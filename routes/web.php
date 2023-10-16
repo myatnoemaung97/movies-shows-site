@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\admin\ArticleController;
+use App\Http\Controllers\admin\MovieController;
 use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 
@@ -14,11 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/test', function () {
-
-    $movie = Movie::first();
-    $results =  $movie->ratings;
-    return $results;
-
+Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/admin', function () {
+    return view('admin.index');
+});
+
+Route::resource('/admin/articles', ArticleController::class);
+
+Route::resource('/admin/movies', MovieController::class);
+

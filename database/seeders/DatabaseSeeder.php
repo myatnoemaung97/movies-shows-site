@@ -143,5 +143,7 @@ class DatabaseSeeder extends Seeder
             'image' => '/images/image.png',
             'body' => "This is content's body",
         ]);
+
+        Movie::factory(30)->create();
     }
 }
