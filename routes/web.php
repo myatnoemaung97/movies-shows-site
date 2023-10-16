@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\admin\ArticleController;
 use App\Http\Controllers\admin\MovieController;
-use App\Models\Movie;
+use App\Http\Controllers\admin\ShowController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,3 +28,4 @@ Route::resource('/admin/articles', ArticleController::class);
 
 Route::resource('/admin/movies', MovieController::class);
 
+Route::resource('/admin/shows', ShowController::class);

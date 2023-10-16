@@ -145,5 +145,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Movie::factory(30)->create();
+        Show::factory(30)->create();
     }
 }
