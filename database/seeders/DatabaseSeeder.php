@@ -146,5 +146,7 @@ class DatabaseSeeder extends Seeder
 
         Movie::factory(30)->create();
         Show::factory(30)->create();
+        Person::factory(50)->create();
+        User::factory(5)->create();
     }
 }

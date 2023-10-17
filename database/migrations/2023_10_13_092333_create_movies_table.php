@@ -18,8 +18,8 @@ return new class extends Migration
             $table->date('release_date');
             $table->text('description');
             $table->integer('run_time');
-            $table->string('poster')->nullable();
-            $table->string('trailer')->nullable();
+            $table->string('poster');
+            $table->string('trailer');
             $table->timestamps();
         });
     }

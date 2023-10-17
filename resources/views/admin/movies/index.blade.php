@@ -5,7 +5,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Articles</h3>
+                            <h3 class="card-title">Movies</h3>
                             <a href="{{ route('movies.create') }}" class="btn btn-success float-right">Create Movie</a>
                         </div>
                         <!-- /.card-header -->

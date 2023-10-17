@@ -1,3 +1,3 @@
 @props(['name', 'label'])
 
-<label for="{{ $name }}">{{ $label }}</label>
+<label class="mt-3" for="{{ $name }}">{{ $label }}</label>

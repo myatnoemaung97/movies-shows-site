@@ -1,7 +1,7 @@
-@props(['header'])
+@props(['header', 'people'])
 
 <x-form.formfield>
-    <form action="{{ route('movies.store') }}" method="POST">
+    <form action="{{ route('movies.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <h3 class="text-center">{{ $header }}</h3>
@@ -12,11 +12,19 @@
 
         <x-form.input :type="'date'" :name="'release_date'" :label="'Release Date'" />
 
-        <x-form.textarea :name="'description'" :label="'Description'"/>
+        <x-form.textarea :name="'description'" :label="'Description'" :rows="8"/>
 
         <x-form.input :type="'number'" :name="'run_time'" :label="'Run time (in minutes)'"/>
 
-        <button type="submit" class="btn btn-success">Create</button>
+        <x-form.input :type="'file'" :name="'poster'" :label="'Poster'"/>
+
+        <x-form.input :type="'text'" :name="'trailer'" :label="'Trailer Link'"/>
+
+        <x-form.multiselect :name="'directors'" :label="'Director(s)'" :options="$people" />
+
+        <x-form.multiselect :name="'cast'" :label="'Cast Members'" :options="$people" />
+
+        <button type="submit" class="btn btn-success mt-3">Create</button>
     </form>
 </x-form.formfield>
 
