@@ -22,7 +22,7 @@ class MovieFactory extends Factory
             'release_date' => fake()->date,
             'description' => fake()->paragraph(),
             'run_time' => fake()->numberBetween(60, 240),
-            'poster' => 'default-poster.jpg',
+            'poster' => '/storage/image-placeholder.jpg',
             'trailer' => 'youtube.com'
         ];
     }

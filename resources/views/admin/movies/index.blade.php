@@ -13,6 +13,7 @@
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
+                                        <th>ID</th>
                                         <th>Title</th>
                                         <th>Age Rating</th>
                                         <th>Release Date</th>
@@ -23,13 +24,14 @@
                                 <tbody>
                                     @foreach($movies as $movie)
                                         <tr>
+                                            <td>{{ $movie->id }}</td>
                                             <td>{{ $movie->title }}</td>
                                             <td>{{ $movie->age_rating }}</td>
                                             <td>{{ $movie->release_date }}</td>
                                             <td>{{ $movie->run_time }}</td>
                                             <td>
-                                                <a class="btn btn-secondary">Details</a>
-                                                <a class="btn btn-success">Edit</a>
+                                                <a class="btn btn-secondary" href="{{ route('movies.show', $movie->id) }}">Details</a>
+                                                <a class="btn btn-success" href="{{ route('movies.edit', $movie->id) }}">Edit</a>
                                                 <a class="btn btn-danger">Delete</a>
                                             </td>
                                         </tr>

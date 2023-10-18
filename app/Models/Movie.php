@@ -9,31 +9,40 @@ class Movie extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = ['title', 'age_rating', 'release_date', 'description', 'run_time', 'poster', 'trailer'];
 
-    public function reviews() {
+    public function reviews()
+    {
         return $this->morphMany(Review::class, 'media');
     }
 
-    public function images() {
+    public function images()
+    {
         return $this->morphMany(Image::class, 'imageable');
     }
 
-    public function actors() {
+    public function actors()
+    {
         return $this->morphToMany(Person::class, 'media', 'media_crews')
             ->wherePivot('role', 'actor');
     }
 
-    public function directors() {
+    public function directors()
+    {
         return $this->morphToMany(Person::class, 'media', 'media_crews')
             ->wherePivot('role', 'director');
     }
 
-    public function writers() {
+    public function writers()
+    {
         return $this->morphToMany(Person::class, 'media', 'media_crews')
             ->wherePivot('role', 'writer');
     }
 
+    public function mediacrew()
+    {
+        return $this->morphMany(MediaCrew::class, 'media');
+    }
 
 
 }

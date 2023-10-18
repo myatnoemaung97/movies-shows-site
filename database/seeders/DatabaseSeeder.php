@@ -17,6 +17,7 @@ use App\Models\Season;
 use App\Models\Show;
 use App\Models\User;
 use App\Models\Watchlist;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -148,5 +149,11 @@ class DatabaseSeeder extends Seeder
         Show::factory(30)->create();
         Person::factory(50)->create();
         User::factory(5)->create();
+        User::create([
+            'username' => 'admin',
+            'email' => 'admin@gmail.com',
+            'password' => '12345',
+            'is_admin' => true
+        ]);
     }
 }

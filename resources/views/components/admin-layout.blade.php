@@ -75,6 +75,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <p>Shows</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/admin/people" class="nav-link {{ request()->is('admin/people') ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>People</p>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

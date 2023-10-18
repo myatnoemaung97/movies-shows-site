@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class MediaCrew extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['media_id', 'media_type', 'person_id', 'role'];
 }
