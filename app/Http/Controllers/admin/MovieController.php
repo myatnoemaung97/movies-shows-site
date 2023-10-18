@@ -8,13 +8,30 @@ use App\Models\Movie;
 use App\Models\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 
 class MovieController extends Controller
 {
-    public function index() {
-        return view('admin.movies.index', [
-            'movies' => Movie::latest()->get()
-        ]);
+    public function index(Request $request) {
+
+        if($request->ajax())
+        {
+            $vacancies = Movie::query();
+
+            return DataTables::of($vacancies)
+
+                ->addColumn('action', function($a) {
+
+                    $details = "<a href='/admin/movies/$a->id' class='btn btn-primary' style='margin-right: 10px'>Details</a>";
+                    $edit = '<a href=" '.route('movies.edit', $a->id).'" class="btn btn-success" style="margin-right: 10px;">Edit</a>';
+                    $delete = '<a href="" class="deleteButton btn btn-danger" data-id="'. $a->id .'">Delete</a>';
+
+                    return '<div class="action">' . $details  . $edit . $delete . '</div>';
+
+                })->rawColumns(['action'])->make(true);
+        }
+
+        return view('admin.movies.index');
     }
 
     public function create() {

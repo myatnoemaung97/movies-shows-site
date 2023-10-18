@@ -14,9 +14,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
     <!-- DataTables -->
-    <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+{{--    <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">--}}
+{{--    <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">--}}
+{{--    <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">--}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/dist/css/adminlte.min.css">
     <!-- bootstrap 5.0 -->
@@ -112,22 +113,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- DataTables  & Plugins -->
-<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-<script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="/plugins/jszip/jszip.min.js"></script>
-<script src="/plugins/pdfmake/pdfmake.min.js"></script>
-<script src="/plugins/pdfmake/vfs_fonts.js"></script>
-<script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+{{--<script src="/plugins/datatables/jquery.dataTables.min.js"></script>--}}
+{{--<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>--}}
+{{--<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>--}}
+{{--<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>--}}
+{{--<script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>--}}
+{{--<script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>--}}
+{{--<script src="/plugins/jszip/jszip.min.js"></script>--}}
+{{--<script src="/plugins/pdfmake/pdfmake.min.js"></script>--}}
+{{--<script src="/plugins/pdfmake/vfs_fonts.js"></script>--}}
+{{--<script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>--}}
+{{--<script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>--}}
+{{--<script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>--}}
+<!-- Data Table-->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <!-- select2 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<!-- Swal -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     $(document).ready(function() {
@@ -148,20 +155,64 @@ scratch. This page gets rid of all links and provides the needed markup only.
     });
 </script>
 <script>
-    $(function () {
-        $("#example1").DataTable({
-            "responsive": true, "lengthChange": false, "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
+    var table = $('#movies').DataTable({
+        'serverSide': true,
+        'processing': true,
+        'ajax': {
+            url: '/admin/movies/',
+            error: function(xhr, testStatus, errorThrown) {
+
+            }
+        },
+
+        "columns": [{
+            "data": "id"
+        },
+            {
+                "data": "title"
+            },
+            {
+                "data": "age_rating"
+            },
+            {
+                'data': 'release_date'
+            },
+            {
+                'data': 'run_time'
+            },
+            {
+                "data": "action"
+            }
+        ]
+    });
+
+
+    $(document).on('click', '.deleteButton', function(a) {
+        a.preventDefault();
+        const id = $(this).data('id');
+        console.log(id);
+        Swal.fire({
+            title: 'Do you want to delete this vacancy?',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            confirmButtonColor: '#FF0000',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/movies/' + id,
+                    type: 'DELETE',
+                    success: function() {
+                        table.ajax.reload();
+                    }
+                });
+
+                Swal.fire(
+                    'Deleted!',
+                    'Vacancy has been deleted.',
+                    'success'
+                )
+            }
+        })
     });
 </script>
 </body>

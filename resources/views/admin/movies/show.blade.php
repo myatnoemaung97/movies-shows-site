@@ -33,7 +33,7 @@
                                 <p>Release Date: {{ $movie->release_date }}</p>
                                 <p>Run Time (minutes): {{ $movie->run_time }}</p>
                                 <p>Director(s): <span class="fw-semibold">{{ implode(', ', $movie->directors()->pluck('name')->toArray()) }}</span></p>
-                                <p>Cast: <span class="fw-bold">{{ implode(', ', $movie->actors()->pluck('name')->toArray()) }}</span></p>
+                                <p>Cast: <span class="fw-semibold">{{ implode(', ', $movie->actors()->pluck('name')->toArray()) }}</span></p>
                             </div>
                             <hr>
                             <div>

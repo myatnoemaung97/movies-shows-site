@@ -10,7 +10,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example2" class="table table-bordered table-hover">
+                            <table id="movies" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -22,20 +22,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($movies as $movie)
-                                        <tr>
-                                            <td>{{ $movie->id }}</td>
-                                            <td>{{ $movie->title }}</td>
-                                            <td>{{ $movie->age_rating }}</td>
-                                            <td>{{ $movie->release_date }}</td>
-                                            <td>{{ $movie->run_time }}</td>
-                                            <td>
-                                                <a class="btn btn-secondary" href="{{ route('movies.show', $movie->id) }}">Details</a>
-                                                <a class="btn btn-success" href="{{ route('movies.edit', $movie->id) }}">Edit</a>
-                                                <a class="btn btn-danger">Delete</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+{{--                                    @foreach($movies as $movie)--}}
+{{--                                        <tr>--}}
+{{--                                            <td>{{ $movie->id }}</td>--}}
+{{--                                            <td>{{ $movie->title }}</td>--}}
+{{--                                            <td>{{ $movie->age_rating }}</td>--}}
+{{--                                            <td>{{ $movie->release_date }}</td>--}}
+{{--                                            <td>{{ $movie->run_time }}</td>--}}
+{{--                                            <td>--}}
+{{--                                                <a class="btn btn-secondary" href="{{ route('movies.show', $movie->id) }}">Details</a>--}}
+{{--                                                <a class="btn btn-success" href="{{ route('movies.edit', $movie->id) }}">Edit</a>--}}
+{{--                                                <a class="btn btn-danger">Delete</a>--}}
+{{--                                            </td>--}}
+{{--                                        </tr>--}}
+{{--                                    @endforeach--}}
                                 </tbody>
                             </table>
                         </div>
@@ -49,4 +49,5 @@
         </div>
         <!-- /.container-fluid -->
     </section>
+
 </x-admin-layout>
