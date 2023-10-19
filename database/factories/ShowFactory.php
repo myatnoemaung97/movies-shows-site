@@ -20,6 +20,9 @@ class ShowFactory extends Factory
             'title' => fake()->sentence,
             'age_rating' => fake()->randomElement(['G', 'PG', 'PG-13', 'R']),
             'release_date' => fake()->date,
+            'poster' => '/storage/image-placeholder.jpg',
+            'trailer' => 'youtube.com',
+            'status' => 'on going',
             'description' => fake()->paragraph(),
         ];
     }

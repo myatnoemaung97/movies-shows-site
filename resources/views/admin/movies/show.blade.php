@@ -18,13 +18,8 @@
                                 <div class="d-flex flex-column float-right">
                                     <p>Created: {{ $movie->created_at }}</p>
                                     <p>Updated: {{ $movie->updated_at }}</p>
-                                    <div class="d-flex gap-3">
+                                    <div class="d-flex justify-content-end">
                                         <a class="btn btn-success" href="{{ route('movies.edit', $movie->id) }}">Edit</a>
-                                        <form action="{{ route('movies.destroy', $movie->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger">Delete</button>
-                                        </form>
                                     </div>
                                 </div>
 

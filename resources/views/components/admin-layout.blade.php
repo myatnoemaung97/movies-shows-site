@@ -7,22 +7,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{csrf_token()}}">
     <title>Kino Wave</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
-    <!-- DataTables -->
-{{--    <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">--}}
-{{--    <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">--}}
-{{--    <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">--}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/dist/css/adminlte.min.css">
     <!-- bootstrap 5.0 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/807f2d6ec6.js" crossorigin="anonymous"></script>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -111,20 +109,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- DataTables  & Plugins -->
-{{--<script src="/plugins/datatables/jquery.dataTables.min.js"></script>--}}
-{{--<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>--}}
-{{--<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>--}}
-{{--<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>--}}
-{{--<script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>--}}
-{{--<script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>--}}
-{{--<script src="/plugins/jszip/jszip.min.js"></script>--}}
-{{--<script src="/plugins/pdfmake/pdfmake.min.js"></script>--}}
-{{--<script src="/plugins/pdfmake/vfs_fonts.js"></script>--}}
-{{--<script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>--}}
-{{--<script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>--}}
-{{--<script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>--}}
 <!-- Data Table-->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -186,11 +170,66 @@ scratch. This page gets rid of all links and provides the needed markup only.
         ]
     });
 
+    var table = $('#people').DataTable({
+        'serverSide': true,
+        'processing': true,
+        'ajax': {
+            url: '/admin/people/',
+            error: function(xhr, testStatus, errorThrown) {
 
-    $(document).on('click', '.deleteButton', function(a) {
+            }
+        },
+
+        "columns": [{
+            "data": "id"
+        },
+            {
+                "data": "name"
+            },
+            {
+                "data": "image"
+            },
+            {
+                "data": "action"
+            }
+        ]
+    });
+
+    var table = $('#shows').DataTable({
+        'serverSide': true,
+        'processing': true,
+        'ajax': {
+            url: '/admin/shows/',
+            error: function(xhr, testStatus, errorThrown) {
+
+            }
+        },
+
+        "columns": [{
+            "data": "id"
+        },
+            {
+                "data": "title"
+            },
+            {
+                "data": "age_rating"
+            },
+            {
+                "data": "release_date"
+            },
+            {
+                "data": "status"
+            },
+            {
+                "data": "action"
+            }
+        ]
+    });
+
+
+    $(document).on('click', '.deleteMovieButton', function(a) {
         a.preventDefault();
         const id = $(this).data('id');
-        console.log(id);
         Swal.fire({
             title: 'Do you want to delete this vacancy?',
             showCancelButton: true,
@@ -213,6 +252,96 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 )
             }
         })
+    });
+
+    $(document).on('click', '.deletePersonButton', function(a) {
+        a.preventDefault();
+        const id = $(this).data('id');
+        Swal.fire({
+            title: 'Do you want to delete this profile?',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            confirmButtonColor: '#FF0000',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/people/' + id,
+                    type: 'DELETE',
+                    success: function() {
+                        table.ajax.reload();
+                    }
+                });
+
+                Swal.fire(
+                    'Deleted!',
+                    'Profile has been deleted.',
+                    'success'
+                )
+            }
+        })
+    });
+
+    $(document).on('click', '.deleteShowButton', function(a) {
+        a.preventDefault();
+        const id = $(this).data('id');
+        Swal.fire({
+            title: 'Do you want to delete this show?',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            confirmButtonColor: '#FF0000',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/shows/' + id,
+                    type: 'DELETE',
+                    success: function() {
+                        table.ajax.reload();
+                    }
+                });
+
+                Swal.fire(
+                    'Deleted!',
+                    'Show has been deleted.',
+                    'success'
+                )
+            }
+        })
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        let token = document.head.querySelector('meta[name="csrf-token"]');
+        if(token)
+        {
+            $.ajaxSetup({
+                headers : {
+                    'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        }
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        @if(session('create'))
+        Toast.fire({
+            icon: 'success',
+            title: '{{session('create')}} created successfully!'
+        })
+        @endif
+        @if(session('update'))
+        Toast.fire({
+            icon: 'success',
+            title: "{{session('update')}} updated successfully!"
+        })
+        @endif
     });
 </script>
 </body>

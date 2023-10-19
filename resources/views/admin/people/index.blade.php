@@ -5,21 +5,19 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Movies</h3>
-                            <a href="{{ route('movies.create') }}" class="btn btn-success float-right">Create Movie</a>
+                            <h3 class="card-title">Artists</h3>
+                            <a href="{{ route('people.create') }}" class="btn btn-success float-right">Create Artist Profile</a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="movies" class="table table-bordered table-hover">
+                            <table id="people" class="table table-bordered table-hover">
                                 <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Title</th>
-                                        <th>Age Rating</th>
-                                        <th>Release Date</th>
-                                        <th>Run Time(minutes)</th>
-                                        <th>Action</th>
-                                    </tr>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Image</th>
+                                    <th>Action</th>
+                                </tr>
                                 </thead>
                                 <tbody>
 

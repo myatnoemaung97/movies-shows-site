@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\MediaCrewController;
 use App\Models\Movie;
 use App\Models\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -14,19 +14,17 @@ class MovieController extends Controller
 {
     public function index(Request $request) {
 
-        if($request->ajax())
-        {
-            $vacancies = Movie::query();
+        if ($request->ajax()) {
+            $movies = Movie::query();
 
-            return DataTables::of($vacancies)
-
-                ->addColumn('action', function($a) {
+            return DataTables::of($movies)
+                ->addColumn('action', function ($a) {
 
                     $details = "<a href='/admin/movies/$a->id' class='btn btn-primary' style='margin-right: 10px'>Details</a>";
-                    $edit = '<a href=" '.route('movies.edit', $a->id).'" class="btn btn-success" style="margin-right: 10px;">Edit</a>';
-                    $delete = '<a href="" class="deleteButton btn btn-danger" data-id="'. $a->id .'">Delete</a>';
+                    $edit = '<a href=" ' . route('movies.edit', $a->id) . '" class="btn btn-success" style="margin-right: 10px;">Edit</a>';
+                    $delete = '<a href="" class="deleteMovieButton btn btn-danger" data-id="' . $a->id . '">Delete</a>';
 
-                    return '<div class="action">' . $details  . $edit . $delete . '</div>';
+                    return '<div class="action">' . $details . $edit . $delete . '</div>';
 
                 })->rawColumns(['action'])->make(true);
         }
@@ -52,7 +50,7 @@ class MovieController extends Controller
             'actor' => $attributes['cast']
         ]);
 
-        return redirect(route('movies.index'));
+        return redirect(route('movies.index'))->with('create', 'Movie');
     }
 
     public function show($id) {
@@ -73,11 +71,15 @@ class MovieController extends Controller
 
         $movie = Movie::findOrFail($id);
 
+        $oldPosterPath = public_path($movie->poster);
+
         if ($request->file('poster')) {
             $attributes['poster'] = '/storage/' . $request->file('poster')->store();
-        }
 
-        Storage::disk('public')->delete($movie->poster);
+            if (file_exists($oldPosterPath)) {
+                unlink($oldPosterPath);
+            }
+        }
 
         $movie->update($attributes);
 
@@ -86,8 +88,24 @@ class MovieController extends Controller
             'actor' => $attributes['cast']
         ]);
 
-        return redirect("/admin/movies/$id");
+        return redirect("/admin/movies/$id")->with('update', 'Movie');
     }
+
+    public function destroy($id) {
+        $movie = Movie::findOrFail($id);
+
+        $path = public_path($movie->poster);
+        if (file_exists($path)) {
+            unlink($path);
+        }
+
+        $movie->delete();
+
+        MediaCrewController::destroy($movie->id, 'App\Models\Movie');
+
+        return 'success';
+    }
+
 
     private function validateMovie(Request $request) {
         $rules = [

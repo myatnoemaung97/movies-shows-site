@@ -19,7 +19,7 @@ class SeasonFactory extends Factory
     public function definition(): array
     {
         return [
-            'show_id' => Show::factory()->create()->id,
+            'show_id' => 1,
             'season_number' => fake()->numberBetween(1, 3),
             'release_date' => fake()->date,
         ];

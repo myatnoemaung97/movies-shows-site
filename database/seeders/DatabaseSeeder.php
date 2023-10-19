@@ -155,5 +155,17 @@ class DatabaseSeeder extends Seeder
             'password' => '12345',
             'is_admin' => true
         ]);
+
+        for ($i = 1; $i <= 5; $i++) {
+            Season::create([
+                'show_id' => 2,
+                'season_number' => $i,
+                'poster' => '/storage/image-placeholder.jpg',
+                'trailer' => 'youtube.com',
+                'release_date' => now(),
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        }
     }
 }

@@ -5,32 +5,24 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Articles</h3>
+                            <h3 class="card-title">Shows</h3>
+                            <a href="{{ route('shows.create') }}" class="btn btn-success float-right">Create Show</a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example2" class="table table-bordered table-hover">
+                            <table id="shows" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Title</th>
                                     <th>Age Rating</th>
                                     <th>Release Date</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($shows as $show)
-                                    <tr>
-                                        <td>{{ $show->title }}</td>
-                                        <td>{{ $show->age_rating }}</td>
-                                        <td>{{ $show->release_date }}</td>
-                                        <td>
-                                            <a class="btn btn-secondary">Details</a>
-                                            <a class="btn btn-success">Edit</a>
-                                            <a class="btn btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+
                                 </tbody>
                             </table>
                         </div>
@@ -44,4 +36,5 @@
         </div>
         <!-- /.container-fluid -->
     </section>
+
 </x-admin-layout>

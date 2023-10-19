@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('age_rating');
             $table->text('description');
             $table->date('release_date');
+            $table->string('status');
             $table->string('poster')->nullable();
             $table->string('trailer')->nullable();
             $table->timestamps();

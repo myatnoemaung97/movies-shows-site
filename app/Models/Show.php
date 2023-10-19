@@ -9,6 +9,8 @@ class Show extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'age_rating', 'release_date', 'description', 'poster', 'trailer', 'status'];
+
     public function seasons() {
         return $this->hasMany(Season::class);
     }
@@ -31,8 +33,10 @@ class Show extends Model
             ->wherePivot('role', 'director');
     }
 
-    public function writers() {
+    public function creators() {
         return $this->morphToMany(Person::class, 'media', 'media_crews')
-            ->wherePivot('role', 'writer');
+            ->wherePivot('role', 'creator');
     }
+
+
 }

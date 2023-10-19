@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\admin\ArticleController;
 use App\Http\Controllers\admin\MovieController;
+use App\Http\Controllers\admin\PersonController;
+use App\Http\Controllers\admin\SeasonController;
 use App\Http\Controllers\admin\ShowController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegisterController;
@@ -52,6 +54,8 @@ Route::middleware('can:admin')->group(function () {
     Route::resource('/admin/articles', ArticleController::class);
     Route::resource('/admin/movies', MovieController::class);
     Route::resource('/admin/shows', ShowController::class);
+    Route::resource('/admin/shows/{show}/seasons', SeasonController::class);
+    Route::resource('/admin/people', PersonController::class);
 });
 
 
