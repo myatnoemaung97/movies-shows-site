@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <h3 class="card-title">
                                 <label for="season">Season</label>
-                                <select class="form-select" name="season" id="season" onchange="redirectToSeason()">
+                                <select class="form-select" name="season" id="season" onchange="redirectToSeason({{ $show->id }})">
                                     <option value="">-</option>
                                     @foreach($seasons as $season)
                                         <option value="{{ $season->id }}">{{ $season->season_number }}</option>
@@ -28,11 +28,11 @@
                                     <p>Created: {{ $season->created_at }}</p>
                                     <p>Updated: {{ $season->updated_at }}</p>
                                     <div class="d-flex justify-content-end">
-                                        <a class="btn btn-success" href="{{ route('seasons.edit', $season->id) }}">Edit</a>
+                                        <a class="btn btn-success" href="{{ route('seasons.edit', [$show->id, $season->id]) }}">Edit</a>
                                     </div>
                                 </div>
                                 <h4><a href="{{ route('shows.show', $show->id) }}" style="text-decoration: none;"
-                                       class="text-black">{{ $show->title }}</a></h4>
+                                       class="text-black">{{ $show->title }}</a> S{{ $season->season_number }}</h4>
                                 <p>Release Date: {{ $season->release_date }}</p>
                                 <p>Creator(s): <span
                                         class="fw-semibold">{{ implode(', ', $show->creators()->pluck('name')->toArray()) }}</span>
@@ -61,7 +61,8 @@
     <script>
         function redirectToSeason(showId) {
             var seasonId = document.getElementById('season').value;
-            window.location.href = `/admin/shows/${showId}/${seasonId}`;
+            console.log(seasonId);
+            window.location.href = `/admin/shows/${showId}/seasons/${seasonId}`;
         }
     </script>
 </x-admin-layout>

@@ -8,6 +8,7 @@ use App\Models\Season;
 class SeasonController extends Controller
 {
     public function show($id) {
+        dd($id);
         $season = Season::findOrFail($id);
         $show = $season->show;
 

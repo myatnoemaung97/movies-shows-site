@@ -9,7 +9,7 @@
                                 <label for="season">Seasons</label>
                                 <div class="d-flex align-items-center gap-2">
                                     <select class="form-select" name="season" id="season"
-                                            onchange="redirectToSeason({{ $show->id }})">
+                                            onchange="redirectToSeason({{ str_replace(' ', '-',  $show->title) }})">
                                         <option value="">-</option>
                                         @foreach($seasons as $season)
                                             <option value="{{ $season->id }}">{{ $season->season_number }}</option>
@@ -72,10 +72,12 @@
         <!-- /.container-fluid -->
     </section>
     <script>
-        function redirectToSeason(showId) {
+        function redirectToSeason(showSlug) {
+            alert(showSlug);
+
             var seasonId = document.getElementById('season').value;
 
-            window.location.href = `/admin/shows/${showId}/seasons/${seasonId}`;
+            window.location.href = "/admin/shows/" + showSlug + "/seasons/" + seasonId;
         }
     </script>
 

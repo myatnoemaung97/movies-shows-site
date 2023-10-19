@@ -34,6 +34,7 @@ class ShowController extends Controller
 
     public function show($id) {
         $show = Show::findOrFail($id);
+       // dd($show->seasons);
 
         return view('admin.shows.show', [
             'show' => $show,
