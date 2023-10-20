@@ -139,7 +139,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     });
 </script>
 <script>
-    var table = $('#movies').DataTable({
+    var movieTable = $('#movies').DataTable({
         'serverSide': true,
         'processing': true,
         'ajax': {
@@ -170,7 +170,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         ]
     });
 
-    var table = $('#people').DataTable({
+    var peopleTable = $('#people').DataTable({
         'serverSide': true,
         'processing': true,
         'ajax': {
@@ -195,7 +195,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         ]
     });
 
-    var table = $('#shows').DataTable({
+    var showTable = $('#shows').DataTable({
         'serverSide': true,
         'processing': true,
         'ajax': {
@@ -241,7 +241,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     url: '/admin/movies/' + id,
                     type: 'DELETE',
                     success: function() {
-                        table.ajax.reload();
+                        movieTable.ajax.reload();
                     }
                 });
 
@@ -268,7 +268,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     url: '/admin/people/' + id,
                     type: 'DELETE',
                     success: function() {
-                        table.ajax.reload();
+                        peopleTable.ajax.reload();
                     }
                 });
 
@@ -295,7 +295,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     url: '/admin/shows/' + id,
                     type: 'DELETE',
                     success: function() {
-                        table.ajax.reload();
+                        showTable.ajax.reload();
                     }
                 });
 
@@ -340,6 +340,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         Toast.fire({
             icon: 'success',
             title: "{{session('update')}} updated successfully!"
+        })
+        @endif
+        @if(session('delete'))
+        Toast.fire({
+            icon: 'success',
+            title: "{{session('delete')}} deleted successfully!"
         })
         @endif
     });

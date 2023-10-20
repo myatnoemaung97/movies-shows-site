@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
-
-use App\Http\Controllers\Controller;
+namespace App\Http\Controllers;
 
 class EpisodeController extends Controller
 {

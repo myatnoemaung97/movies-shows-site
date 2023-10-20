@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Season;
 use App\Models\Show;
 use Illuminate\Http\Request;
 
 class SeasonController extends Controller
 {
-    public function show($showSlug, $seasonId) {
+    public function show($showSlug, $seasonNumber) {
+        $show = Show::firstWhere('slug', $showSlug);
 
-        $currentSeason = Season::findOrFail($seasonId);
+        $currentSeason = Season::firstWhere(['show_id' => $show->id, 'season_number' => $seasonNumber]);
         $show = $currentSeason->show;
 
         return view('admin.seasons.show', [
@@ -29,7 +29,7 @@ class SeasonController extends Controller
     }
 
     public function store(Request $request) {
-        $showId = $request->get('show');
+        $showId = $request->get('showId');
         $attributes = $this->validateSeason($request);
 
         $attributes['poster'] = '/storage/' . $request->file('poster')->store();
@@ -38,7 +38,7 @@ class SeasonController extends Controller
 
         Season::create($attributes);
 
-        return redirect(route('shows.show', $showId))->with('create', 'Show');
+        return redirect(route('shows.show', $request['showSlug']))->with('create', 'Show');
     }
 
     public function edit($showId, $seasonId) {

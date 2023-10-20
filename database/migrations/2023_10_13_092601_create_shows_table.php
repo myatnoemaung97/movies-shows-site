@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('shows', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug')->unique();
             $table->string('age_rating');
             $table->text('description');
             $table->date('release_date');

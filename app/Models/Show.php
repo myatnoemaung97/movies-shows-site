@@ -9,7 +9,7 @@ class Show extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'age_rating', 'release_date', 'description', 'poster', 'trailer', 'status'];
+    protected $fillable = ['title', 'slug', 'age_rating', 'release_date', 'description', 'poster', 'trailer', 'status'];
 
     public function seasons() {
         return $this->hasMany(Season::class);

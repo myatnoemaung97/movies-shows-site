@@ -1,15 +1,12 @@
 <?php
 
-use App\Http\Controllers\admin\ArticleController;
-use App\Http\Controllers\admin\MovieController;
-use App\Http\Controllers\admin\PersonController;
-use App\Http\Controllers\admin\SeasonController;
-use App\Http\Controllers\admin\ShowController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\MovieController;
+use App\Http\Controllers\PersonController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\SessionsController;
-use App\Models\Movie;
-use App\Models\User;
+use App\Http\Controllers\ShowController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,9 +25,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    $movie = Movie::find(32);
 
-    dd(\Illuminate\Support\Facades\Storage::exists($movie->poster));
 });
 
 Route::middleware('guest')->group(function () {

@@ -17,7 +17,8 @@ class ShowFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->sentence,
+            'title' => fake()->words(3, true),
+            'slug' => fake()->slug,
             'age_rating' => fake()->randomElement(['G', 'PG', 'PG-13', 'R']),
             'release_date' => fake()->date,
             'poster' => '/storage/image-placeholder.jpg',

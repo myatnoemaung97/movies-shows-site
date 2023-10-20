@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Person;
 use App\Models\Season;
 use App\Models\Show;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
 class ShowController extends Controller
@@ -20,7 +20,7 @@ class ShowController extends Controller
             return DataTables::of($shows)
                 ->addColumn('action', function ($a) {
 
-                    $details = "<a href='/admin/shows/$a->id' class='btn btn-primary' style='margin-right: 10px'>Details</a>";
+                    $details = "<a href='/admin/shows/$a->slug' class='btn btn-primary' style='margin-right: 10px'>Details</a>";
                     $edit = '<a href=" ' . route('shows.edit', $a->id) . '" class="btn btn-success" style="margin-right: 10px;">Edit</a>';
                     $delete = '<a href="" class="deleteShowButton btn btn-danger" data-id="' . $a->id . '">Delete</a>';
 
@@ -32,9 +32,8 @@ class ShowController extends Controller
         return view('admin.shows.index');
     }
 
-    public function show($id) {
-        $show = Show::findOrFail($id);
-        // dd($show->seasons);
+    public function show($slug) {
+        $show = Show::firstWhere('slug', $slug);
 
         return view('admin.shows.show', [
             'show' => $show,
@@ -53,6 +52,8 @@ class ShowController extends Controller
 
         $posterPath = '/storage/' . $request->file('poster')->store();
         $attributes['poster'] = $posterPath;
+
+        $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
 
         $show = Show::create($attributes);
 

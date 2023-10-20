@@ -22,6 +22,8 @@ class SeasonFactory extends Factory
             'show_id' => 1,
             'season_number' => fake()->numberBetween(1, 3),
             'release_date' => fake()->date,
+            'poster' => '/storage/image-placeholder.jpg',
+            'trailer' => 'youtube.com'
         ];
     }
 }

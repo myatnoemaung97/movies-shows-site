@@ -9,6 +9,8 @@ class Season extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['show_id', 'season_number', 'release_date', 'poster', 'trailer'];
+
     public function show() {
         return $this->belongsTo(Show::class);
     }
@@ -16,9 +18,4 @@ class Season extends Model
     public function episodes() {
         return $this->hasMany(Episode::class);
     }
-
-    public function images() {
-        return $this->morphMany(Image::class, 'imageable');
-    }
-
 }
