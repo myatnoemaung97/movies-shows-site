@@ -50,7 +50,7 @@ class SeasonController extends Controller
         ]);
     }
 
-    public function update(Request $request, $showId , $seasonId) {
+    public function update(Request $request, $showSlug, $seasonId) {
         $attributes = $this->validateSeason($request);
 
         $season = Season::findOrFail($seasonId);
@@ -67,10 +67,10 @@ class SeasonController extends Controller
 
         $season->update($attributes);
 
-        return redirect("/admin/shows/". $season->show->id . "/seasons/$seasonId")->with('update', 'Season');
+        return redirect("/admin/shows/". $season->show->slug . "/seasons/$seasonId")->with('update', 'Season');
     }
 
-    public function destroy($showId, $seasonId) {
+    public function destroy($showSlug, $seasonId) {
         $season = Season::findOrFail($seasonId);
 
         $path = public_path($season->poster);
@@ -80,7 +80,7 @@ class SeasonController extends Controller
 
         $season->delete();
 
-        return redirect("/admin/shows/$showId")->with('delete', 'Season');
+        return redirect("/admin/shows/$showSlug")->with('delete', 'Season');
     }
 
     private function validateSeason(Request $request) {

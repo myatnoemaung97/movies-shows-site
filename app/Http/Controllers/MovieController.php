@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Movie;
 use App\Models\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
 class MovieController extends Controller
@@ -17,8 +18,8 @@ class MovieController extends Controller
             return DataTables::of($movies)
                 ->addColumn('action', function ($a) {
 
-                    $details = "<a href='/admin/movies/$a->id' class='btn btn-primary' style='margin-right: 10px'>Details</a>";
-                    $edit = '<a href=" ' . route('movies.edit', $a->id) . '" class="btn btn-success" style="margin-right: 10px;">Edit</a>';
+                    $details = "<a href='/admin/movies/$a->slug' class='btn btn-primary' style='margin-right: 10px'>Details</a>";
+                    $edit = '<a href=" ' . route('movies.edit', $a->slug) . '" class="btn btn-success" style="margin-right: 10px;">Edit</a>';
                     $delete = '<a href="" class="deleteMovieButton btn btn-danger" data-id="' . $a->id . '">Delete</a>';
 
                     return '<div class="action">' . $details . $edit . $delete . '</div>';
@@ -40,6 +41,8 @@ class MovieController extends Controller
 
         $attributes['poster'] = '/storage/' . $request->file('poster')->store();
 
+        $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
+
         $movie = Movie::create($attributes);
 
         MediaCrewController::store($movie->id, 'App\Models\Movie', [
@@ -50,15 +53,15 @@ class MovieController extends Controller
         return redirect(route('movies.index'))->with('create', 'Movie');
     }
 
-    public function show($id) {
+    public function show($slug) {
         return view('admin.movies.show', [
-            'movie' => Movie::findOrFail($id)
+            'movie' => Movie::firstWhere('slug', $slug)
         ]);
     }
 
-    public function edit($id) {
+    public function edit($slug) {
         return view('admin.movies.edit', [
-            'movie' => Movie::findOrFail($id),
+            'movie' => Movie::firstWhere('slug', $slug),
             'people' => Person::all()
         ]);
     }
@@ -78,6 +81,8 @@ class MovieController extends Controller
             }
         }
 
+        $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
+
         $movie->update($attributes);
 
         MediaCrewController::update($movie->id, 'App\Models\Movie', [
@@ -85,7 +90,7 @@ class MovieController extends Controller
             'actor' => $attributes['cast']
         ]);
 
-        return redirect("/admin/movies/$id")->with('update', 'Movie');
+        return redirect("/admin/movies/$movie->slug")->with('update', 'Movie');
     }
 
     public function destroy($id) {
@@ -106,7 +111,7 @@ class MovieController extends Controller
 
     private function validateMovie(Request $request) {
         $rules = [
-            'title' => 'required|unique:movies,title',
+            'title' => 'required',
             'age_rating' => 'required',
             'release_date' => 'required',
             'description' => 'required',

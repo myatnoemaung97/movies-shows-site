@@ -10,7 +10,7 @@
             <p>Updated: {{ $currentSeason->updated_at }}</p>
             <div class="d-flex justify-content-end gap-2">
                 <a class="btn btn-success" href="{{ route('seasons.edit', [$show->id, $currentSeason->id]) }}">Edit</a>
-                <form action="/admin/shows/{{$show->id}}/seasons/{{ $currentSeason->id }}" method="POST">
+                <form action="/admin/shows/{{$show->slug}}/seasons/{{ $currentSeason->id }}" method="POST">
                     @csrf
                     @method('DELETE')
 

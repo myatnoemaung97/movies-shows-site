@@ -101,6 +101,8 @@ class ShowController extends Controller
             }
         }
 
+        $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
+
         $show->update($attributes);
 
         MediaCrewController::update($show->id, 'App\Models\Show', [
@@ -108,7 +110,7 @@ class ShowController extends Controller
             'actor' => $attributes['cast']
         ]);
 
-        return redirect("/admin/shows/$id")->with('update', 'Show');
+        return redirect("/admin/shows/$show->slug")->with('update', 'Show');
     }
 
     public function destroy($id) {

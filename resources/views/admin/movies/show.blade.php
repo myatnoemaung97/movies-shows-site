@@ -19,7 +19,7 @@
                                     <p>Created: {{ $movie->created_at }}</p>
                                     <p>Updated: {{ $movie->updated_at }}</p>
                                     <div class="d-flex justify-content-end">
-                                        <a class="btn btn-success" href="{{ route('movies.edit', $movie->id) }}">Edit</a>
+                                        <a class="btn btn-success" href="{{ route('movies.edit', $movie->slug) }}">Edit</a>
                                     </div>
                                 </div>
 

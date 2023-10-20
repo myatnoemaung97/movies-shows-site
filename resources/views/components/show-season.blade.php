@@ -22,10 +22,8 @@
                                     </a>
                                 </div>
                             </h3>
-                            @if()
 
-                            @endif
-                            <a class="btn btn-success float-right" href="/admin/shows/{{ $show->slug }}">Back</a>
+                            <a class="btn btn-success float-right" href="/admin/shows/{{ request()->routeIs('seasons.show') ? $show->slug : '' }}">Back</a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
