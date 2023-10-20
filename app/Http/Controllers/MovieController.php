@@ -76,7 +76,7 @@ class MovieController extends Controller
         if ($request->file('poster')) {
             $attributes['poster'] = '/storage/' . $request->file('poster')->store();
 
-            if (file_exists($oldPosterPath)) {
+            if (file_exists($oldPosterPath) && basename($oldPosterPath) !== 'image-placeholder.jpg') {
                 unlink($oldPosterPath);
             }
         }
@@ -95,7 +95,7 @@ class MovieController extends Controller
         $movie = Movie::findOrFail($id);
 
         $path = public_path($movie->poster);
-        if (file_exists($path)) {
+        if (file_exists($path) && basename($path) !== 'image-placeholder.jpg') {
             unlink($path);
         }
 
@@ -109,7 +109,7 @@ class MovieController extends Controller
 
     private function validateMovie(Request $request) {
         $rules = [
-            'title' => 'required',
+            'title' => 'required|unique:movies,title',
             'age_rating' => 'required',
             'release_date' => 'required',
             'description' => 'required',

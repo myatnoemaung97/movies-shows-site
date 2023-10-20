@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Movie;
 use App\Models\Person;
 use App\Models\Season;
 use App\Models\Show;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Yajra\DataTables\Facades\DataTables;
 
 class ShowController extends Controller
@@ -34,11 +34,11 @@ class ShowController extends Controller
 
     public function show($id) {
         $show = Show::findOrFail($id);
-       // dd($show->seasons);
+        // dd($show->seasons);
 
         return view('admin.shows.show', [
             'show' => $show,
-            'seasons' => $show->seasons
+            'seasons' => $show->seasons()->orderBy('season_number')->get()
         ]);
     }
 
@@ -51,7 +51,8 @@ class ShowController extends Controller
     public function store(Request $request) {
         $attributes = $this->validateShow($request);
 
-        $attributes['poster'] = '/storage/' . $request->file('poster')->store();
+        $posterPath = '/storage/' . $request->file('poster')->store();
+        $attributes['poster'] = $posterPath;
 
         $show = Show::create($attributes);
 
@@ -60,14 +61,18 @@ class ShowController extends Controller
             'actor' => $attributes['cast']
         ]);
 
+        $sourcePath = public_path($posterPath);
+        $seasonPoster = '/storage/' . 's01' . basename($posterPath);
+        $destinationPath = public_path($seasonPoster);
+
+        File::copy($sourcePath, $destinationPath);
+
         Season::create([
             'show_id' => $show->id,
             'season_number' => 1,
-            'poster' => $show->poster,
+            'poster' => $seasonPoster,
             'trailer' => 'youtube.com',
-            'release_date' => now(),
-            'created_at' => now(),
-            'updated_at' => now()
+            'release_date' => $attributes['release_date'],
         ]);
 
         return redirect(route('shows.index'))->with('create', 'Show');
@@ -90,7 +95,7 @@ class ShowController extends Controller
         if ($request->file('poster')) {
             $attributes['poster'] = '/storage/' . $request->file('poster')->store();
 
-            if (file_exists($oldPosterPath)) {
+            if (file_exists($oldPosterPath) && basename($oldPosterPath) !== 'image-placeholder.jpg') {
                 unlink($oldPosterPath);
             }
         }
@@ -109,7 +114,7 @@ class ShowController extends Controller
         $show = Show::findOrFail($id);
 
         $path = public_path($show->poster);
-        if (file_exists($path)) {
+        if (file_exists($path) && basename($path) !== 'image-placeholder.jpg') {
             unlink($path);
         }
 
@@ -124,7 +129,7 @@ class ShowController extends Controller
         $rules = [
             'title' => 'required',
             'age_rating' => 'required',
-            'release_date' => 'required',
+            'release_date' => 'required|date',
             'status' => 'required',
             'description' => 'required',
             'creators' => 'required',
