@@ -44,5 +44,11 @@ class Movie extends Model
         return $this->morphMany(MediaCrew::class, 'media');
     }
 
+    public function genres() {
+        return $this->morphToMany(Genre::class, 'media', 'media_genres');
+    }
+
+
+
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Person;
 use Illuminate\Http\Request;
@@ -32,7 +33,8 @@ class MovieController extends Controller
 
     public function create() {
         return view('admin.movies.create', [
-            'people' => Person::all()
+            'people' => Person::all(),
+            'genres' => Genre::all()
         ]);
     }
 
@@ -44,6 +46,8 @@ class MovieController extends Controller
         $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
 
         $movie = Movie::create($attributes);
+
+        MediaGenreController::store($movie, $attributes['genres']);
 
         MediaCrewController::store($movie->id, 'App\Models\Movie', [
             'director' => $attributes['directors'],
@@ -62,7 +66,8 @@ class MovieController extends Controller
     public function edit($slug) {
         return view('admin.movies.edit', [
             'movie' => Movie::firstWhere('slug', $slug),
-            'people' => Person::all()
+            'people' => Person::all(),
+            'genres' => Genre::all()
         ]);
     }
 
@@ -85,6 +90,8 @@ class MovieController extends Controller
 
         $movie->update($attributes);
 
+        MediaGenreController::store($movie, $attributes['genres']);
+
         MediaCrewController::update($movie->id, 'App\Models\Movie', [
             'director' => $attributes['directors'],
             'actor' => $attributes['cast']
@@ -103,6 +110,8 @@ class MovieController extends Controller
 
         $movie->delete();
 
+        MediaGenreController::destroy($movie->id, 'App\Models\Movie');
+
         MediaCrewController::destroy($movie->id, 'App\Models\Movie');
 
         return 'success';
@@ -117,6 +126,7 @@ class MovieController extends Controller
             'description' => 'required',
             'run_time' => 'required',
             'directors' => 'required',
+            'genres' => 'required',
             'cast' => 'required',
             'trailer' => 'required',
             'poster.*' => 'mimes:jpg,jpeg,png,bmp,svg',

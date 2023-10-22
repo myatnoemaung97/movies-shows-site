@@ -1,4 +1,4 @@
-@props(['action', 'method', 'header', 'people', 'button', 'show' => null])
+@props(['action', 'method', 'header', 'people', 'genres', 'button', 'show' => null])
 
 <x-form.formfield>
     <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
@@ -23,8 +23,9 @@
             </div>
         </div>
 
-
         <x-form.textarea :name="'description'" :label="'Description'" :rows="8" :value="$show?->description"/>
+
+        <x-form.multiselect :name="'genres'" :label="'Genre(s)'" :options="$genres" :values="$show?->genres()->pluck('name')->toArray()"/>
 
         <x-form.input :type="'file'" :name="'poster'" :label="'Poster'" :value="$show?->poster"/>
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\RegisterController;
@@ -50,6 +51,7 @@ Route::middleware('can:admin')->group(function () {
     Route::resource('/admin/movies', MovieController::class);
     Route::resource('/admin/shows', ShowController::class);
     Route::resource('/admin/shows/{show}/seasons', SeasonController::class);
+    Route::resource('/admin/shows/{show}/seasons/{season}/episodes', EpisodeController::class);
     Route::resource('/admin/people', PersonController::class);
 });
 

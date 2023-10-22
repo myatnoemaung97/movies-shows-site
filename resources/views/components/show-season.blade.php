@@ -11,7 +11,7 @@
                                 <label for="season">Seasons</label>
                                 <div class="d-flex align-items-center gap-2">
                                     <select class="form-select" name="season" id="season" onchange="redirectToSeason('{{ $show->slug }}')">
-                                        <option value="">-</option>
+                                        <option value="" disabled>-</option>
                                         @foreach($seasons as $season)
                                             <option value="{{ $season->season_number }}" {{ $currentSeason?->season_number == $season->season_number ? 'selected' : '' }}>{{ $season->season_number }}</option>
                                         @endforeach

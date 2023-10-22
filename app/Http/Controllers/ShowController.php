@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Genre;
 use App\Models\Person;
 use App\Models\Season;
 use App\Models\Show;
@@ -43,7 +44,8 @@ class ShowController extends Controller
 
     public function create() {
         return view('admin.shows.create', [
-            'people' => Person::all()
+            'people' => Person::all(),
+            'genres' => Genre::all()
         ]);
     }
 
@@ -56,6 +58,8 @@ class ShowController extends Controller
         $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
 
         $show = Show::create($attributes);
+
+        MediaGenreController::store($show, $attributes['genres']);
 
         MediaCrewController::store($show->id, 'App\Models\Show', [
             'creator' => $attributes['creators'],
@@ -82,7 +86,8 @@ class ShowController extends Controller
     public function edit($id) {
         return view('admin.shows.edit', [
             'show' => Show::findOrFail($id),
-            'people' => Person::all()
+            'people' => Person::all(),
+            'genres' => Genre::all()
         ]);
     }
 
@@ -105,6 +110,8 @@ class ShowController extends Controller
 
         $show->update($attributes);
 
+        MediaGenreController::store($show, $attributes['genres']);
+
         MediaCrewController::update($show->id, 'App\Models\Show', [
             'creator' => $attributes['creators'],
             'actor' => $attributes['cast']
@@ -123,6 +130,8 @@ class ShowController extends Controller
 
         $show->delete();
 
+        MediaGenreController::destroy($show->id, 'App\Models\Movie');
+
         MediaCrewController::destroy($show->id, 'App\Models\Show');
 
         return 'success';
@@ -135,6 +144,7 @@ class ShowController extends Controller
             'release_date' => 'required|date',
             'status' => 'required',
             'description' => 'required',
+            'genres' => 'required',
             'creators' => 'required',
             'cast' => 'required',
             'trailer' => 'required',

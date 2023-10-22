@@ -19,10 +19,6 @@ class Show extends Model
         return $this->morphMany(Review::class, 'media');
     }
 
-    public function images() {
-        return $this->morphMany(Image::class, 'imageable');
-    }
-
     public function actors() {
         return $this->morphToMany(Person::class, 'media', 'media_crews')
             ->wherePivot('role', 'actor');
@@ -36,6 +32,10 @@ class Show extends Model
     public function creators() {
         return $this->morphToMany(Person::class, 'media', 'media_crews')
             ->wherePivot('role', 'creator');
+    }
+
+    public function genres() {
+        return $this->morphToMany(Genre::class, 'media', 'media_genres');
     }
 
 

@@ -17,6 +17,7 @@
         <p class="mt-3">Rating: {{ $show->age_rating }}</p>
         <p>Release Date: {{ $show->release_date }}</p>
         <p>Status: {{ ucwords($show->status) }}</p>
+        <p>Genre(s): {{ ucwords(implode(', ', $show->genres()->pluck('name')->toArray())) }}</p>
         <p>Creator(s): <span
                 class="fw-semibold">{{ implode(', ', $show->creators()->pluck('name')->toArray()) }}</span>
         </p>

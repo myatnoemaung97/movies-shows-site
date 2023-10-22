@@ -18,7 +18,7 @@
                 </form>
             </div>
         </div>
-        <h4><a href="{{ route('shows.show', $show->id) }}" style="text-decoration: none;"
+        <h4><a href="{{ route('shows.show', $show->slug) }}" style="text-decoration: none;"
                class="text-black">{{ $show->title }}</a> <span class="fs-5">S{{ $currentSeason->season_number }}</span></h4>
         <p>Release Date: {{ $currentSeason->release_date }}</p>
         <p>Creator(s): <span
@@ -35,7 +35,13 @@
     </div>
     <hr>
     <div>
-        <h5>Episodes</h5>
+        <div class="d-flex gap-2">
+            <h5>Episodes</h5>
+            <a href="{{ route('episodes.create', [$show->slug, $currentSeason->season_number]) }}"
+               class="btn btn-sm btn-outline-success rounded-pill" title="Add New Episode">
+                <i class="fa-solid fa-plus"></i>
+            </a>
+        </div>
         @foreach($episodes as $episode)
             <p>{{ $episode }}</p>
         @endforeach

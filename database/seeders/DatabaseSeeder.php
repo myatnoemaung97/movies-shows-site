@@ -6,8 +6,10 @@ namespace Database\Seeders;
 use App\Models\Article;
 use App\Models\Content;
 use App\Models\Episode;
+use App\Models\Genre;
 use App\Models\Image;
 use App\Models\MediaCrew;
+use App\Models\MediaGenre;
 use App\Models\Movie;
 use App\Models\Person;
 use App\Models\Playlist;
@@ -167,5 +169,21 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ]);
         }
+
+        Genre::factory(5)->create();
+
+        MediaGenre::create([
+            'media_id' => 1,
+            'media_type' => 'App\Models\Movie',
+            'genre_id' => 1
+        ]);
+
+        MediaGenre::create([
+            'media_id' => 1,
+            'media_type' => 'App\Models\Show',
+            'genre_id' => 2
+        ]);
+
+
     }
 }
