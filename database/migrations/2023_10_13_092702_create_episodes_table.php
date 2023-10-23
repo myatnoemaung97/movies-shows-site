@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('episodes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('season_id')->constrained()->cascadeOnDelete();
+            $table->string('title');
             $table->integer('episode_number');
             $table->integer('run_time');
-            $table->string('title');
-            $table->text('description');
             $table->date('release_date');
+            $table->text('description');
             $table->timestamps();
         });
     }

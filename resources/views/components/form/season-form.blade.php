@@ -11,7 +11,7 @@
 
         <h3 class="text-center">{{ $header }}</h3>
 
-        <h4 class="mt-5">{{ $show->title }}</h4>
+        <h4 class="mt-5">{{ $show->title }} Season {{ $season?->season_number }}</h4>
 
         <x-form.input :type="'number'" :name="'season_number'" :label="'Season Number'" :value="$season?->season_number"/>
 

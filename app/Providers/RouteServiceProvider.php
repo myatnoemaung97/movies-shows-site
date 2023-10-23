@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Show;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -36,5 +37,20 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
+
+        parent::boot();
+
+        Route::bind('show', function ($value) {
+            return Show::where('slug', $value)->firstOrFail();
+        });
+
+        Route::bind('season', function ($value, $route) {
+            return $route->show->seasons()->where('season_number', $value)->firstOrFail();
+        });
+
+        Route::bind('episode', function ($value, $route) {
+            return $route->season->episodes()->where('episode_number', $value)->firstOrFail();
+        });
     }
+
 }

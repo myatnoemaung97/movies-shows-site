@@ -9,7 +9,7 @@
             <p>Created: {{ $show->created_at }}</p>
             <p>Updated: {{ $show->updated_at }}</p>
             <div class="d-flex justify-content-end">
-                <a class="btn btn-success" href="{{ route('shows.edit', $show->id) }}">Edit</a>
+                <a class="btn btn-success" href="{{ route('shows.edit', $show->slug) }}">Edit</a>
             </div>
         </div>
         <h4><a href="{{ route('shows.show', $show->slug) }}" style="text-decoration: none;"

@@ -22,8 +22,8 @@ class ShowController extends Controller
                 ->addColumn('action', function ($a) {
 
                     $details = "<a href='/admin/shows/$a->slug' class='btn btn-primary' style='margin-right: 10px'>Details</a>";
-                    $edit = '<a href=" ' . route('shows.edit', $a->id) . '" class="btn btn-success" style="margin-right: 10px;">Edit</a>';
-                    $delete = '<a href="" class="deleteShowButton btn btn-danger" data-id="' . $a->id . '">Delete</a>';
+                    $edit = '<a href=" ' . route('shows.edit', $a->slug) . '" class="btn btn-success" style="margin-right: 10px;">Edit</a>';
+                    $delete = '<a href="" class="deleteShowButton btn btn-danger" data-slug="' . $a->slug . '">Delete</a>';
 
                     return '<div class="action">' . $details . $edit . $delete . '</div>';
 
@@ -33,8 +33,7 @@ class ShowController extends Controller
         return view('admin.shows.index');
     }
 
-    public function show($slug) {
-        $show = Show::firstWhere('slug', $slug);
+    public function show(Show $show) {
 
         return view('admin.shows.show', [
             'show' => $show,
@@ -83,18 +82,16 @@ class ShowController extends Controller
         return redirect(route('shows.index'))->with('create', 'Show');
     }
 
-    public function edit($id) {
+    public function edit(Show $show) {
         return view('admin.shows.edit', [
-            'show' => Show::findOrFail($id),
+            'show' => $show,
             'people' => Person::all(),
             'genres' => Genre::all()
         ]);
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, Show $show) {
         $attributes = $this->validateShow($request);
-
-        $show = Show::findOrFail($id);
 
         $oldPosterPath = public_path($show->poster);
 
@@ -120,9 +117,7 @@ class ShowController extends Controller
         return redirect("/admin/shows/$show->slug")->with('update', 'Show');
     }
 
-    public function destroy($id) {
-        $show = Show::findOrFail($id);
-
+    public function destroy(Show $show) {
         $path = public_path($show->poster);
         if (file_exists($path) && basename($path) !== 'image-placeholder.jpg') {
             unlink($path);

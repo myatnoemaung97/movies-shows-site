@@ -37,4 +37,63 @@
         <!-- /.container-fluid -->
     </section>
 
+<script>
+    var showTable = $('#shows').DataTable({
+        'serverSide': true,
+        'processing': true,
+        'ajax': {
+            url: '/admin/shows/',
+            error: function(xhr, testStatus, errorThrown) {
+
+            }
+        },
+
+        "columns": [{
+            "data": "id"
+        },
+            {
+                "data": "title"
+            },
+            {
+                "data": "age_rating"
+            },
+            {
+                "data": "release_date"
+            },
+            {
+                "data": "status"
+            },
+            {
+                "data": "action"
+            }
+        ]
+    });
+
+    $(document).on('click', '.deleteShowButton', function(a) {
+        a.preventDefault();
+        const slug = $(this).data('slug');
+        Swal.fire({
+            title: 'Do you want to delete this show?',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            confirmButtonColor: '#FF0000',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/shows/' + slug,
+                    type: 'DELETE',
+                    success: function() {
+                        showTable.ajax.reload();
+                    }
+                });
+
+                Swal.fire(
+                    'Deleted!',
+                    'Show has been deleted.',
+                    'success'
+                )
+            }
+        })
+    });
+</script>
 </x-admin-layout>

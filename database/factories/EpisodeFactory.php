@@ -21,7 +21,7 @@ class EpisodeFactory extends Factory
             'season_id' => 1,
             'episode_number' => fake()->numberBetween(1,5),
             'run_time' => fake()->numberBetween(20, 80),
-            'title' => fake()->sentence,
+            'title' => fake()->words(3, true),
             'description' => fake()->paragraph,
             'release_date' => fake()->date,
         ];
