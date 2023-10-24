@@ -11,7 +11,7 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="text-center">
-                                <img src="{{ $movie->poster }}" alt="movie poster" style="max-width: 200px; max-height: 500px;">
+                                <img src="{{ $movie->poster }}" alt="movie poster" style="max-width: 500px; max-height: 1000px;">
                             </div>
                             <hr>
                             <div>

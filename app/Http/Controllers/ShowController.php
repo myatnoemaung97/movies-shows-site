@@ -6,6 +6,7 @@ use App\Models\Genre;
 use App\Models\Person;
 use App\Models\Season;
 use App\Models\Show;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -19,11 +20,19 @@ class ShowController extends Controller
             $shows = Show::query();
 
             return DataTables::of($shows)
+                ->editColumn('created_at', function($e) {
+                    return Carbon::parse($e->created_at)->format("Y-m-d H:i:s");
+                })
+
+                ->editColumn('updated_at', function($e) {
+                    return Carbon::parse($e->updated_at)->format("Y-m-d H:i:s");
+                })
+
                 ->addColumn('action', function ($a) {
 
-                    $details = "<a href='/admin/shows/$a->slug' class='btn btn-primary' style='margin-right: 10px'>Details</a>";
-                    $edit = '<a href=" ' . route('shows.edit', $a->slug) . '" class="btn btn-success" style="margin-right: 10px;">Edit</a>';
-                    $delete = '<a href="" class="deleteShowButton btn btn-danger" data-slug="' . $a->slug . '">Delete</a>';
+                    $details = "<a href='/admin/shows/$a->slug' class='btn btn-sm btn-primary' style='margin-right: 10px'>Details</a>";
+                    $edit = '<a href=" ' . route('shows.edit', $a->slug) . '" class="btn btn-sm btn-success" style="margin-right: 10px;">Edit</a>';
+                    $delete = '<a href="" class="deleteShowButton btn btn-sm btn-danger" data-slug="' . $a->slug . '">Delete</a>';
 
                     return '<div class="action">' . $details . $edit . $delete . '</div>';
 

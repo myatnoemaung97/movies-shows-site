@@ -40,12 +40,6 @@
                             <p>Updated: {{ $episode->updated_at }}</p>
                             <div class="d-flex justify-content-end gap-2">
                                 <a class="btn btn-success" href="{{ route('episodes.edit', [$show->slug, $currentSeason->season_number, $episode->episode_number]) }}">Edit</a>
-                                <form action="#" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <button class="btn btn-danger">DELETE</button>
-                                </form>
                             </div>
                         </div>
 

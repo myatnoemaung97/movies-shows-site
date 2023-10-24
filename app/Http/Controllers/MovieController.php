@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Person;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
@@ -17,11 +18,19 @@ class MovieController extends Controller
             $movies = Movie::query();
 
             return DataTables::of($movies)
+                ->editColumn('created_at', function($e) {
+                    return Carbon::parse($e->created_at)->format("Y-m-d H:i:s");
+                })
+
+                ->editColumn('updated_at', function($e) {
+                    return Carbon::parse($e->updated_at)->format("Y-m-d H:i:s");
+                })
+
                 ->addColumn('action', function ($a) {
 
-                    $details = "<a href='/admin/movies/$a->slug' class='btn btn-primary' style='margin-right: 10px'>Details</a>";
-                    $edit = '<a href=" ' . route('movies.edit', $a->slug) . '" class="btn btn-success" style="margin-right: 10px;">Edit</a>';
-                    $delete = '<a href="" class="deleteMovieButton btn btn-danger" data-id="' . $a->id . '">Delete</a>';
+                    $details = "<a href='/admin/movies/$a->slug' class='btn btn-sm btn-primary' style='margin-right: 10px'>Details</a>";
+                    $edit = '<a href=" ' . route('movies.edit', $a->slug) . '" class="btn btn-sm btn-success" style="margin-right: 10px;">Edit</a>';
+                    $delete = '<a href="" class="deleteMovieButton btn btn-sm btn-danger" data-id="' . $a->slug . '">Delete</a>';
 
                     return '<div class="action">' . $details . $edit . $delete . '</div>';
 
@@ -57,24 +66,22 @@ class MovieController extends Controller
         return redirect(route('movies.index'))->with('create', 'Movie');
     }
 
-    public function show($slug) {
+    public function show(Movie $movie) {
         return view('admin.movies.show', [
-            'movie' => Movie::firstWhere('slug', $slug)
+            'movie' => $movie
         ]);
     }
 
-    public function edit($slug) {
+    public function edit(Movie $movie) {
         return view('admin.movies.edit', [
-            'movie' => Movie::firstWhere('slug', $slug),
+            'movie' => $movie,
             'people' => Person::all(),
             'genres' => Genre::all()
         ]);
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, Movie $movie) {
         $attributes = $this->validateMovie($request);
-
-        $movie = Movie::findOrFail($id);
 
         $oldPosterPath = public_path($movie->poster);
 
@@ -100,8 +107,7 @@ class MovieController extends Controller
         return redirect("/admin/movies/$movie->slug")->with('update', 'Movie');
     }
 
-    public function destroy($id) {
-        $movie = Movie::findOrFail($id);
+    public function destroy(Movie $movie) {
 
         $path = public_path($movie->poster);
         if (file_exists($path) && basename($path) !== 'image-placeholder.jpg') {

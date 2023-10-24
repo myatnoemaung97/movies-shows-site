@@ -1,7 +1,7 @@
 <x-show-season :show="$show" :currentSeason="$currentSeason" :seasons="$seasons">
     <div class="text-center">
         <img src="{{ $currentSeason->poster }}" alt="show poster"
-             style="max-width: 200px; max-height: 500px;">
+             style="max-width: 500px; max-height: 1000px;">
     </div>
     <hr>
     <div>
@@ -55,6 +55,8 @@
                                 <th>Title</th>
                                 <th>Run Time</th>
                                 <th>Release Date</th>
+                                <th>Created</th>
+                                <th>Updated</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -112,14 +114,28 @@
                     "data": "release_date"
                 },
                 {
+                    "data": "created_at"
+                },
+                {
+                    "data": "updated_at"
+                },
+                {
                     "data": "action"
                 }
             ]
         });
 
+
         $(document).on('click', '.deleteEpisodeButton', function(a) {
             a.preventDefault();
+            const showSlug = $(this).data('show_slug');
+            const seasonNumber = $(this).data('season_number');
             const episodeNumber = $(this).data('episode_number');
+
+            console.log('showSlug:' + showSlug);
+            console.log('seasonNumber:' + seasonNumber);
+            console.log('episodeNumber:' + episodeNumber);
+
             Swal.fire({
                 title: 'Do you want to delete this episode?',
                 showCancelButton: true,
@@ -128,16 +144,16 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/admin/people/' + id,
+                        url: '/admin/shows/' + showSlug + '/seasons/' + seasonNumber + '/episodes/' + episodeNumber,
                         type: 'DELETE',
                         success: function() {
-                            peopleTable.ajax.reload();
+                            episodeTable.ajax.reload();
                         }
                     });
 
                     Swal.fire(
                         'Deleted!',
-                        'Profile has been deleted.',
+                        'Episode has been deleted.',
                         'success'
                     )
                 }

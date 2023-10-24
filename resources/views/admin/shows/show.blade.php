@@ -1,7 +1,7 @@
 <x-show-season :show="$show" :seasons="$seasons">
     <div class="text-center">
         <img src="{{ $show->poster }}" alt="show poster"
-             style="max-width: 200px; max-height: 500px;">
+             style="max-width: 500px; max-height: 1000px;">
     </div>
     <hr>
     <div>

@@ -38,6 +38,5 @@ class MediaCrewController extends Controller
             ['media_type', $mediaType]
         ])->delete();
     }
-
 }
 

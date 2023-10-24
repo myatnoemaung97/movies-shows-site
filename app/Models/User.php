@@ -39,7 +39,8 @@ User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'is_admin' => 'boolean'
+        'is_admin' => 'boolean',
+        'is_banned' => 'boolean'
     ];
 
     public function reviews() {

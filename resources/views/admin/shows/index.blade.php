@@ -18,6 +18,8 @@
                                     <th>Age Rating</th>
                                     <th>Release Date</th>
                                     <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Updated</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -62,6 +64,12 @@
             },
             {
                 "data": "status"
+            },
+            {
+                'data': 'created_at'
+            },
+            {
+                'data': 'updated_at'
             },
             {
                 "data": "action"

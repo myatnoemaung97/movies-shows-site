@@ -184,6 +184,16 @@ class DatabaseSeeder extends Seeder
             'genre_id' => 2
         ]);
 
+        Article::factory(15)->create();
+
+        for ($i = 1; $i <= 5; $i++) {
+            Content::create([
+                'article_id' => 1,
+                'body' => fake()->paragraphs(2, true),
+                'image' => '/storage/image-placeholder.jpg'
+            ]);
+        }
+
 
     }
 }

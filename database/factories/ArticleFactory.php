@@ -18,7 +18,9 @@ class ArticleFactory extends Factory
     {
         return [
             'title' => fake()->sentence,
-            'description' => fake()->paragraph,
+            'body' => fake()->paragraphs(3, true),
+            'image' => '/storage/image-placeholder.jpg',
+            'status' => fake()->randomElement(['draft'])
         ];
     }
 }

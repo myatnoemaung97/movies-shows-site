@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PersonController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\ShowController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,7 +49,9 @@ Route::middleware('can:admin')->group(function () {
         return view('admin.index');
     });
 
+    Route::resource('/admin/users', UserController::class);
     Route::resource('/admin/articles', ArticleController::class);
+    Route::resource('/admin/articles/{article}/contents', ContentController::class);
     Route::resource('/admin/movies', MovieController::class);
     Route::resource('/admin/shows', ShowController::class);
     Route::resource('/admin/shows/{show}/seasons', SeasonController::class);

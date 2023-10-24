@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Article;
+use App\Models\Content;
+use App\Models\Movie;
 use App\Models\Show;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -39,6 +42,18 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         parent::boot();
+
+        Route::bind('article', function ($value) {
+            return Article::where('id', $value)->firstOrFail();
+        });
+
+        Route::bind('content', function ($value) {
+            return Content::where('id', $value)->firstOrFail();
+        });
+
+        Route::bind('movie', function ($value) {
+            return Movie::where('slug', $value)->firstOrFail();
+        });
 
         Route::bind('show', function ($value) {
             return Show::where('slug', $value)->firstOrFail();

@@ -55,32 +55,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                     <li class="nav-item">
                         <a href="/admin" class="nav-link {{ request()->is('admin') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
+                            <i class="fa-solid fa-house nav-icon"></i>
                             <p>Home</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/admin/articles" class="nav-link {{ request()->is('admin/articles') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
+                        <a href="/admin/users" class="nav-link {{ Str::startsWith(request()->path(), 'admin/users') ? 'active' : '' }}">
+                            <i class="fa-solid fa-user nav-icon"></i>
+                            <p>Users</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/articles" class="nav-link {{ Str::startsWith(request()->path(), 'admin/articles') ? 'active' : '' }}">
+                            <i class="fa-solid fa-newspaper nav-icon"></i>
                             <p>Articles</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/admin/movies" class="nav-link {{ request()->is('admin/movies') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
+                        <a href="/admin/movies" class="nav-link {{ Str::startsWith(request()->path(), 'admin/movies') ? 'active' : '' }}">
+                            <i class="fa-solid fa-film nav-icon"></i>
                             <p>Movies</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/admin/shows" class="nav-link {{ request()->is('admin/shows') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
+                        <a href="/admin/shows" class="nav-link {{ Str::startsWith(request()->path(), 'admin/shows') ? 'active' : '' }}">
+                            <i class="fa-solid fa-tv nav-icon"></i>
                             <p>Shows</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/admin/people" class="nav-link {{ request()->is('admin/people') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>People</p>
+                        <a href="/admin/people" class="nav-link {{ Str::startsWith(request()->path(), 'admin/people') ? 'active' : '' }}">
+                            <i class="fa-solid fa-masks-theater nav-icon"></i>
+                            <p>Artists</p>
                         </a>
                     </li>
                 </ul>
@@ -142,117 +148,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     });
 </script>
 <script>
-    var movieTable = $('#movies').DataTable({
-        'serverSide': true,
-        'processing': true,
-        'ajax': {
-            url: '/admin/movies/',
-            error: function(xhr, testStatus, errorThrown) {
-
-            }
-        },
-
-        "columns": [{
-            "data": "id"
-        },
-            {
-                "data": "title"
-            },
-            {
-                "data": "age_rating"
-            },
-            {
-                'data': 'release_date'
-            },
-            {
-                'data': 'run_time'
-            },
-            {
-                "data": "action"
-            }
-        ]
-    });
-
-    var peopleTable = $('#people').DataTable({
-        'serverSide': true,
-        'processing': true,
-        'ajax': {
-            url: '/admin/people/',
-            error: function(xhr, testStatus, errorThrown) {
-
-            }
-        },
-
-        "columns": [{
-            "data": "id"
-        },
-            {
-                "data": "name"
-            },
-            {
-                "data": "image"
-            },
-            {
-                "data": "action"
-            }
-        ]
-    });
-
-    $(document).on('click', '.deleteMovieButton', function(a) {
-        a.preventDefault();
-        const id = $(this).data('id');
-        Swal.fire({
-            title: 'Do you want to delete this vacancy?',
-            showCancelButton: true,
-            confirmButtonText: 'Delete',
-            confirmButtonColor: '#FF0000',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: '/admin/movies/' + id,
-                    type: 'DELETE',
-                    success: function() {
-                        movieTable.ajax.reload();
-                    }
-                });
-
-                Swal.fire(
-                    'Deleted!',
-                    'Vacancy has been deleted.',
-                    'success'
-                )
-            }
-        })
-    });
-
-    $(document).on('click', '.deletePersonButton', function(a) {
-        a.preventDefault();
-        const id = $(this).data('id');
-        Swal.fire({
-            title: 'Do you want to delete this profile?',
-            showCancelButton: true,
-            confirmButtonText: 'Delete',
-            confirmButtonColor: '#FF0000',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: '/admin/people/' + id,
-                    type: 'DELETE',
-                    success: function() {
-                        peopleTable.ajax.reload();
-                    }
-                });
-
-                Swal.fire(
-                    'Deleted!',
-                    'Profile has been deleted.',
-                    'success'
-                )
-            }
-        })
-    });
-</script>
-<script>
     $(document).ready(function() {
         let token = document.head.querySelector('meta[name="csrf-token"]');
         if(token)
@@ -290,6 +185,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
         Toast.fire({
             icon: 'success',
             title: "{{session('delete')}} deleted successfully!"
+        })
+        @endif
+        @if(session('draft'))
+        Toast.fire({
+            icon: 'success',
+            title: "{{session('draft')}} saved to draft!"
+        })
+        @endif
+        @if(session('publish'))
+        Toast.fire({
+            icon: 'success',
+            title: "{{session('publish')}} published successfully!"
         })
         @endif
     });

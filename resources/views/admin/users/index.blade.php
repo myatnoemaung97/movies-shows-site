@@ -5,23 +5,21 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Movies</h3>
-                            <a href="{{ route('movies.create') }}" class="btn btn-success float-right">Create Movie</a>
+                            <h3 class="card-title">Users</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="movies" class="table table-bordered table-hover">
+                            <table id="users" class="table table-bordered table-hover">
                                 <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Title</th>
-                                        <th>Age Rating</th>
-                                        <th>Release Date</th>
-                                        <th>Run Time(minutes)</th>
-                                        <th>Created</th>
-                                        <th>Updated</th>
-                                        <th>Action</th>
-                                    </tr>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Is_Banned</th>
+                                    <th>Created</th>
+                                    <th>Updated</th>
+                                    <th>Action</th>
+                                </tr>
                                 </thead>
                                 <tbody>
 
@@ -39,11 +37,11 @@
         <!-- /.container-fluid -->
     </section>
     <script>
-        var movieTable = $('#movies').DataTable({
+        var userTable = $('#users').DataTable({
             'serverSide': true,
             'processing': true,
             'ajax': {
-                url: '/admin/movies/',
+                url: '/admin/users/',
                 error: function(xhr, testStatus, errorThrown) {
 
                 }
@@ -53,16 +51,13 @@
                 "data": "id"
             },
                 {
-                    "data": "title"
+                    "data": "username"
                 },
                 {
-                    "data": "age_rating"
+                    "data": "email"
                 },
                 {
-                    'data': 'release_date'
-                },
-                {
-                    'data': 'run_time'
+                    'data': 'is_banned'
                 },
                 {
                     'data': 'created_at'

@@ -63,7 +63,7 @@ class PersonController extends Controller
         if ($request->file('image')) {
             $attributes['image'] = '/storage/' . $request->file('image')->store();
 
-            if (file_exists($oldImage)) {
+            if (file_exists($oldImage) && basename($oldImage) !== 'image-placeholder.jpg') {
                 unlink($oldImage);
             }
         }

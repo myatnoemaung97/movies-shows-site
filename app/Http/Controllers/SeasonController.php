@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Episode;
 use App\Models\Season;
 use App\Models\Show;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
@@ -13,14 +14,22 @@ class SeasonController extends Controller
 {
     public function show(Request $request, Show $show, Season $season) {
         if ($request->ajax()) {
-            $episodes = Episode::where('season_id', $season->id);
+            $episodes = $season->episodes;
 
             return DataTables::of($episodes)
+                ->editColumn('created_at', function($e) {
+                    return Carbon::parse($e->created_at)->format("Y-m-d H:i:s");
+                })
+
+                ->editColumn('updated_at', function($e) {
+                    return Carbon::parse($e->updated_at)->format("Y-m-d H:i:s");
+                })
+
                 ->addColumn('action', function ($e) use ($season, $show) {
 
                     $details = "<a href='/admin/shows/$show->slug/seasons/$season->season_number/episodes/$e->episode_number' class='btn btn-sm btn-primary' style='margin-right: 10px'>Details</a>";
                     $edit = "<a href='/admin/shows/$show->slug/seasons/$season->season_number/episodes/$e->episode_number/edit' class='btn btn-sm btn-success' style='margin-right: 10px;'>Edit</a>";
-                    $delete = '<a href="" class="deleteEpisodeButton btn btn-sm btn-danger" data-episode_number="' . $e->episode_number . '">Delete</a>';
+                    $delete = '<a href="" class="deleteEpisodeButton btn btn-sm btn-danger" data-episode_number="' . $e->episode_number . '" data-show_slug="' . $show->slug . '" data-season_number="' . $season->season_number . '">Delete</a>';
 
                     return '<div class="action">' . $details . $edit . $delete . '</div>';
 
@@ -90,7 +99,7 @@ class SeasonController extends Controller
 
     private function validateSeason(Request $request, Show $show, Season $season = null) {
         $messages = [
-            'season_number.unique' => "The show already has an season number " . $request['season_number']
+            'season_number.unique' => "The show already has a season number " . $request['season_number']
         ];
 
         $rules = [

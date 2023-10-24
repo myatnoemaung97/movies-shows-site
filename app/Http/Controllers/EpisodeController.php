@@ -54,8 +54,10 @@ class EpisodeController extends Controller
         return redirect(route('episodes.show', [$show->slug, $season->season_number, $episode->episode_number]))->with('update', 'Episode');
     }
 
-    public function destroy() {
+    public function destroy(Show $show, Season $season, Episode $episode) {
+        $episode->delete();
 
+        return 'success';
     }
 
     private function validateEpisode(Request $request, Season $season, Episode $episode = null) {
