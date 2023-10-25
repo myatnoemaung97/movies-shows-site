@@ -22,7 +22,7 @@ class SessionsController extends Controller
 
         session()->regenerate();
 
-        return redirect('/');
+        return redirect('/admin/');
     }
 
     public function destroy() {

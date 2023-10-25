@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('body');
+            $table->string('thumbnail')->default('/storage/image-placeholder.jpg');
             $table->string('image');
             $table->string('status');
             $table->timestamps();

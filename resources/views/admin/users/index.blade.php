@@ -71,27 +71,27 @@
             ]
         });
 
-        $(document).on('click', '.deleteMovieButton', function(a) {
+        $(document).on('click', '.deleteUserButton', function(a) {
             a.preventDefault();
             const id = $(this).data('id');
             Swal.fire({
-                title: 'Do you want to delete this vacancy?',
+                title: 'Do you want to delete this user?',
                 showCancelButton: true,
                 confirmButtonText: 'Delete',
                 confirmButtonColor: '#FF0000',
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/admin/movies/' + id,
+                        url: '/admin/users/' + id,
                         type: 'DELETE',
                         success: function() {
-                            movieTable.ajax.reload();
+                            userTable.ajax.reload();
                         }
                     });
 
                     Swal.fire(
                         'Deleted!',
-                        'Vacancy has been deleted.',
+                        'User has been deleted.',
                         'success'
                     )
                 }

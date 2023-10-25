@@ -1,11 +1,11 @@
-@props(['action', 'method', 'header', 'button', 'article' => null])
+@props(['action', 'method', 'header', 'button', 'status', 'article' => null])
 
 <x-form.formfield>
     <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method($method)
 
-        <input type="hidden" name="status" value="draft">
+        <input type="hidden" name="status" value="{{ $article?->status ?? 'draft' }}">
 
         <h3 class="text-center">{{ $header }}</h3>
 

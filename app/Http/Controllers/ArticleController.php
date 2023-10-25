@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Services\ImageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
 
 class ArticleController extends Controller
@@ -82,6 +84,20 @@ class ArticleController extends Controller
     public function store(Request $request) {
         $attributes = $this->validateArticle($request);
 
+        ImageService::storeImage($request->file('image'));
+
+        $image = $request->file('image');
+
+        $path = public_path('/storage/');
+
+        $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+
+        Image::make($image->getRealPath())
+            ->resize(600, 400)
+            ->save($path . $filename);
+
+        $attributes['thumbnail'] = '/storage/' . $filename;
+
         $attributes['image'] = '/storage/' . $request->file('image')->store();
 
         Article::create($attributes);
@@ -101,6 +117,17 @@ class ArticleController extends Controller
         $oldImage = public_path($article->image);
 
         if ($request->file('image')) {
+            $image = $request->file('image');
+
+            $path = public_path('/storage/');
+
+            $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+
+            Image::make($image->getRealPath())
+                ->resize(600, 400)
+                ->save($path . $filename);
+
+            $attributes['thumbnail'] = '/storage/' . $filename;
             $attributes['image'] = '/storage/' . $request->file('image')->store();
 
             if (file_exists($oldImage) && basename($oldImage) !== 'image-placeholder.jpg') {

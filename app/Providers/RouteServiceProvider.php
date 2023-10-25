@@ -43,14 +43,6 @@ class RouteServiceProvider extends ServiceProvider
 
         parent::boot();
 
-        Route::bind('article', function ($value) {
-            return Article::where('id', $value)->firstOrFail();
-        });
-
-        Route::bind('content', function ($value) {
-            return Content::where('id', $value)->firstOrFail();
-        });
-
         Route::bind('movie', function ($value) {
             return Movie::where('slug', $value)->firstOrFail();
         });

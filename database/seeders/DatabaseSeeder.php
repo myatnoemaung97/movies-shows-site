@@ -7,7 +7,6 @@ use App\Models\Article;
 use App\Models\Content;
 use App\Models\Episode;
 use App\Models\Genre;
-use App\Models\Image;
 use App\Models\MediaCrew;
 use App\Models\MediaGenre;
 use App\Models\Movie;
@@ -109,13 +108,6 @@ class DatabaseSeeder extends Seeder
             'role' => 'actor'
         ]);
 
-        // creates an image for the movie
-        Image::create([
-            'url' => '/images/image-url.jpeg',
-            'imageable_id' => 1,
-            'imageable_type' => 'App\Models\Movie'
-        ]);
-
         // user adds a movie to watchlist
         Watchlist::create([
             'user_id' => $user->id,
@@ -184,7 +176,7 @@ class DatabaseSeeder extends Seeder
             'genre_id' => 2
         ]);
 
-        Article::factory(15)->create();
+        Article::factory(36)->create();
 
         for ($i = 1; $i <= 5; $i++) {
             Content::create([

@@ -10,6 +10,7 @@ use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\UserController;
+use App\Models\Article;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +25,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('index', [
+        'articles' => Article::latest()->where('status', 'published')->take(4)->get()
+    ]);
 });
 
 Route::get('/test', function () {
