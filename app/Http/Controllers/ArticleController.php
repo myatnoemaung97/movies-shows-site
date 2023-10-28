@@ -84,25 +84,12 @@ class ArticleController extends Controller
     public function store(Request $request) {
         $attributes = $this->validateArticle($request);
 
-        ImageService::storeImage($request->file('image'));
-
         $image = $request->file('image');
 
-        $path = public_path('/storage/');
+        $attributes['image'] = ImageService::store($image);
+        $attributes['thumbnail'] = ImageService::makeThumbnail($image, [600, 400]);
 
-        $filename = uniqid() . '.' . $image->getClientOriginalExtension();
-
-        Image::make($image->getRealPath())
-            ->resize(600, 400)
-            ->save($path . $filename);
-
-        $attributes['thumbnail'] = '/storage/' . $filename;
-
-        $attributes['image'] = '/storage/' . $request->file('image')->store();
-
-        Article::create($attributes);
-
-        return redirect(route('articles.index'))->with('draft', 'Article');
+        return redirect(route('articles.show', Article::create($attributes)->id))->with('draft', 'Article');
     }
 
     public function edit(Article $article) {
@@ -114,25 +101,13 @@ class ArticleController extends Controller
     public function update(Request $request, Article $article) {
         $attributes = $this->validateArticle($request);
 
-        $oldImage = public_path($article->image);
+        $image = request()->file('image');
 
-        if ($request->file('image')) {
-            $image = $request->file('image');
+        if ($image) {
+            $attributes['image'] = ImageService::store($image);
+            $attributes['thumbnail'] = ImageService::makeThumbnail($image, [600, 400]);
 
-            $path = public_path('/storage/');
-
-            $filename = uniqid() . '.' . $image->getClientOriginalExtension();
-
-            Image::make($image->getRealPath())
-                ->resize(600, 400)
-                ->save($path . $filename);
-
-            $attributes['thumbnail'] = '/storage/' . $filename;
-            $attributes['image'] = '/storage/' . $request->file('image')->store();
-
-            if (file_exists($oldImage) && basename($oldImage) !== 'image-placeholder.jpg') {
-                unlink($oldImage);
-            }
+            ImageService::delete($article->image);
         }
 
         $article->update($attributes);
@@ -145,10 +120,7 @@ class ArticleController extends Controller
     }
 
     public function destroy(Article $article) {
-        $path = public_path($article->image);
-        if (file_exists($path) && basename($path) !== 'image-placeholder.jpg') {
-            unlink($path);
-        }
+        ImageService::delete($article->image);
 
         $article->delete();
 
