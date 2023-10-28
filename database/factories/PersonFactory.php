@@ -18,6 +18,8 @@ class PersonFactory extends Factory
     {
         return [
             'name' => fake()->unique()->name,
+            'role' => fake()->randomElement(['Actor', 'Director']),
+            'biography' => fake()->paragraphs(2, true),
         ];
     }
 }

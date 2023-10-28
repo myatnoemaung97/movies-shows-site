@@ -227,6 +227,7 @@
 </header>
 <!-- END | Header -->
 
+<!-- Articles -->
 <div class="slider article-items">
     <div class="container">
         <div class="row">
@@ -241,26 +242,17 @@
                         </div>
                     </div>
                 @endforeach
-{{--                <div class="movie-item">--}}
-{{--                    <div class="mv-img">--}}
-{{--                        <a href="#"><img src="images/uploads/slider1.jpg" alt="" width="285" height="437"></a>--}}
-{{--                    </div>--}}
-{{--                    <div class="title-in">--}}
-{{--                        <div class="cate">--}}
-{{--                            <span class="blue"><a href="#">Sci-fi</a></span>--}}
-{{--                        </div>--}}
-{{--                        <h6><a href="#">Interstellar</a></h6>--}}
-{{--                        <p><i class="ion-android-star"></i><span>7.4</span> /10</p>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
             </div>
         </div>
     </div>
 </div>
+<!-- Articles/ -->
+
 <div class="article-items">
     <div class="container">
         <div class="row ipad-width">
             <div class="col-md-8">
+                <!-- Movies -->
                 <div class="title-hd">
                     <h2>in theater</h2>
                     <a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>
@@ -635,6 +627,9 @@
                         </div>
                     </div>
                 </div>
+                <!-- Movies/ -->
+
+                <!-- Shows -->
                 <div class="title-hd">
                     <h2>on tv</h2>
                     <a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>
@@ -1079,12 +1074,12 @@
                         </div>
                     </div>
                 </div>
+                <!-- Shows/ -->
             </div>
+
             <div class="col-md-4">
                 <div class="sidebar">
-                    <div class="ads">
-                        <img src="images/uploads/ads1.png" alt="" width="336" height="296">
-                    </div>
+                    <!-- Celebrities -->
                     <div class="celebrities">
                         <h4 class="sb-title">Spotlight Celebrities</h4>
                         <div class="celeb-item">
@@ -1117,6 +1112,7 @@
                         </div>
                         <a href="#" class="btn">See all celebrities<i class="ion-ios-arrow-right"></i></a>
                     </div>
+                    <!-- Celebrities/ -->
                 </div>
             </div>
         </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Person;
+use App\Services\ImageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -18,14 +19,12 @@ class MovieController extends Controller
             $movies = Movie::query();
 
             return DataTables::of($movies)
-                ->editColumn('created_at', function($e) {
+                ->editColumn('created_at', function ($e) {
                     return Carbon::parse($e->created_at)->format("Y-m-d H:i:s");
                 })
-
-                ->editColumn('updated_at', function($e) {
+                ->editColumn('updated_at', function ($e) {
                     return Carbon::parse($e->updated_at)->format("Y-m-d H:i:s");
                 })
-
                 ->addColumn('action', function ($a) {
 
                     $details = "<a href='/admin/movies/$a->slug' class='btn btn-sm btn-primary' style='margin-right: 10px'>Details</a>";
@@ -50,7 +49,10 @@ class MovieController extends Controller
     public function store(Request $request) {
         $attributes = $this->validateMovie($request);
 
-        $attributes['poster'] = '/storage/' . $request->file('poster')->store();
+        $image = $request->file('poster');
+
+        $attributes['poster'] = ImageService::store($image);
+        $attributes['thumbnail'] = ImageService::makeThumbnail($image, [150, 300]);
 
         $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
 
@@ -83,14 +85,15 @@ class MovieController extends Controller
     public function update(Request $request, Movie $movie) {
         $attributes = $this->validateMovie($request);
 
-        $oldPosterPath = public_path($movie->poster);
+        $image = $request->file('poster');
 
-        if ($request->file('poster')) {
-            $attributes['poster'] = '/storage/' . $request->file('poster')->store();
+        if ($image) {
+            $attributes['poster'] = ImageService::store($image);
+            $attributes['thumbnail'] = ImageService::makeThumbnail($image, [150, 300]);
 
-            if (file_exists($oldPosterPath) && basename($oldPosterPath) !== 'image-placeholder.jpg') {
-                unlink($oldPosterPath);
-            }
+            ImageService::delete($movie->image);
+            ImageService::delete($movie->thumbnail);
+
         }
 
         $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
@@ -108,11 +111,8 @@ class MovieController extends Controller
     }
 
     public function destroy(Movie $movie) {
-
-        $path = public_path($movie->poster);
-        if (file_exists($path) && basename($path) !== 'image-placeholder.jpg') {
-            unlink($path);
-        }
+        ImageService::delete($movie->poster);
+        ImageService::delete($movie->thumbnail);
 
         $movie->delete();
 

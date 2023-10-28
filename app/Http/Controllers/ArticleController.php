@@ -101,13 +101,14 @@ class ArticleController extends Controller
     public function update(Request $request, Article $article) {
         $attributes = $this->validateArticle($request);
 
-        $image = request()->file('image');
+        $image = $request->file('image');
 
         if ($image) {
             $attributes['image'] = ImageService::store($image);
             $attributes['thumbnail'] = ImageService::makeThumbnail($image, [600, 400]);
 
             ImageService::delete($article->image);
+            ImageService::delete($article->thumbnail);
         }
 
         $article->update($attributes);
@@ -121,6 +122,7 @@ class ArticleController extends Controller
 
     public function destroy(Article $article) {
         ImageService::delete($article->image);
+        ImageService::delete($article->thumbnail);
 
         $article->delete();
 

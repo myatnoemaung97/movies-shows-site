@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Episode;
 use App\Models\Season;
 use App\Models\Show;
+use App\Services\ImageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -52,7 +53,11 @@ class SeasonController extends Controller
     public function store(Request $request, Show $show) {
         $attributes = $this->validateSeason($request, $show);
 
-        $attributes['poster'] = '/storage/' . $request->file('poster')->store();
+        $image = $request->file('poster');
+
+        $attributes['poster'] = ImageService::store($image);
+        $attributes['thumbnail'] = ImageService::makeThumbnail($image, [150, 300]);
+
         $attributes['show_id'] = $show->id;
         $attributes['season_number'] = $request->get('season_number');
 
@@ -71,14 +76,14 @@ class SeasonController extends Controller
     public function update(Request $request, Show $show, Season $season) {
         $attributes = $this->validateSeason($request, $show, $season);
 
-        $oldPosterPath = public_path($season->poster);
+        $image = $request->file('poster');
 
-        if ($request->file('poster')) {
-            $attributes['poster'] = '/storage/' . $request->file('poster')->store();
+        if ($image) {
+            $attributes['poster'] = ImageService::store($image);
+            $attributes['thumbnail'] = ImageService::makeThumbnail($image, [150, 300]);
 
-            if (file_exists($oldPosterPath) && basename($oldPosterPath) !== 'image-placeholder.jpg') {
-                unlink($oldPosterPath);
-            }
+            ImageService::delete($season->poster);
+            ImageService::delete($season->thumbnail);
         }
 
         $season->update($attributes);
@@ -87,10 +92,8 @@ class SeasonController extends Controller
     }
 
     public function destroy(Show $show, Season $season) {
-        $path = public_path($season->poster);
-        if (file_exists($path) && basename($path) !== 'image-placeholder.jpg') {
-            unlink($path);
-        }
+        ImageService::delete($season->poster);
+        ImageService::delete($season->thumbnail);
 
         $season->delete();
 

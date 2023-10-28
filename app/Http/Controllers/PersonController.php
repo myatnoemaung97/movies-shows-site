@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Person;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -40,7 +41,10 @@ class PersonController extends Controller
     public function store(Request $request) {
         $attributes = $this->validatePerson($request);
 
-        $attributes['image'] = '/storage/' . $request->file('image')->store();
+        $image = $request->file('image');
+
+        $attributes['image'] = ImageService::store($image);
+        $attributes['thumbnail'] = ImageService::makeThumbnail($image, [50, 50]);
 
         Person::create($attributes);
 
@@ -58,28 +62,26 @@ class PersonController extends Controller
 
         $person = Person::findOrFail($id);
 
-        $oldImage = public_path($person->image);
+        $image = $request->file('poster');
 
-        if ($request->file('image')) {
-            $attributes['image'] = '/storage/' . $request->file('image')->store();
+        if ($image) {
+            $attributes['image'] = ImageService::store($image);
+            $attributes['thumbnail'] = ImageService::makeThumbnail($image, [50, 50]);
 
-            if (file_exists($oldImage) && basename($oldImage) !== 'image-placeholder.jpg') {
-                unlink($oldImage);
-            }
+            ImageService::delete($person->image);
+            ImageService::delete($person->thumbnail);
         }
 
-        $person->update($attributes);
+        $person = $person->update($attributes);
 
-        return redirect("/admin/people")->with('update', 'Person');
+        return redirect(route('people.show', $person->id))->with('update', 'Person');
     }
 
     public function destroy($id) {
         $person = Person::findOrFail($id);
 
-        $path = public_path($person->image);
-        if (file_exists($path)) {
-            unlink($path);
-        }
+        ImageService::delete($person->poster);
+        //ImageService::delete($person->thumbnail);
 
         $person->delete();
 
@@ -89,6 +91,8 @@ class PersonController extends Controller
     private function validatePerson(Request $request) {
         $rules = [
             'name' => 'required',
+            'role' => 'required',
+            'biography' => 'required',
             'image.*' => 'mimes:jpg,jpeg,png,bmp,svg',
         ];
 
