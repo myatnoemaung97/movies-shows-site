@@ -23,6 +23,7 @@ class SeasonFactory extends Factory
             'season_number' => fake()->numberBetween(1, 3),
             'release_date' => fake()->date,
             'poster' => '/storage/image-placeholder.jpg',
+            'thumbnail' => '/storage/media-thumbnail.jpg',
             'trailer' => 'youtube.com'
         ];
     }

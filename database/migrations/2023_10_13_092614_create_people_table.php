@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('role');
             $table->text('biography');
-            $table->string('image')->default('/storage/image-placeholder.jpg');
+            $table->string('image');
             $table->string('thumbnail');
             $table->timestamps();
         });

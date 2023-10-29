@@ -20,6 +20,8 @@ class PersonFactory extends Factory
             'name' => fake()->unique()->name,
             'role' => fake()->randomElement(['Actor', 'Director']),
             'biography' => fake()->paragraphs(2, true),
+            'image' => '/storage/image-placeholder.jpg',
+            'thumbnail' => '/storage/cele-thumbnail.jpg',
         ];
     }
 }

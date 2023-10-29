@@ -70,18 +70,21 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // creates a person
-        $actor = Person::create([
-            'name' => 'Ryan Gosling'
+        $actor = Person::factory()->create([
+            'name' => 'Ryan Gosling',
+            'role' => 'Actor'
         ]);
 
         // creates a person
-        $actress = Person::create([
-            'name' => 'Ana De Armas'
+        $actress = Person::factory()->create([
+            'name' => 'Ana De Armas',
+            'role' => 'Actor'
         ]);
 
         // creates a person
-        $director = Person::create([
-            'name' => 'Christopher Nolan'
+        $director = Person::factory()->create([
+            'name' => 'Christopher Nolan',
+            'role' => 'Director'
         ]);
 
         // creates a media crew for movie
@@ -155,6 +158,7 @@ class DatabaseSeeder extends Seeder
                 'show_id' => 2,
                 'season_number' => $i,
                 'poster' => '/storage/image-placeholder.jpg',
+                'thumbnail' => '/storage/media-thumbnail.jpg',
                 'trailer' => 'youtube.com',
                 'release_date' => now(),
                 'created_at' => now(),

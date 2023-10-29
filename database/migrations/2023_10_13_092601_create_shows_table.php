@@ -19,8 +19,9 @@ return new class extends Migration
             $table->text('description');
             $table->date('release_date');
             $table->string('status');
-            $table->string('poster')->nullable();
-            $table->string('trailer')->nullable();
+            $table->string('poster');
+            $table->string('thumbnail');
+            $table->string('trailer');
             $table->timestamps();
         });
     }

@@ -24,6 +24,7 @@ class MovieFactory extends Factory
             'description' => fake()->paragraph(),
             'run_time' => fake()->numberBetween(60, 240),
             'poster' => '/storage/image-placeholder.jpg',
+            'thumbnail' => '/storage/media-thumbnail.jpg',
             'trailer' => 'youtube.com'
         ];
     }

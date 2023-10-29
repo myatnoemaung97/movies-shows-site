@@ -13,7 +13,7 @@ class ImageService
     public static function delete($image) {
         $path = public_path($image);
 
-        if (file_exists($path) && basename($path) !== 'image-placeholder.jpg') {
+        if (file_exists($path) && !in_array(basename($path), ['image-placeholder.jpg', 'media-thumbnail.jpg', 'cele-thumbnail.jpg'])){
             unlink($path);
         }
     }
@@ -28,6 +28,4 @@ class ImageService
 
         return '/storage/' . $filename;
     }
-
-
 }
