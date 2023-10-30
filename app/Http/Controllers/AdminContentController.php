@@ -6,7 +6,7 @@ use App\Models\Article;
 use App\Models\Content;
 use Illuminate\Http\Request;
 
-class ContentController extends Controller
+class AdminContentController extends Controller
 {
 
     public function show(Article $article, Content $content) {

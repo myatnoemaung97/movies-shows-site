@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
-class MovieController extends Controller
+class AdminMovieController extends Controller
 {
     public function index(Request $request) {
 

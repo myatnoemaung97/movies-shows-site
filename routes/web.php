@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\ContentController;
-use App\Http\Controllers\EpisodeController;
-use App\Http\Controllers\MovieController;
-use App\Http\Controllers\PersonController;
+use App\Http\Controllers\AdminArticleController;
+use App\Http\Controllers\AdminContentController;
+use App\Http\Controllers\AdminEpisodeController;
+use App\Http\Controllers\AdminMovieController;
+use App\Http\Controllers\AdminPersonController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\AdminSeasonController;
 use App\Http\Controllers\SessionsController;
-use App\Http\Controllers\ShowController;
+use App\Http\Controllers\AdminShowController;
 use App\Http\Controllers\UserController;
 use App\Models\Article;
 use Illuminate\Support\Facades\Route;
@@ -53,13 +53,13 @@ Route::middleware('can:admin')->group(function () {
     });
 
     Route::resource('/admin/users', UserController::class);
-    Route::resource('/admin/articles', ArticleController::class);
-    Route::resource('/admin/articles/{article}/contents', ContentController::class);
-    Route::resource('/admin/movies', MovieController::class);
-    Route::resource('/admin/shows', ShowController::class);
-    Route::resource('/admin/shows/{show}/seasons', SeasonController::class);
-    Route::resource('/admin/shows/{show}/seasons/{season}/episodes', EpisodeController::class);
-    Route::resource('/admin/people', PersonController::class);
+    Route::resource('/admin/articles', AdminArticleController::class);
+    Route::resource('/admin/articles/{article}/contents', AdminContentController::class);
+    Route::resource('/admin/movies', AdminMovieController::class);
+    Route::resource('/admin/shows', AdminShowController::class);
+    Route::resource('/admin/shows/{show}/seasons', AdminSeasonController::class);
+    Route::resource('/admin/shows/{show}/seasons/{season}/episodes', AdminEpisodeController::class);
+    Route::resource('/admin/people', AdminPersonController::class);
 });
 
 

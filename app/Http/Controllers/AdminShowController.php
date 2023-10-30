@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
-class ShowController extends Controller
+class AdminShowController extends Controller
 {
     public function index(Request $request) {
 

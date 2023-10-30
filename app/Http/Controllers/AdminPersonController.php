@@ -7,7 +7,7 @@ use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class PersonController extends Controller
+class AdminPersonController extends Controller
 {
     public function index(Request $request) {
         if($request->ajax())

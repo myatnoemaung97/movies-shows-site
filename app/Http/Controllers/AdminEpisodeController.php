@@ -8,7 +8,7 @@ use App\Models\Show;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class EpisodeController extends Controller
+class AdminEpisodeController extends Controller
 {
     public function create(Show $show, Season $season) {
         //dd(request()->routeIs('episodes.create'));

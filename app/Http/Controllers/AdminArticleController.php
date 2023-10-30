@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
 
-class ArticleController extends Controller
+class AdminArticleController extends Controller
 {
     public function index(Request $request) {
 

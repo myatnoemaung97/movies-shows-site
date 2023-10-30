@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
-class SeasonController extends Controller
+class AdminSeasonController extends Controller
 {
     public function show(Request $request, Show $show, Season $season) {
         if ($request->ajax()) {
