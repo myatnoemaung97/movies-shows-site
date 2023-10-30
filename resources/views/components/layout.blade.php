@@ -28,9 +28,9 @@
     <link rel="stylesheet" href="/css/plugins.css">
     <link rel="stylesheet" href="/css/style.css">
 
-    {{--    <!-- bootstrap -->--}}
-    {{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">--}}
-    {{--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>--}}
+    {{--        <!-- bootstrap -->--}}
+    {{--        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">--}}
+    {{--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>--}}
 
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/807f2d6ec6.js" crossorigin="anonymous"></script>
@@ -290,7 +290,7 @@
             <p><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></p>
         </div>
         <div class="backtotop">
-            <p><a href="#" id="back-to-top">Back to top <i class="ion-ios-arrow-thin-up"></i></a></p>
+            <p><a href="#" id="back-to-top">Back to top <i class="fa-solid fa-up-long fa-sm"></i></a></p>
         </div>
     </div>
 </footer>

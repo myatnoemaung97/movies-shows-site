@@ -39,6 +39,7 @@ Route::get('/', function () {
 Route::get('/articles/{article}', [ArticleController::class, 'show']);
 
 Route::get('/movies', [MovieController::class, 'index']);
+Route::get('/movies/{movie}', [MovieController::class, 'show']);
 
 
 Route::middleware('guest')->group(function () {

@@ -7,7 +7,7 @@
                         <h1> blog detail</h1>
                         <ul class="breadcumb">
                             <li class="active"><a href="#">Home</a></li>
-                            <li> <span class="ion-ios-arrow-right"></span> blog listing</li>
+                            <li> <span class="fa-solid fa-arrow-right"></span> blog listing</li>
                         </ul>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="blog-detail-ct">
                         <h1>{{ $article->title }}</h1>
-                        <span class="time">{{ $article->created_at }}</span>
+                        <span class="time">{{ date('Y-m-d', strtotime($article->created_at)) }}</span>
                         <img src="{{ $article->image }}" alt="">
                         <p>{!! nl2br($article->body) !!}</p>
 

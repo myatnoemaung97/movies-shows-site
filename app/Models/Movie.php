@@ -9,16 +9,11 @@ class Movie extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'slug', 'age_rating', 'release_date', 'description', 'run_time', 'poster', 'trailer'];
+    protected $fillable = ['title', 'slug', 'age_rating', 'release_date', 'description', 'run_time', 'poster', 'thumbnail', 'trailer'];
 
     public function reviews()
     {
         return $this->morphMany(Review::class, 'media');
-    }
-
-    public function images()
-    {
-        return $this->morphMany(Image::class, 'imageable');
     }
 
     public function actors()
@@ -44,11 +39,10 @@ class Movie extends Model
         return $this->morphMany(MediaCrew::class, 'media');
     }
 
-    public function genres() {
+    public function genres()
+    {
         return $this->morphToMany(Genre::class, 'media', 'media_genres');
     }
-
-
 
 
 }

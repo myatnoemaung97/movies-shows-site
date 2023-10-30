@@ -8,8 +8,17 @@ use Illuminate\Http\Request;
 class MovieController extends Controller
 {
     public function index() {
+        $movies = Movie::latest();
+
         return view('movies.index', [
-            'movies' => Movie::latest()->paginate(12)
+            'count' => $movies->count(),
+            'movies' => $movies->paginate(12)
+        ]);
+    }
+
+    public function show(Movie $movie) {
+        return view('movies.show', [
+            'movie' => $movie
         ]);
     }
 }

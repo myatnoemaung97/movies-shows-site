@@ -62,7 +62,7 @@ class AdminShowController extends Controller
         $image = $request->file('poster');
 
         $attributes['poster'] = ImageService::store($image);
-        $attributes['thumbnail'] = ImageService::makeThumbnail($image, [150, 300]);
+        $attributes['thumbnail'] = ImageService::makeThumbnail($image, [180, 270]);
 
         $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
 
