@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminContentController;
 use App\Http\Controllers\AdminEpisodeController;
 use App\Http\Controllers\AdminMovieController;
 use App\Http\Controllers\AdminPersonController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminSeasonController;
 use App\Http\Controllers\SessionsController;
@@ -24,15 +25,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/test', function () {
+
+});
+
 Route::get('/', function () {
     return view('index', [
         'articles' => Article::latest()->where('status', 'published')->take(4)->get()
     ]);
 });
 
-Route::get('/test', function () {
-
-});
+Route::get('/articles/{article}', [ArticleController::class, 'show']);
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'create']);
