@@ -23,15 +23,22 @@ class AdminPersonController extends Controller
 
                 ->addColumn('action', function($a) {
 
+                    $details = "<a href='/admin/people/$a->id' class='btn btn-primary' style='margin-right: 10px'>Details</a>";
                     $edit = '<a href=" '.route('people.edit', $a->id).'" class="btn btn-success" style="margin-right: 10px;">Edit</a>';
                     $delete = '<a href="" class="deletePersonButton btn btn-danger" data-id="'. $a->id .'">Delete</a>';
 
-                    return '<div class="action">' . $edit . $delete . '</div>';
+                    return '<div class="action">' . $details . $edit . $delete . '</div>';
 
                 })->rawColumns(['action', 'image'])->make(true);
         }
 
         return view('admin.people.index');
+    }
+
+    public function show(Person $person) {
+        return view('admin.people.show', [
+            'person' => $person
+        ]);
     }
 
     public function create() {
@@ -62,7 +69,7 @@ class AdminPersonController extends Controller
 
         $person = Person::findOrFail($id);
 
-        $image = $request->file('poster');
+        $image = $request->file('image');
 
         if ($image) {
             $attributes['image'] = ImageService::store($image);
@@ -72,7 +79,7 @@ class AdminPersonController extends Controller
             ImageService::delete($person->thumbnail);
         }
 
-        $person = $person->update($attributes);
+        $person->update($attributes);
 
         return redirect(route('people.show', $person->id))->with('update', 'Person');
     }
