@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminEpisodeController;
 use App\Http\Controllers\AdminMovieController;
 use App\Http\Controllers\AdminPersonController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminSeasonController;
 use App\Http\Controllers\SessionsController;
@@ -36,6 +37,9 @@ Route::get('/', function () {
 });
 
 Route::get('/articles/{article}', [ArticleController::class, 'show']);
+
+Route::get('/movies', [MovieController::class, 'index']);
+
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'create']);

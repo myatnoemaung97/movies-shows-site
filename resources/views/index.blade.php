@@ -26,8 +26,8 @@
                 <div class="col-md-8">
                     <!-- Movies -->
                     <div class="title-hd">
-                        <h2>in theater</h2>
-                        <a href="#" class="viewall">View all <i class="fa-solid fa-arrow-right"></i></a>
+                        <h2>Movies</h2>
+                        <a href="/movies" class="viewall">View all <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                     <div class="tabs">
                         <ul class="tab-links">
@@ -451,7 +451,7 @@
 
                     <!-- Shows -->
                     <div class="title-hd">
-                        <h2>on tv</h2>
+                        <h2>Series</h2>
                         <a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>
                     </div>
                     <div class="tabs">
