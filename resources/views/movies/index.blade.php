@@ -28,40 +28,9 @@
                             <option value="date">Release date Ascending</option>
                         </select>
                     </div>
-                    <div class="flex-wrap-movielist">
-                        @foreach($movies as $movie)
-                            <div class="movie-item-style-2 movie-item-style-1">
-                                <img src="{{ $movie->thumbnail }}" alt="">
-                                <div class="hvr-inner">
-                                    <a href="/movies/{{ $movie->slug }}"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-                                </div>
-                                <div class="mv-item-infor">
-                                    <h6><a href="/movies/{{ $movie->slug }}">{{ $movie->title }}</a></h6>
-                                    <p class="rate"><i class="fa-solid fa-star"></i><span>8.1</span> /10</p>
-                                </div>
-                            </div>
-                        @endforeach
 
-                        {{ $movies->links() }}
-                    </div>
-{{--                    <div class="topbar-filter">--}}
-{{--                        <label>Movies per page:</label>--}}
-{{--                        <select>--}}
-{{--                            <option value="range">20 Movies</option>--}}
-{{--                            <option value="saab">10 Movies</option>--}}
-{{--                        </select>--}}
+                    <x-media-grid :medias="$movies"/>
 
-{{--                        <div class="pagination2">--}}
-{{--                            <span>Page 1 of 2:</span>--}}
-{{--                            <a class="active" href="#">1</a>--}}
-{{--                            <a href="#">2</a>--}}
-{{--                            <a href="#">3</a>--}}
-{{--                            <a href="#">...</a>--}}
-{{--                            <a href="#">78</a>--}}
-{{--                            <a href="#">79</a>--}}
-{{--                            <a href="#"><i class="ion-arrow-right-b"></i></a>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
                 </div>
                 <div class="col-md-4 col-sm-12 col-xs-12">
                     <div class="sidebar">
