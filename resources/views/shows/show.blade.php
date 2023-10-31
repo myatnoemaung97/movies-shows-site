@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="hero mv-single-hero">
+    <div class="hero sr-single-hero sr-single">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -12,5 +12,5 @@
             </div>
         </div>
     </div>
-    <x-media-detail :media="$movie" />
+    <x-media-detail :media="$show" />
 </x-layout>

@@ -11,8 +11,11 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminSeasonController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\AdminShowController;
+use App\Http\Controllers\ShowController;
 use App\Http\Controllers\UserController;
 use App\Models\Article;
+use App\Models\Movie;
+use App\Models\Show;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/test', function () {
-
+    dd(class_basename(Show::first()));
 });
 
 Route::get('/', function () {
@@ -41,6 +44,8 @@ Route::get('/articles/{article}', [ArticleController::class, 'show']);
 Route::get('/movies', [MovieController::class, 'index']);
 Route::get('/movies/{movie}', [MovieController::class, 'show']);
 
+Route::get('/shows', [ShowController::class, 'index']);
+Route::get('/shows/{show}', [ShowController::class, 'show']);
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'create']);

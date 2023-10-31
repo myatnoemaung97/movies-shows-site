@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('role');
             $table->text('biography');
             $table->string('image');
-            $table->string('thumbnail');
+            $table->string('thumbnail')->default('/storage/cele-thumbnail.jpg');
             $table->timestamps();
         });
     }

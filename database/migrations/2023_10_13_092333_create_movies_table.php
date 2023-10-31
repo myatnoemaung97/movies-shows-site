@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('description');
             $table->integer('run_time');
             $table->string('poster');
-            $table->string('thumbnail');
+            $table->string('thumbnail')->default('/storage/media-thumbnail.jpg');
             $table->string('trailer');
             $table->timestamps();
         });

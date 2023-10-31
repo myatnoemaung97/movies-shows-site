@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('release_date');
             $table->string('status');
             $table->string('poster');
-            $table->string('thumbnail');
+            $table->string('thumbnail')->default('/storage/media-thumbnail.jpg');
             $table->string('trailer');
             $table->timestamps();
         });

@@ -9,6 +9,7 @@ use App\Models\Show;
 use App\Services\ImageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
@@ -59,35 +60,37 @@ class AdminShowController extends Controller
     public function store(Request $request) {
         $attributes = $this->validateShow($request);
 
-        $image = $request->file('poster');
+        DB::transaction(function () use ($request, $attributes) {
+            $image = $request->file('poster');
 
-        $attributes['poster'] = ImageService::store($image);
-        $attributes['thumbnail'] = ImageService::makeThumbnail($image, [180, 270]);
+            $attributes['poster'] = ImageService::store($image);
+            $attributes['thumbnail'] = ImageService::makeThumbnail($image, [180, 310]);
 
-        $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
+            $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
 
-        $show = Show::create($attributes);
+            $show = Show::create($attributes);
 
-        MediaGenreController::store($show, $attributes['genres']);
+            MediaGenreController::store($show, $attributes['genres']);
 
-        MediaCrewController::store($show->id, 'App\Models\Show', [
-            'creator' => $attributes['creators'],
-            'actor' => $attributes['cast']
-        ]);
+            MediaCrewController::store($show->id, 'App\Models\Show', [
+                'creator' => $attributes['creators'],
+                'actor' => $attributes['cast']
+            ]);
 
-        $sourcePath = public_path($attributes['poster']);
-        $seasonPoster = '/storage/' . 's01' . basename($attributes['poster']);
-        $destinationPath = public_path($seasonPoster);
+            $sourcePath = public_path($attributes['poster']);
+            $seasonPoster = '/storage/' . 's01' . basename($attributes['poster']);
+            $destinationPath = public_path($seasonPoster);
 
-        File::copy($sourcePath, $destinationPath);
+            File::copy($sourcePath, $destinationPath);
 
-        Season::create([
-            'show_id' => $show->id,
-            'season_number' => 1,
-            'poster' => $seasonPoster,
-            'trailer' => 'youtube.com',
-            'release_date' => $attributes['release_date'],
-        ]);
+            Season::create([
+                'show_id' => $show->id,
+                'season_number' => 1,
+                'poster' => $seasonPoster,
+                'trailer' => 'youtube.com',
+                'release_date' => $attributes['release_date'],
+            ]);
+        });
 
         return redirect(route('shows.index'))->with('create', 'Show');
     }

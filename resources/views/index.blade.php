@@ -452,7 +452,7 @@
                     <!-- Shows -->
                     <div class="title-hd">
                         <h2>Series</h2>
-                        <a href="#" class="viewall">View all <i class="fa-solid fa-arrow-right"></i></a>
+                        <a href="/shows" class="viewall">View all <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                     <div class="tabs">
                         <ul class="tab-links-2">
