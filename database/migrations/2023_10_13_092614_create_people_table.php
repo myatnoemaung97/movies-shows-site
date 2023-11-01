@@ -14,8 +14,12 @@ return new class extends Migration
         Schema::create('people', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('roles');
-            $table->text('biography')->nullable();
+            $table->date('birthday')->nullable();
+            $table->string('country')->nullable();
+            $table->integer('height')->nullable();
+            $table->string('roles')->nullable();
+            $table->text('')
+            $table->longText('biography')->nullable();
             $table->string('image')->default('/storage/image-placeholder.jpg');
             $table->string('thumbnail')->default('/storage/cele-thumbnail.jpg');
             $table->timestamps();

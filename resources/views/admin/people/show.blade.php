@@ -14,13 +14,16 @@
                                 <img src="{{ $person->image }}" alt="image" style="max-width: 500px; max-height: 1000px;">
                             </div>
                             <hr>
-                            <div class="d-flex flex-row justify-content-between align-items-center">
+                            <div class="d-flex flex-row justify-content-between">
                                 <div>
                                     <h4>{{ $person->name }}</h4>
                                     <p class="mt-3">{{ $person->roles }}</p>
+                                    <p>Date of birth: {{ $person->birthday }}</p>
+                                    <p>Country: {{ $person->country }}</p>
+                                    <p>Height: {{ $person->height }}</p>
                                 </div>
 
-                                <div class="d-flex flex-row align-items-center gap-3">
+                                <div class="d-flex flex-row gap-3">
                                     <div>
                                         <a class="btn btn-success" href="{{ route('people.edit', $person->id) }}">Edit</a>
                                     </div>

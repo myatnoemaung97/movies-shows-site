@@ -101,6 +101,9 @@ class AdminPersonController extends Controller
     private function validatePerson(Request $request) {
         $rules = [
             'name' => 'required',
+            'birthday' => 'required',
+            'country' => 'required',
+            'height' => 'required',
             'roles' => 'required',
             'biography' => 'required',
             'image.*' => 'mimes:jpg,jpeg,png,bmp,svg',

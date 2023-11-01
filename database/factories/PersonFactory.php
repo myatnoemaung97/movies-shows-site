@@ -18,6 +18,9 @@ class PersonFactory extends Factory
     {
         return [
             'name' => fake()->unique()->name,
+            'birthday' => fake()->date,
+            'country' => fake()->country,
+            'height' => fake()->numberBetween(100, 250),
             'roles' => fake()->randomElement(['Actor', 'Director']),
             'biography' => fake()->paragraphs(2, true),
             'image' => '/storage/image-placeholder.jpg',

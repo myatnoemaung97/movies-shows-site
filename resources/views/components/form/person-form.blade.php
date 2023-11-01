@@ -9,6 +9,12 @@
 
         <x-form.input :name="'name'" :label="'Name'" :value="$person?->name"/>
 
+        <x-form.input :name="'birthday'" :type="'date'" :label="'Date of Birthday'" :value="$person?->birthday"/>
+
+        <x-form.input :name="'country'" :label="'Country'" :value="$person?->country"/>
+
+        <x-form.input :name="'height'" :type="'number'" :label="'Height (cm)'" :value="$person?->height"/>
+
         <label class="mt-3" for="roles">Role(s)</label>
         <select class="js-example-basic-multiple form-control text-black" id="roles" name="roles[]"
                 multiple="multiple">
