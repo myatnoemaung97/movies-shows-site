@@ -8,6 +8,7 @@ use App\Models\Person;
 use App\Services\ImageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -49,21 +50,23 @@ class AdminMovieController extends Controller
     public function store(Request $request) {
         $attributes = $this->validateMovie($request);
 
-        $image = $request->file('poster');
+        DB::transaction(function () use ($request, $attributes) {
+            $image = $request->file('poster');
 
-        $attributes['poster'] = ImageService::store($image);
-        $attributes['thumbnail'] = ImageService::makeThumbnail($image, [180, 270]);
+            $attributes['poster'] = ImageService::store($image);
+            $attributes['thumbnail'] = ImageService::makeThumbnail($image, [180, 270]);
 
-        $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
+            $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
 
-        $movie = Movie::create($attributes);
+            $movie = Movie::create($attributes);
 
-        MediaGenreController::store($movie, $attributes['genres']);
+            MediaGenreController::store($movie, $attributes['genres']);
 
-        MediaCrewController::store($movie->id, 'App\Models\Movie', [
-            'director' => $attributes['directors'],
-            'actor' => $attributes['cast']
-        ]);
+            MediaCrewController::store($movie->id, 'App\Models\Movie', [
+                'director' => $attributes['directors'],
+                'actor' => $attributes['cast']
+            ]);
+        });
 
         return redirect(route('movies.index'))->with('create', 'Movie');
     }
@@ -85,26 +88,28 @@ class AdminMovieController extends Controller
     public function update(Request $request, Movie $movie) {
         $attributes = $this->validateMovie($request);
 
-        $image = $request->file('poster');
+        DB::transaction(function () use ($request, $attributes, $movie) {
+            $image = $request->file('poster');
 
-        if ($image) {
-            $attributes['poster'] = ImageService::store($image);
-            $attributes['thumbnail'] = ImageService::makeThumbnail($image, [180, 310]);
+            if ($image) {
+                $attributes['poster'] = ImageService::store($image);
+                $attributes['thumbnail'] = ImageService::makeThumbnail($image, [185, 300]);
 
-            ImageService::delete($movie->poster);
-            ImageService::delete($movie->thumbnail);
-        }
+                ImageService::delete($movie->poster);
+                ImageService::delete($movie->thumbnail);
+            }
 
-        $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
+            $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
 
-        $movie->update($attributes);
+            $movie->update($attributes);
 
-        MediaGenreController::store($movie, $attributes['genres']);
+            MediaGenreController::store($movie, $attributes['genres']);
 
-        MediaCrewController::update($movie->id, 'App\Models\Movie', [
-            'director' => $attributes['directors'],
-            'actor' => $attributes['cast']
-        ]);
+            MediaCrewController::update($movie->id, 'App\Models\Movie', [
+                'director' => $attributes['directors'],
+                'actor' => $attributes['cast']
+            ]);
+        });
 
         return redirect("/admin/movies/$movie->slug")->with('update', 'Movie');
     }

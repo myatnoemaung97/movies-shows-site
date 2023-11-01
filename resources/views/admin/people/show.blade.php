@@ -14,8 +14,13 @@
                                 <img src="{{ $person->image }}" alt="image" style="max-width: 500px; max-height: 1000px;">
                             </div>
                             <hr>
-                            <div>
-                                <div class="d-flex flex-row float-right align-items-center gap-3">
+                            <div class="d-flex flex-row justify-content-between align-items-center">
+                                <div>
+                                    <h4>{{ $person->name }}</h4>
+                                    <p class="mt-3">{{ $person->roles }}</p>
+                                </div>
+
+                                <div class="d-flex flex-row align-items-center gap-3">
                                     <div>
                                         <a class="btn btn-success" href="{{ route('people.edit', $person->id) }}">Edit</a>
                                     </div>
@@ -24,14 +29,11 @@
                                         <p>Updated: {{ $person->updated_at }}</p>
                                     </div>
                                 </div>
-
-                                <h4>{{ $person->name }}</h4>
-                                <p class="mt-3">{{ $person->role }}</p>
                             </div>
                             <hr>
                             <div>
                                 <h5>Biography</h5>
-                                <p>{{ $person->biography }}</p>
+                                <p>{!! nl2br($person->biography)  !!}</p>
                             </div>
                         </div>
                         <!-- /.card-body -->

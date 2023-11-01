@@ -7,7 +7,7 @@
                         <h1> Series</h1>
                         <ul class="breadcumb">
                             <li class="active"><a href="#">Home</a></li>
-                            <li><i class="fa-solid fa-sm fa-arrow-right"></i> Series </li>
+                            <li><i class="ion-ios-arrow-forward"></i>  Series </li>
                         </ul>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                         </select>
                     </div>
 
-                    <x-media-grid :medias="$shows"/>
+                    <x-media-grid :medias="$shows" :type="'shows'"/>
 
                 </div>
                 <div class="col-md-4 col-sm-12 col-xs-12">

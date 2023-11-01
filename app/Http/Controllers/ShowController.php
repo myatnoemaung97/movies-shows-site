@@ -17,7 +17,6 @@ class ShowController extends Controller
     }
 
     public function show(Show $show) {
-
         $start = date('Y', strtotime($show->release_date));
         $currentSeason = $show->seasons()->orderBy('release_date', 'desc')->first();
 
@@ -28,8 +27,7 @@ class ShowController extends Controller
         }
 
         return view('shows.show', [
-            'start' => $start,
-            'end' => $end,
+            'period' => $start . ' - ' . $end,
             'show' => $show,
             'currentSeason' => $currentSeason
         ]);

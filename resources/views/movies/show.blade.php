@@ -12,5 +12,5 @@
             </div>
         </div>
     </div>
-    <x-media-detail :media="$movie" />
+    <x-media-detail :media="$movie" :type="'movie'"/>
 </x-layout>

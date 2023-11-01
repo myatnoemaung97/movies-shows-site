@@ -15,7 +15,7 @@ class MediaCrewController extends Controller
                 $mediaCrewRecords[] = [
                     'media_id' => $mediaId,
                     'media_type' => $mediaType,
-                    'person_id' => Person::firstOrCreate(['name' => $person])->id,
+                    'person_id' => Person::firstOrCreate(['name' => $person, 'roles' => ucwords($role)])->id,
                     'role' => $role,
                     'created_at' => now(),
                     'updated_at' => now()

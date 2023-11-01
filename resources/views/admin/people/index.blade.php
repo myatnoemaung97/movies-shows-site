@@ -16,6 +16,7 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Image</th>
+                                    <th>Roles</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -53,6 +54,9 @@
                 },
                 {
                     "data": "image"
+                },
+                {
+                    'data': 'roles'
                 },
                 {
                     "data": "action"

@@ -12,5 +12,5 @@
             </div>
         </div>
     </div>
-    <x-media-detail :media="$show" />
+    <x-media-detail :media="$show" :currentSeason="$currentSeason" :type="'show'" :period="$period" />
 </x-layout>

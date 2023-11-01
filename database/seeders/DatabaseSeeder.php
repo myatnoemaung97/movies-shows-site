@@ -72,19 +72,19 @@ class DatabaseSeeder extends Seeder
         // creates a person
         $actor = Person::factory()->create([
             'name' => 'Ryan Gosling',
-            'role' => 'Actor'
+            'roles' => 'Actor'
         ]);
 
         // creates a person
         $actress = Person::factory()->create([
             'name' => 'Ana De Armas',
-            'role' => 'Actor'
+            'roles' => 'Actor'
         ]);
 
         // creates a person
         $director = Person::factory()->create([
             'name' => 'Christopher Nolan',
-            'role' => 'Director'
+            'roles' => 'Director'
         ]);
 
         // creates a media crew for movie

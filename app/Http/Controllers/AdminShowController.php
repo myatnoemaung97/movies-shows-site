@@ -64,7 +64,7 @@ class AdminShowController extends Controller
             $image = $request->file('poster');
 
             $attributes['poster'] = ImageService::store($image);
-            $attributes['thumbnail'] = ImageService::makeThumbnail($image, [180, 310]);
+            $attributes['thumbnail'] = ImageService::makeThumbnail($image, [185, 300]);
 
             $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
 
@@ -83,10 +83,13 @@ class AdminShowController extends Controller
 
             File::copy($sourcePath, $destinationPath);
 
+            $seasonThumbnail = ImageService::makeThumbnail($image, [125, 150]);
+
             Season::create([
                 'show_id' => $show->id,
                 'season_number' => 1,
                 'poster' => $seasonPoster,
+                'thumbnail' => $seasonThumbnail,
                 'trailer' => 'youtube.com',
                 'release_date' => $attributes['release_date'],
             ]);
@@ -119,6 +122,7 @@ class AdminShowController extends Controller
         $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
 
         $show->update($attributes);
+        $show->seasons()->where('season_number', 1)->first()->update(['release_date' => $attributes['release_date']]);
 
         MediaGenreController::store($show, $attributes['genres']);
 

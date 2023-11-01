@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminSeasonController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\AdminShowController;
 use App\Http\Controllers\ShowController;
+use App\Http\Controllers\SpotlightController;
 use App\Http\Controllers\UserController;
 use App\Models\Article;
 use App\Models\Movie;
@@ -47,6 +48,9 @@ Route::get('/movies/{movie}', [MovieController::class, 'show']);
 Route::get('/shows', [ShowController::class, 'index']);
 Route::get('/shows/{show}', [ShowController::class, 'show']);
 
+Route::get('/celebrities', [PersonController::class, 'index']);
+Route::get('/celebrities/{person}', [PersonController::class, 'show']);
+
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'create']);
     Route::post('/register', [RegisterController::class, 'store']);
@@ -73,6 +77,7 @@ Route::middleware('can:admin')->group(function () {
     Route::resource('/admin/shows/{show}/seasons', AdminSeasonController::class);
     Route::resource('/admin/shows/{show}/seasons/{season}/episodes', AdminEpisodeController::class);
     Route::resource('/admin/people', AdminPersonController::class);
+
 });
 
 

@@ -52,6 +52,7 @@ class AdminPersonController extends Controller
 
         $attributes['image'] = ImageService::store($image);
         $attributes['thumbnail'] = ImageService::makeThumbnail($image, [50, 50]);
+        $attributes['roles'] = implode(', ', $attributes['roles']);
 
         Person::create($attributes);
 
@@ -79,6 +80,8 @@ class AdminPersonController extends Controller
             ImageService::delete($person->thumbnail);
         }
 
+        $attributes['roles'] = implode(', ', $attributes['roles']);
+
         $person->update($attributes);
 
         return redirect(route('people.show', $person->id))->with('update', 'Person');
@@ -98,7 +101,7 @@ class AdminPersonController extends Controller
     private function validatePerson(Request $request) {
         $rules = [
             'name' => 'required',
-            'role' => 'required',
+            'roles' => 'required',
             'biography' => 'required',
             'image.*' => 'mimes:jpg,jpeg,png,bmp,svg',
         ];

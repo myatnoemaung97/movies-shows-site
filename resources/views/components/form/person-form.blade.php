@@ -9,8 +9,20 @@
 
         <x-form.input :name="'name'" :label="'Name'" :value="$person?->name"/>
 
-        <x-form.select :name="'role'" :label="'Role'" :options="['Actor', 'Director']"
-                       :value="$person?->role"/>
+        <label class="mt-3" for="roles">Role(s)</label>
+        <select class="js-example-basic-multiple form-control text-black" id="roles" name="roles[]"
+                multiple="multiple">
+            <option value="" disabled>-select</option>
+            <option
+                value="Actor" >
+                Actor
+            </option>
+            <option
+                value="Director" >
+                Director
+            </option>
+        </select>
+        <x-form.error :name="'roles'"/>
 
         <x-form.textarea :name="'biography'" :label="'Biography'" :rows="10" :value="$person?->biography"/>
 

@@ -56,7 +56,7 @@ class AdminSeasonController extends Controller
         $image = $request->file('poster');
 
         $attributes['poster'] = ImageService::store($image);
-        $attributes['thumbnail'] = ImageService::makeThumbnail($image, [150, 300]);
+        $attributes['thumbnail'] = ImageService::makeThumbnail($image, [125, 150]);
 
         $attributes['show_id'] = $show->id;
         $attributes['season_number'] = $request->get('season_number');
