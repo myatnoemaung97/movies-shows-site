@@ -8,11 +8,8 @@ use Illuminate\Http\Request;
 class CelebrityController extends Controller
 {
     public function show(Person $person) {
-        $movies = $person->movies;
-        $shows = $person->shows;
-
-
         return view('people.show', [
+            'medias' => $person->movies->mergeRecursive($person->shows),
             'person' => $person
         ]);
     }

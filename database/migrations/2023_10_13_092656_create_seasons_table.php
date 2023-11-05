@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('show_id')->constrained()->cascadeOnDelete();
             $table->integer('season_number');
             $table->date('release_date');
+            $table->text('description')->nullable();
             $table->string('poster');
             $table->string('thumbnail')->default('/storage/media-thumbnail.jpg');
             $table->string('trailer');

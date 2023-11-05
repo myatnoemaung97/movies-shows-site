@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Episode;
 use App\Models\Season;
 use App\Models\Show;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -22,6 +23,7 @@ class AdminEpisodeController extends Controller
         $attributes = $this->validateEpisode($request, $season);
 
         $attributes['season_id'] = $season->id;
+        $attributes['image'] = ImageService::store($request->file('image'));
 
         Episode::create($attributes);
 
@@ -49,6 +51,14 @@ class AdminEpisodeController extends Controller
     public function update(Request $request, Show $show, Season $season, Episode $episode) {
         $attributes = $this->validateEpisode($request, $season, $episode);
 
+        $image = $request->file('image');
+
+        if ($image) {
+            $attributes['image'] = ImageService::store($image);
+
+            ImageService::delete($episode->image);
+        }
+
         $episode->update($attributes);
 
         return redirect(route('episodes.show', [$show->slug, $season->season_number, $episode->episode_number]))->with('update', 'Episode');
@@ -69,7 +79,7 @@ class AdminEpisodeController extends Controller
             'release_date' => 'required|date',
             'title' => 'required',
             'run_time' => 'required|numeric|min:0',
-            'description' => 'required'
+            'description' => 'required|max:250'
         ];
 
         if ($request->isMethod('POST')) {

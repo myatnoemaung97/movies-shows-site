@@ -32,6 +32,11 @@
     </div>
     <hr>
     <div>
+        <h5>Description</h5>
+        <p>{!! nl2br($currentSeason->description) !!}</p>
+    </div>
+    <hr>
+    <div>
         <h5>Trailer</h5>
         <p><a href="{{ $currentSeason->trailer }}" target="_blank">{{ $currentSeason->trailer }}</a></p>
     </div>

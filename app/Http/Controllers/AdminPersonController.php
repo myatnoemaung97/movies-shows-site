@@ -91,7 +91,7 @@ class AdminPersonController extends Controller
         $person = Person::findOrFail($id);
 
         ImageService::delete($person->poster);
-        //ImageService::delete($person->thumbnail);
+        ImageService::delete($person->thumbnail);
 
         $person->delete();
 
@@ -105,6 +105,7 @@ class AdminPersonController extends Controller
             'country' => 'required',
             'height' => 'required',
             'roles' => 'required',
+            'bio' => 'required',
             'biography' => 'required',
             'image.*' => 'mimes:jpg,jpeg,png,bmp,svg',
         ];

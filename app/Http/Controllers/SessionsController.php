@@ -6,10 +6,6 @@ use Illuminate\Http\Request;
 
 class SessionsController extends Controller
 {
-    public function create() {
-        return view('sessions.create');
-    }
-
     public function store(Request $request) {
         $attributes = $request->validate([
             'email' => 'required|email',
@@ -22,7 +18,7 @@ class SessionsController extends Controller
 
         session()->regenerate();
 
-        return redirect('/admin/');
+        return redirect('/');
     }
 
     public function destroy() {

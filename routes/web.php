@@ -7,17 +7,22 @@ use App\Http\Controllers\AdminMovieController;
 use App\Http\Controllers\AdminPersonController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CelebrityController;
+use App\Http\Controllers\EpisodeController;
+use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminSeasonController;
+use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\AdminShowController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\SpotlightController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WatchListController;
 use App\Models\Article;
 use App\Models\Movie;
 use App\Models\Show;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,9 +35,17 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/test', function () {
-    dd(class_basename(Show::first()));
+    $user = auth()->user();
+
+    $movies = $user->watchlistMovies()->paginate(3);
+    $shows = $user->watchlistShows()->paginate(3);
+
+    dd($movies->merge($shows));
+});
+
+Route::patch('/test', function (Request $request) {
+    dd($request->all());
 });
 
 Route::get('/', function () {
@@ -49,19 +62,24 @@ Route::get('/movies/{movie}', [MovieController::class, 'show']);
 Route::get('/shows', [ShowController::class, 'index']);
 Route::get('/shows/{show}', [ShowController::class, 'show']);
 
+Route::get('/shows/{show}/seasons/{season}', [SeasonController::class, 'show']);
+
 Route::get('/celebrities/{person}', [CelebrityController::class, 'show']);
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'create']);
     Route::post('/register', [RegisterController::class, 'store']);
 
-    Route::get('/login', [SessionsController::class, 'create'])->name('login');
+    Route::get('/login', [SessionsController::class, 'create']);
     Route::post('/login', [SessionsController::class, 'store']);
-    Route::get('/logout', [SessionsController::class, 'destroy']);
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/logout', [SessionsController::class, 'destroy']);
+    Route::delete('/logout', [SessionsController::class, 'destroy']);
+
+    Route::get('/profiles/{user}/watchlists', [WatchListController::class, 'index']);
+    Route::post('/watchlists', [WatchListController::class, 'store']);
+    Route::delete('/watchlists/{watchlist}', [WatchListController::class, 'destroy']);
 });
 
 Route::middleware('can:admin')->group(function () {

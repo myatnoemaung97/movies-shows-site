@@ -18,6 +18,8 @@
         <x-form.input :type="'date'" :name="'release_date'" :label="'Release Date'"
                       :value="$season?->release_date"/>
 
+        <x-form.textarea :name="'description'" :label="'Description'" :rows="8" :value="$season?->description"/>
+
         <x-form.input :type="'file'" :name="'poster'" :label="'Poster'" :value="$season?->poster"/>
 
         <x-form.input :type="'text'" :name="'trailer'" :label="'Trailer Link'" :value="$season?->trailer"/>

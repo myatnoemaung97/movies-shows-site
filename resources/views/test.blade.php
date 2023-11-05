@@ -12,13 +12,16 @@
 </head>
 <body>
 
-<label for="cast">Cast Members</label>
-<select class="js-example-basic-multiple form-control text-black" id="cast" name="cast[]" multiple="multiple">
-    <option value="">-select</option>
-    @foreach($people as $person)
-        <option value="{{ $person->id }}">{{ $person->name }}</option>
-    @endforeach
-</select>
+<form action="/test" method="POST">
+    @csrf
+    @method('PATCH')
+
+    <label>name</label>
+    <input type="text" name="name" id="name" >
+
+    <button type="submit">Submit</button>
+</form>
+
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

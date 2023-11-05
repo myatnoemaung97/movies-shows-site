@@ -108,6 +108,7 @@ class AdminSeasonController extends Controller
         $rules = [
             'release_date' => 'required|date',
             'trailer' => 'required',
+            'description' => 'required',
             'poster.*' => 'mimes:jpg,jpeg,png,bmp,svg',
         ];
 

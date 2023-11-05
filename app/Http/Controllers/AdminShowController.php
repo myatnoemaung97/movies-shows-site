@@ -6,6 +6,7 @@ use App\Models\Genre;
 use App\Models\Person;
 use App\Models\Season;
 use App\Models\Show;
+use App\Models\Watchlist;
 use App\Services\ImageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -140,9 +141,15 @@ class AdminShowController extends Controller
 
         $show->delete();
 
-        MediaGenreController::destroy($show->id, 'App\Models\Movie');
+        MediaGenreController::destroy($show->id, 'App\Models\Show');
 
         MediaCrewController::destroy($show->id, 'App\Models\Show');
+
+        $watchlistShow = Watchlist::firstWhere(['media_id' => $show->id, 'media_type' => 'App\Models\Show']);
+
+        if ($watchlistShow) {
+            (new WatchListController)->destroy($watchlistShow);
+        }
 
         return 'success';
     }

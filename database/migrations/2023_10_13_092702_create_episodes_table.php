@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer('episode_number');
             $table->integer('run_time');
             $table->date('release_date');
-            $table->text('description');
+            $table->string('description');
+            $table->string('image')->default('/storage/image-placeholder.jpg');
             $table->timestamps();
         });
     }

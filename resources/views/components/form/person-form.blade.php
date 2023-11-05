@@ -30,7 +30,9 @@
         </select>
         <x-form.error :name="'roles'"/>
 
-        <x-form.textarea :name="'biography'" :label="'Biography'" :rows="10" :value="$person?->biography"/>
+        <x-form.textarea :name="'bio'" :label="'Biography (summary)'" :rows="5" :value="$person?->bio"/>
+
+        <x-form.textarea :name="'biography'" :label="'Biography (full)'" :rows="10" :value="$person?->biography"/>
 
         <x-form.input :type="'file'" :name="'image'" :label="'Image'" :value="$person?->image"/>
 

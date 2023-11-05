@@ -80,7 +80,7 @@
             a.preventDefault();
             const id = $(this).data('id');
             Swal.fire({
-                title: 'Do you want to delete this vacancy?',
+                title: 'Do you want to delete this movie?',
                 showCancelButton: true,
                 confirmButtonText: 'Delete',
                 confirmButtonColor: '#FF0000',
@@ -96,7 +96,7 @@
 
                     Swal.fire(
                         'Deleted!',
-                        'Vacancy has been deleted.',
+                        'Movie has been deleted.',
                         'success'
                     )
                 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Person;
+use App\Models\Watchlist;
 use App\Services\ImageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -123,6 +124,12 @@ class AdminMovieController extends Controller
         MediaGenreController::destroy($movie->id, 'App\Models\Movie');
 
         MediaCrewController::destroy($movie->id, 'App\Models\Movie');
+
+        $watchlistMovie = Watchlist::firstWhere(['media_id' => $movie->id, 'media_type' => 'App\Models\Movie']);
+
+        if ($watchlistMovie) {
+            (new WatchListController)->destroy($watchlistMovie);
+        }
 
         return 'success';
     }

@@ -40,7 +40,8 @@ class DatabaseSeeder extends Seeder
         // creates a season
         $season = Season::factory()->create([
             'show_id' => $show->id,
-            'season_number' => 1
+            'season_number' => 1,
+            'description' => fake()->paragraph
         ]);
 
         // creates 5 episodes

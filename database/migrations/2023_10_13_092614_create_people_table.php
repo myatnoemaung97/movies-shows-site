@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->integer('height')->nullable();
             $table->string('roles')->nullable();
-            $table->text('')
+            $table->text('bio')->nullable();
             $table->longText('biography')->nullable();
             $table->string('image')->default('/storage/image-placeholder.jpg');
             $table->string('thumbnail')->default('/storage/cele-thumbnail.jpg');

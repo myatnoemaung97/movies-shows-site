@@ -18,7 +18,7 @@ class ShowController extends Controller
 
     public function show(Show $show) {
         $start = date('Y', strtotime($show->release_date));
-        $currentSeason = $show->seasons()->orderBy('release_date', 'desc')->first();
+        $currentSeason = $show->seasons()->orderBy('season_number', 'desc')->first();
 
         if ($show->status === 'on going') {
             $end = 'current';
@@ -29,7 +29,8 @@ class ShowController extends Controller
         return view('shows.show', [
             'period' => $start . ' - ' . $end,
             'show' => $show,
-            'currentSeason' => $currentSeason
+            'currentSeason' => $currentSeason,
+            'watchlistMedia' => auth()->user()?->watchlists()->firstWhere(['media_id' => $show->id, 'media_type' => "App\Models\Show"])
         ]);
     }
 

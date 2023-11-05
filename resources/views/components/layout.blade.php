@@ -16,6 +16,8 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{csrf_token()}}">
+
     <link rel="profile" href="#">
 
     <!--Google Font-->
@@ -30,10 +32,8 @@
 
     <!-- custom css -->
     <link rel="stylesheet" href="/css/custom-css.css">
-
-    {{--        <!-- bootstrap -->--}}
-    {{--        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">--}}
-    {{--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>--}}
+    <!-- custom js -->
+    <script src="/js/myjs.js"></script>
 
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/807f2d6ec6.js" crossorigin="anonymous"></script>
@@ -66,6 +66,7 @@
                     <input type="email" name="email" id="email" required="required"/>
                 </label>
             </div>
+            <x-form.error :name="'email'"/>
 
             <div class="row">
                 <label for="password">
@@ -73,6 +74,7 @@
                     <input type="password" name="password" id="password" required="required"/>
                 </label>
             </div>
+            <x-form.error :name="'password'"/>
 
             <div class="row">
                 <button type="submit">Login</button>
@@ -86,7 +88,9 @@
     <div class="login-content">
         <a href="#" class="close">x</a>
         <h3>sign up</h3>
-        <form method="post" action="#">
+        <form method="POST" action="/register">
+            @csrf
+
             <div class="row">
                 <label for="username-2">
                     Username:
@@ -98,8 +102,7 @@
             <div class="row">
                 <label for="email-2">
                     your email:
-                    <input type="password" name="email" id="email-2" placeholder=""
-                           pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                    <input type="email" name="email" id="email-2" placeholder=""
                            required="required"/>
                 </label>
             </div>
@@ -107,15 +110,6 @@
                 <label for="password-2">
                     Password:
                     <input type="password" name="password" id="password-2" placeholder=""
-                           pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
-                           required="required"/>
-                </label>
-            </div>
-            <div class="row">
-                <label for="repassword-2">
-                    re-type Password:
-                    <input type="password" name="password" id="repassword-2" placeholder=""
-                           pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
                            required="required"/>
                 </label>
             </div>
@@ -216,14 +210,21 @@
                             pages <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </a>
                         <ul class="dropdown-menu level1">
-                            <li><a href="landing.html">Landing</a></li>
+                            <li><a href="/profiles/{{ auth()->user()?->id }}/watchlists">Watchlist</a></li>
                             <li><a href="404.html">404 Page</a></li>
                             <li class="it-last"><a href="comingsoon.html">Coming soon</a></li>
                         </ul>
                     </li>
                     <li><a href="#">Help</a></li>
                     @auth
-                        <li class="logoutBtn"><a href="#">LOG Out</a></li>
+                        <li>
+                            <form action="/logout" method="POST">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="logoutBtn">Log Out</button>
+                            </form>
+                        </li>
                     @else
                         <li class="loginLink"><a href="#">LOG In</a></li>
                         <li class="btn signupLink"><a href="#">sign up</a></li>

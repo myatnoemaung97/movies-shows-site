@@ -9,7 +9,8 @@
 
         <h3 class="text-center">{{ $header }}</h3>
 
-        <h4 class="mt-5">{{ $show->title }} - Season {{ $season->season_number }} {{ $episode !== null ? 'Episode ' . $episode->episode_number : '' }}</h4>
+        <h4 class="mt-5">{{ $show->title }} -
+            Season {{ $season->season_number }} {{ $episode !== null ? 'Episode ' . $episode->episode_number : '' }}</h4>
 
         <x-form.input :name="'title'" :label="'Title'" :value="$episode?->title"/>
 
@@ -20,6 +21,8 @@
 
         <x-form.input :type="'date'" :name="'release_date'" :label="'Release Date'"
                       :value="$episode?->release_date"/>
+
+        <x-form.input :type="'file'" :name="'image'" :label="'Image'" :value="$episode?->image"/>
 
         <x-form.textarea :name="'description'" :label="'Description'" :rows="8" :value="$episode?->description"/>
 

@@ -35,7 +35,11 @@
                             </div>
                             <hr>
                             <div>
-                                <h5>Biography</h5>
+                                <h5>Biography (summary)</h5>
+                                <p>{!! nl2br($person->bio)  !!}</p>
+                            </div>
+                            <div>
+                                <h5>Biography (full)</h5>
                                 <p>{!! nl2br($person->biography)  !!}</p>
                             </div>
                         </div>

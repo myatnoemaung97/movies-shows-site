@@ -17,8 +17,10 @@ class MovieController extends Controller
     }
 
     public function show(Movie $movie) {
+
         return view('movies.show', [
             'movie' => $movie,
+            'watchlistMedia' => auth()->user()?->watchlists()->firstWhere(['media_id' => $movie->id, 'media_type' => "App\Models\Movie"])
         ]);
     }
 }

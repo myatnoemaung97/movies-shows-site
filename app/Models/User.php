@@ -54,4 +54,12 @@ User extends Authenticatable
     public function playlists() {
         return $this->hasMany(Playlist::class);
     }
+
+    public function watchlistMovies() {
+        return $this->morphedByMany(Movie::class, 'media', 'watchlists');
+    }
+
+    public function watchlistShows() {
+        return $this->morphedByMany(Show::class, 'media', 'watchlists');
+    }
 }

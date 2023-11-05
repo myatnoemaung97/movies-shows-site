@@ -9,7 +9,7 @@ class Season extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['show_id', 'season_number', 'release_date', 'poster', 'thumbnail', 'trailer'];
+    protected $fillable = ['show_id', 'season_number', 'description', 'release_date', 'poster', 'thumbnail', 'trailer'];
 
     public function show() {
         return $this->belongsTo(Show::class);

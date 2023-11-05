@@ -1,4 +1,14 @@
 .logoutBtn {
     background-color: rgb(221, 0, 63);
     color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.episodeCard {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-gap: 10px;
+    padding: 10px;
 }
