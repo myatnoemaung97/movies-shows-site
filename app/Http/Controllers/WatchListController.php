@@ -31,8 +31,12 @@ class WatchListController extends Controller
         ]);
     }
 
-    public function destroy(Watchlist $watchlist) {
-        $watchlist->delete();
+    public function destroy(Request $request) {
+        Watchlist::firstWhere([
+            'media_id' => $request['mediaId'],
+            'media_type' => "App\Models\\" . ucwords($request['mediaType']),
+            'user_id' => auth()->user()->id
+        ])->delete();
     }
 
     private function paginate($items, $perPage = 10, $page = null, $options = []) {

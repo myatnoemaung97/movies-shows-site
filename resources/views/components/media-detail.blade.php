@@ -1,4 +1,4 @@
-@props(['media', 'type', 'period', 'currentSeason', 'watchlistMedia' => null])
+@props(['media', 'type', 'period', 'currentSeason', 'isInWatchlist' => false])
 
 <div class="hero sr-single-hero sr-single">
     <div class="container">
@@ -50,15 +50,15 @@
                     </h1>
 
                     @if($type !== 'season')
-                        <div id="plus-sign" class="social-btn {{ $watchlistMedia ? 'hide' : '' }}">
+                        <div id="plus-sign" class="social-btn {{ $isInWatchlist ? 'hide' : '' }}">
                             <a href="#" class="parent-btn"
                                onclick="addToWatchlist({{ $media->id }}, '{{ $type }}', {{ auth()->check() }})"><i
                                     class="fa-solid fa-plus"></i> Add to Watchlist</a>
                         </div>
 
-                        <div id="check-sign" class="social-btn {{ !$watchlistMedia ? 'hide' : '' }}">
+                        <div id="check-sign" class="social-btn {{ !$isInWatchlist ? 'hide' : '' }}">
                             <a href="#" class="parent-btn"
-                               onclick="removeFromWatchlist({{ $watchlistMedia?->id }}, {{ auth()->check() }})"><i
+                               onclick="removeFromWatchlist({{ $media->id }}, '{{ $type }}', {{ auth()->check() }})"><i
                                     class="fa-solid fa-check"></i> In Watchlist </a>
                         </div>
                     @endif

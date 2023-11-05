@@ -79,7 +79,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profiles/{user}/watchlists', [WatchListController::class, 'index']);
     Route::post('/watchlists', [WatchListController::class, 'store']);
-    Route::delete('/watchlists/{watchlist}', [WatchListController::class, 'destroy']);
+    Route::delete('/watchlists', [WatchListController::class, 'destroy']);
 });
 
 Route::middleware('can:admin')->group(function () {

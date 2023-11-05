@@ -33,7 +33,7 @@ function addToWatchlist(mediaId, mediaType, isAuthenticated) {
         });
 }
 
-function removeFromWatchlist(watchlistMediaId, isAuthenticated) {
+function removeFromWatchlist(mediaId, mediaType, isAuthenticated) {
     if (!isAuthenticated) {
         showLoginModal();
         return;
@@ -41,11 +41,13 @@ function removeFromWatchlist(watchlistMediaId, isAuthenticated) {
 
     const formData = new FormData();
 
+    formData.append('mediaId', mediaId);
+    formData.append('mediaType', mediaType);
     formData.append('_method', 'DELETE');
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    fetch(`/watchlists/${watchlistMediaId}`, {
+    fetch(`/watchlists`, {
         method: "POST",
         body: formData,
         headers: {
