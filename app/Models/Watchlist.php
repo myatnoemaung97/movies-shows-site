@@ -10,4 +10,6 @@ class Watchlist extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+
 }

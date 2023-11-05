@@ -103,7 +103,7 @@
                                             <p>{!! nl2br($media->description) !!} </p>
 
                                             @if($type !== 'season')
-                                                @if($type === 'show')
+                                                @if($type === 'show' && $media->seasons->count() > 0)
                                                     <div class="title-hd-sm">
                                                         <h4>Current Season</h4>
                                                         <a href="/shows/{{ $media->slug }}/seasons" class="time">View
@@ -341,7 +341,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                @if($type === 'show')
+                                @if($type === 'show' && $media->seasons->count() > 0)
                                     <div id="season" class="tab">
                                         <div class="row">
                                             @foreach($media->seasons as $season)

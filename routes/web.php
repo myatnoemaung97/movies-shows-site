@@ -38,10 +38,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/test', function () {
     $user = auth()->user();
 
-    $movies = $user->watchlistMovies()->paginate(3);
-    $shows = $user->watchlistShows()->paginate(3);
+    $watchlistMedia = $user->watchlists;
 
-    dd($movies->merge($shows));
 });
 
 Route::patch('/test', function (Request $request) {
