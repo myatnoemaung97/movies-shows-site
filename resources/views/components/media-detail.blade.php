@@ -61,28 +61,33 @@
                                onclick="removeFromWatchlist({{ $media->id }}, '{{ $type }}', {{ auth()->check() }})"><i
                                     class="fa-solid fa-check"></i> In Watchlist </a>
                         </div>
+
+                        <div class="movie-rate" style="{{ $type === 'season' ? 'margin-bottom: 100px;' : '' }}">
+                            <div class="rate">
+                                <i class="ion-android-star"></i>
+                                <p><span>8.1</span> /10<br>
+                                    <span class="rv">56 Reviews</span>
+                                </p>
+                            </div>
+                            <div class="rate-star">
+                                <p>Rate This {{ ucwords($type) }}: </p>
+                                <li class="ratingLink"><a href="#"><i class="fa-regular fa-star"></i></a></li>
+                                <div class="rating-wrapper" id="rating-content">
+                                    <div class="rating-content">
+                                        <a href="#" class="close">x</a>
+                                        <h3>Rate</h3>
+                                        @for($i = 1; $i <= 10; $i++)
+                                            <i id="star{{$i}}" class="fa-regular fa-star"
+                                               style="cursor: pointer; color: #f5b50a; font-size: 30px; margin-right: 5px;"
+                                               onmouseover="hoverStar({{ $i }})" onmouseleave="leaveStar()"
+                                               onclick="clickStar({{ $i }})"></i>
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endif
 
-                    <div class="movie-rate" style="{{ $type === 'season' ? 'margin-bottom: 100px;' : '' }}">
-                        <div class="rate">
-                            <i class="ion-android-star"></i>
-                            <p><span>8.1</span> /10<br>
-                                <span class="rv">56 Reviews</span>
-                            </p>
-                        </div>
-                        <div class="rate-star">
-                            <p>Rate This {{ ucwords($type) }}: </p>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star-outline"></i>
-                        </div>
-                    </div>
                     <div class="movie-tabs">
                         <div class="tabs">
                             <ul class="tab-links tabs-mv">

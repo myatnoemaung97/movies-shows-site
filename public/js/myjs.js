@@ -87,3 +87,55 @@ function showLoginModal() {
         }
     });
 }
+
+const ratingLink = $(".ratingLink");
+const ratingct = $("#rating-content");
+const ratingWrap = $(".rating-wrapper");
+
+ratingWrap.each( function(){
+    $(this).wrap('<div class="overlay"></div>')
+});
+
+const overlay = $(".overlay");
+
+ratingLink.on('click', function(event){
+    event.preventDefault();
+    ratingct.parents(overlay).addClass("openform");
+    $(document).on('click', function(e){
+        var target = $(e.target);
+        if ($(target).hasClass("overlay")){
+            $(target).find(ratingct).each( function(){
+                $(this).removeClass("openform");
+            });
+            setTimeout( function(){
+                $(target).removeClass("openform");
+            }, 350);
+        }
+    });
+});
+
+function hoverStar(starNumber) {
+    for (let i = 1; i <= starNumber; i++) {
+        const star = document.getElementById(`star${i}`);
+
+        if (star) {
+            star.classList.remove('fa-regular')
+            star.classList.add('fa-solid');
+        }
+    }
+}
+
+function leaveStar() {
+    for (let i = 1; i <= 10; i++) {
+        const star = document.getElementById(`star${i}`);
+
+        if (star) {
+            star.classList.remove('fa-solid')
+            star.classList.add('fa-regular');
+        }
+    }
+}
+
+function clickStar() {
+
+}

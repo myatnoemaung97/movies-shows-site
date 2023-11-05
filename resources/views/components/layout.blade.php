@@ -32,14 +32,10 @@
 
     <!-- custom css -->
     <link rel="stylesheet" href="/css/custom-css.css">
-    <!-- custom js -->
-    <script src="/js/myjs.js"></script>
+
 
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/807f2d6ec6.js" crossorigin="anonymous"></script>
-
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 </head>
 <body>
@@ -311,6 +307,9 @@
 <script src="/js/plugins.js"></script>
 <script src="/js/plugins2.js"></script>
 <script src="/js/custom.js"></script>
+
+<!-- custom js -->
+<script src="/js/myjs.js"></script>
 </body>
 
 
