@@ -1,4 +1,4 @@
-@props(['media', 'type', 'period', 'currentSeason', 'isInWatchlist' => false])
+@props(['media', 'type', 'period', 'currentSeason', 'isInWatchlist' => false, 'review' => null])
 
 <div class="hero sr-single-hero sr-single">
     <div class="container">
@@ -70,18 +70,44 @@
                                 </p>
                             </div>
                             <div class="rate-star">
-                                <p>Rate This {{ ucwords($type) }}: </p>
-                                <li class="ratingLink"><a href="#"><i class="fa-regular fa-star"></i></a></li>
+                                @if($review?->rating)
+                                    <p>Your Rating: </p>
+                                    <div class="ratingLink"><a href="#"><i class="fa-solid fa-star fa-2xl"
+                                                                           style="display: flex; justify-content: center; color: #f5b50a;"><span
+                                                    class="rating-number1">{{ $review->rating }}</span></i></a></div>
+                                @else
+                                    <p>Rate This {{ ucwords($type) }}: </p>
+                                    <div class="ratingLink"><a href="#"><i class="fa-regular fa-star"
+                                                                           style="color: #f5b50a"></i></a></div>
+                                @endif
+
                                 <div class="rating-wrapper" id="rating-content">
                                     <div class="rating-content">
                                         <a href="#" class="close">x</a>
-                                        <h3>Rate</h3>
-                                        @for($i = 1; $i <= 10; $i++)
-                                            <i id="star{{$i}}" class="fa-regular fa-star"
-                                               style="cursor: pointer; color: #f5b50a; font-size: 30px; margin-right: 5px;"
-                                               onmouseover="hoverStar({{ $i }})" onmouseleave="leaveStar()"
-                                               onclick="clickStar({{ $i }})"></i>
-                                        @endfor
+                                        <i class="fa-solid fa-star fa-2xl"
+                                           style="display: flex; justify-content: center; color: #f5b50a;"><span
+                                                class="rating-number">{{ $review?->rating }}</span></i>
+                                        <br>
+                                        <div style="margin-top: 50px;">
+                                            @for($i = 1; $i <= 10; $i++)
+                                                <i id="star{{$i}}"
+                                                   class="{{ $review && $i <= $review->rating ? 'fa-solid' : 'fa-regular' }} fa-star"
+                                                   style="cursor: pointer; color: #f5b50a; font-size: 30px; margin-right: 5px;"
+                                                   onmouseover="hoverStar({{ $i }})" onmouseleave="leaveStar()"
+                                                   onclick="clickStar({{ $i }})"></i>
+                                            @endfor
+                                        </div>
+                                        <br>
+                                        <button class="rateBtn grey"
+                                                onclick="rate({{ $media->id }}, '{{ $type }}', {{ auth()->check() }})"
+                                                disabled>Rate
+                                        </button>
+                                        @if($review?->rating)
+                                            <button class="remove-rating-btn"
+                                                    onclick="removeRating({{ $review->id }})"
+                                            >Remove Rating
+                                            </button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -227,122 +253,40 @@
                                 @if($type !== 'season')
                                     <div id="reviews" class="tab review">
                                         <div class="row">
-                                            <div class="rv-hd">
-                                                <a href="#" class="redbtn">Write Review</a>
+                                            <div class="rv-hd" style="margin-bottom: 15px; cursor: pointer;"
+                                                 onclick="showCommentArea({{ auth()->check() }})">
+                                                <div class="redbtn">Write Review</div>
                                             </div>
+
+                                            <div id="comment-area" class="hide">
+                                                <input type="text" class="form-control" id="review-headline"
+                                                       placeholder="Write a headline for your review here"
+                                                       style="margin-bottom: 10px;">
+
+                                                <textarea id="review-body" class="form-control" rows="10"
+                                                          placeholder="Write you review here"></textarea>
+
+                                                <div style="display: flex; justify-content: end; margin: 20px;">
+                                                    <button class="comment-btn"
+                                                            onclick="postComment({{ $media->id }}, '{{ $type }}')">Post
+                                                    </button>
+                                                </div>
+                                            </div>
+
                                             <div class="topbar-filter">
                                                 <p>Found <span>56 reviews</span> in total</p>
                                                 <label>Filter by:</label>
                                                 <select>
-                                                    <option value="popularity">Popularity Descending</option>
-                                                    <option value="popularity">Popularity Ascending</option>
-                                                    <option value="rating">Rating Descending</option>
-                                                    <option value="rating">Rating Ascending</option>
-                                                    <option value="date">Release date Descending</option>
-                                                    <option value="date">Release date Ascending</option>
+                                                    <option value="rating">Best</option>
+                                                    <option value="rating">Top</option>
+                                                    <option value="date">New</option>
+                                                    <option value="date">Controversial</option>
                                                 </select>
                                             </div>
-                                            <div class="mv-user-review-item">
-                                                <div class="user-infor">
-                                                    <img src="/images/uploads/userava1.jpg" alt="">
-                                                    <div>
-                                                        <h3>Best Marvel movie in my opinion</h3>
-                                                        <div class="no-star">
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star last"></i>
-                                                        </div>
-                                                        <p class="time">
-                                                            17 December 2016 by <a href="#"> hawaiipierson</a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <p>This is by far one of my favorite movies from the MCU. The
-                                                    introduction of new Characters both good and bad also makes the
-                                                    movie more exciting. giving the characters more of a back story can
-                                                    also help audiences relate more to different characters better, and
-                                                    it connects a bond between the audience and actors or characters.
-                                                    Having seen the movie three times does not bother me here as it is
-                                                    as thrilling and exciting every time I am watching it. In other
-                                                    words, the movie is by far better than previous movies (and I do
-                                                    love everything Marvel), the plotting is splendid (they really do
-                                                    out do themselves in each film, there are no problems watching it
-                                                    more than once.</p>
-                                            </div>
-                                            <div class="mv-user-review-item">
-                                                <div class="user-infor">
-                                                    <img src="/images/uploads/userava2.jpg" alt="">
-                                                    <div>
-                                                        <h3>Just about as good as the first one!</h3>
-                                                        <div class="no-star">
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                        </div>
-                                                        <p class="time">
-                                                            17 December 2016 by <a href="#"> hawaiipierson</a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <p>Avengers Age of Ultron is an excellent sequel and a worthy MCU title!
-                                                    There are a lot of good and one thing that feels off in my
-                                                    opinion. </p>
 
-                                                <p>THE GOOD:</p>
-
-                                                <p>First off the action in this movie is amazing, to buildings
-                                                    crumbling, to evil blue eyed robots tearing stuff up, this movie has
-                                                    the action perfectly handled. And with that action comes visuals.
-                                                    The visuals are really good, even though you can see clearly where
-                                                    they are through the movie, but that doesn't detract from the
-                                                    experience. While all the CGI glory is taking place, there are
-                                                    lovable characters that are in the mix. First off the original
-                                                    characters, Iron Man, Captain America, Thor, Hulk, Black Widow, and
-                                                    Hawkeye, are just as brilliant as they are always. And Joss Whedon
-                                                    fixed my main problem in the first Avengers by putting in more
-                                                    Hawkeye and him more fleshed out. Then there is the new Avengers,
-                                                    Quicksilver, Scarletwich, and Vision, they are pretty cool in my
-                                                    opinion. Vision in particular is pretty amazing in all his
-                                                    scenes.</p>
-
-                                                <p>THE BAD:</p>
-
-                                                <p>The beginning of the film it's fine until towards the second act and
-                                                    there is when it starts to feel a little rushed. Also I do feel like
-                                                    there are scenes missing but there was talk of an extended version
-                                                    on Blu-Ray so that's cool.</p>
-                                            </div>
-                                            <div class="topbar-filter">
-                                                <label>Reviews per page:</label>
-                                                <select>
-                                                    <option value="range">5 Reviews</option>
-                                                    <option value="saab">10 Reviews</option>
-                                                </select>
-                                                <div class="pagination2">
-                                                    <span>Page 1 of 6:</span>
-                                                    <a class="active" href="#">1</a>
-                                                    <a href="#">2</a>
-                                                    <a href="#">3</a>
-                                                    <a href="#">4</a>
-                                                    <a href="#">5</a>
-                                                    <a href="#">6</a>
-                                                    <a href="#"><i class="ion-arrow-right-b"></i></a>
-                                                </div>
-                                            </div>
+                                            @foreach($media->reviews as $review)
+                                                <x-review-card :review="$review"/>
+                                            @endforeach
                                         </div>
                                     </div>
                                 @endif

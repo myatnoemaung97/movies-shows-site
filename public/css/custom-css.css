@@ -12,3 +12,51 @@
     grid-gap: 10px;
     padding: 10px;
 }
+
+.rateBtn {
+    margin-top: 30px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+}
+
+.remove-rating-btn {
+    background: none;
+    color: deeppink;
+    border: none;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.grey {
+    background-color: grey;
+}
+
+.gold {
+    background-color: #F5B50AFF;
+}
+
+.rating-number {
+    position: absolute;
+    font-size: 10px;
+    font-weight: bold;
+    color: black;
+}
+
+.rating-number1 {
+    position: absolute;
+    font-size: 10px;
+    font-weight: bold;
+    color: black;
+}
+
+.comment-btn {
+    background-color: #dd003f;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    color: white;
+}
+
+

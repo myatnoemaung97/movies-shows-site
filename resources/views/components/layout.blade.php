@@ -33,7 +33,6 @@
     <!-- custom css -->
     <link rel="stylesheet" href="/css/custom-css.css">
 
-
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/807f2d6ec6.js" crossorigin="anonymous"></script>
 

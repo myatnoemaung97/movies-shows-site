@@ -5,22 +5,20 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{csrf_token()}}">
+
     <title>Document</title>
     <!-- bootstrap 5.0 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 <body>
 
-<form action="/test" method="POST">
-    @csrf
-    @method('PATCH')
+<button onclick="testPost()"> post </button>
+<button onclick="testDelete()"> delete </button>
+<button onclick="testPatch()"> patch </button>
 
-    <label>name</label>
-    <input type="text" name="name" id="name" >
-
-    <button type="submit">Submit</button>
-</form>
 
 
 <!-- jquery -->
@@ -29,10 +27,13 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        $('.js-example-basic-multiple').select2();
-    });
-</script>
+
+<script src="/js/jquery.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/plugins2.js"></script>
+<script src="/js/custom.js"></script>
+
+<!-- custom js -->
+<script src="/js/myjs.js"></script>
 </body>
 </html>

@@ -10,13 +10,16 @@ use App\Http\Controllers\CelebrityController;
 use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminSeasonController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\AdminShowController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\SpotlightController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WatchListController;
 use App\Models\Article;
@@ -36,11 +39,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/test', function () {
-    $user = auth()->user();
-
-    $watchlistMedia = $user->watchlists;
-
+    return view('test');
 });
+
+Route::post('/testPost', [TestController::class, 'store']);
+Route::delete('/testDelete', [TestController::class, 'destroy']);
+Route::patch('/testPatch', [TestController::class, 'destroy']);
+
+
 
 Route::patch('/test', function (Request $request) {
     dd($request->all());
@@ -78,6 +84,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profiles/{user}/watchlists', [WatchListController::class, 'index']);
     Route::post('/watchlists', [WatchListController::class, 'store']);
     Route::delete('/watchlists', [WatchListController::class, 'destroy']);
+
+    Route::post('/ratings', [RatingController::class, 'storeOrUpdate']);
+    Route::delete('/ratings/{review}', [RatingController::class, 'destroyOrUpdate']);
+
+    Route::post('/reviews', [ReviewController::class, 'storeOrUpdate']);
 });
 
 Route::middleware('can:admin')->group(function () {
@@ -93,7 +104,6 @@ Route::middleware('can:admin')->group(function () {
     Route::resource('/admin/shows/{show}/seasons', AdminSeasonController::class);
     Route::resource('/admin/shows/{show}/seasons/{season}/episodes', AdminEpisodeController::class);
     Route::resource('/admin/people', AdminPersonController::class);
-
 });
 
 
