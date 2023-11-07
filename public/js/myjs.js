@@ -232,32 +232,112 @@ function showCommentArea(isAuthenticated) {
     document.getElementById('comment-area').classList.remove('hide');
 }
 
-function postComment(mediaId, mediaType) {
-    let body = document.getElementById('review-body');
-    let headline = document.getElementById('review-headline');
+$(document).ready(function () {
 
-    const formData = new FormData();
+    // posting review
+    $('#review-form').submit(function (event) {
+        event.preventDefault();
 
-    formData.append('headline', headline.value);
-    formData.append('body', body.value);
-    formData.append('mediaId', mediaId);
-    formData.append('mediaType', mediaType);
+        var formData = $(this).serialize();
 
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        $.ajax({
+            type: 'POST',
+            url: '/reviews',
+            data: formData,
+            success: function (response) {
+                if (response.errors) {
+                    const headlineError = document.getElementById('headline-error');
+                    const bodyError = document.getElementById('body-error');
 
-    fetch(`/reviews`, {
-        method: "POST",
-        body: formData,
-        headers: {
-            'X-CSRF-TOKEN': csrfToken
-        }
-    })
-        .then(response => {
-            if (response.ok) {
-                window.location.reload();
+                    if (response.errors.headline) {
+                        headlineError.textContent = response.errors.headline[0];
+                    } else {
+                        headlineError.textContent = '';
+                    }
+
+                    if (response.errors.body) {
+                        bodyError.textContent = response.errors.body[0];
+                    } else {
+                        bodyError.textContent = '';
+                    }
+                } else {
+                    const commentArea = document.getElementById('comment-area');
+                    const ownReview = document.getElementById('own-review');
+
+                    commentArea.classList.add('hide');
+                    ownReview.classList.remove('hide');
+
+                    $('#review-form').html(response['reviewFrom']);
+
+                    $('#own-review').html(response['ownReviewSection']);
+                }
+            },
+            error: function (xhr, status, error) {
+
             }
         });
-}
+    });
+
+    // delete review
+    $(document).on('submit', '#delete-review', function (event) {
+        console.log('ajax');
+        event.preventDefault();
+
+        const formData = $(this).serialize();
+        const reviewId = $(this).find('input[name="reviewId"]').val();
+
+        $.ajax({
+            type: 'DELETE',
+            url: `/reviews/${reviewId}`,
+            data: formData,
+            success: function (response) {
+                $('#own-review').html(response['ownReviewSection']);
+            },
+            error: function (xhr, status, error) {
+                // Handle errors if needed
+            }
+        });
+    });
+
+    // login
+    $('#login-form').submit(function (event) {
+        event.preventDefault();
+
+        const formData = $(this).serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: '/login',
+            data: formData,
+            success: function (response) {
+                console.log('success');
+                if (response.errors) {
+                    console.log('errors');
+                    const emailError = document.getElementById('email-error');
+                    const passwordError = document.getElementById('password-error');
+
+                    if (response.errors.email) {
+                        emailError.textContent = response.errors.email;
+                    } else {
+                        emailError.textContent = '';
+                    }
+
+                    if (response.errors.password) {
+                        passwordError.textContent = response.errors.password;
+                    } else {
+                        passwordError.textContent = '';
+                    }
+                } else {
+                    console.log('no error');
+                    window.location.reload();
+                }
+            },
+            error: function (xhr, status, error) {
+
+            }
+        });
+    });
+});
 
 function testPost() {
     const formData = new FormData();

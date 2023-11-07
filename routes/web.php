@@ -89,6 +89,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/ratings/{review}', [RatingController::class, 'destroyOrUpdate']);
 
     Route::post('/reviews', [ReviewController::class, 'storeOrUpdate']);
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroyOrUpdate']);
 });
 
 Route::middleware('can:admin')->group(function () {

@@ -2,25 +2,29 @@
 
 <div class="mv-user-review-item">
     <div class="user-infor">
-        <img src="/images/uploads/userava1.jpg" alt="">
         <div>
-            <h3>{{ $review->headline }}</h3>
-            <div class="no-star">
-                <i class="ion-android-star"></i>
-                <i class="ion-android-star"></i>
-                <i class="ion-android-star"></i>
-                <i class="ion-android-star"></i>
-                <i class="ion-android-star"></i>
-                <i class="ion-android-star"></i>
-                <i class="ion-android-star"></i>
-                <i class="ion-android-star"></i>
-                <i class="ion-android-star"></i>
-                <i class="ion-android-star last"></i>
-            </div>
+            <h3>{{ $review?->headline }}</h3>
+
+            @if($review?->rating)
+                <p>{{ $review?->rating }}/10 <i class="fa-solid fa-star" style="color: gold;"></i></p>
+            @endif
+
             <p class="time">
-                {{ date('d F Y', strtotime($review->created_at))}} by <a href="#"> {{ $review->user->username }}</a>
+                {{ date('d F Y', strtotime($review?->created_at))}} by <a href="#">{{ $review?->user->username }}</a>
             </p>
         </div>
     </div>
-    <p>{{ $review->body }}</p>
+    <p>{{ $review?->body }}</p>
+    <div>
+        @if(auth()->check() && $review?->user->id === auth()->user()->id)
+            <form id="delete-review" action="/reviews/{{ $review->id }}" method="POST">
+                @csrf
+                @method('DELETE')
+
+                <input type="hidden" name="reviewId" value="{{ $review?->id }}">
+
+                <button class="icon-button" type="submit"><i class="fa-solid fa-trash" style="color: deeppink;" title="Delete Review"></i></button>
+            </form>
+        @endif
+    </div>
 </div>

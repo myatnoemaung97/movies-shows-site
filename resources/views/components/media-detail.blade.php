@@ -251,42 +251,20 @@
                                     </div>
                                 </div>
                                 @if($type !== 'season')
-                                    <div id="reviews" class="tab review">
+                                    <div id="reviews" class="tab review" style="padding-left: 10px;">
                                         <div class="row">
                                             <div class="rv-hd" style="margin-bottom: 15px; cursor: pointer;"
                                                  onclick="showCommentArea({{ auth()->check() }})">
-                                                <div class="redbtn">Write Review</div>
+                                                <div class="redbtn">{{ $review?->body ? 'Edit' : 'Write' }} Review</div>
                                             </div>
 
                                             <div id="comment-area" class="hide">
-                                                <input type="text" class="form-control" id="review-headline"
-                                                       placeholder="Write a headline for your review here"
-                                                       style="margin-bottom: 10px;">
-
-                                                <textarea id="review-body" class="form-control" rows="10"
-                                                          placeholder="Write you review here"></textarea>
-
-                                                <div style="display: flex; justify-content: end; margin: 20px;">
-                                                    <button class="comment-btn"
-                                                            onclick="postComment({{ $media->id }}, '{{ $type }}')">Post
-                                                    </button>
-                                                </div>
+                                                @include('partials.review_form', ['mediaId' => $media->id, 'type' => $type, 'review' => $review])
                                             </div>
 
-                                            <div class="topbar-filter">
-                                                <p>Found <span>56 reviews</span> in total</p>
-                                                <label>Filter by:</label>
-                                                <select>
-                                                    <option value="rating">Best</option>
-                                                    <option value="rating">Top</option>
-                                                    <option value="date">New</option>
-                                                    <option value="date">Controversial</option>
-                                                </select>
+                                            <div id="review-section">
+                                                @include('partials.review_section', ['ownReview' => $review, 'reviews' => $media->reviews()->whereNot('user_id', auth()->user()?->id)->get()])
                                             </div>
-
-                                            @foreach($media->reviews as $review)
-                                                <x-review-card :review="$review"/>
-                                            @endforeach
                                         </div>
                                     </div>
                                 @endif

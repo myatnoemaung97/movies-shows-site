@@ -52,29 +52,7 @@
     <div class="login-content">
         <a href="#" class="close">x</a>
         <h3>Login</h3>
-        <form method="post" action="/login">
-            @csrf
-
-            <div class="row">
-                <label for="email">
-                    Email:
-                    <input type="email" name="email" id="email" required="required"/>
-                </label>
-            </div>
-            <x-form.error :name="'email'"/>
-
-            <div class="row">
-                <label for="password">
-                    Password:
-                    <input type="password" name="password" id="password" required="required"/>
-                </label>
-            </div>
-            <x-form.error :name="'password'"/>
-
-            <div class="row">
-                <button type="submit">Login</button>
-            </div>
-        </form>
+        @include('partials.login_form')
     </div>
 </div>
 <!--end of login form popup-->
