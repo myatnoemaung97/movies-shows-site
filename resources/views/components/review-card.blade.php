@@ -1,4 +1,4 @@
-@props(['review'])
+@props(['review', 'liked' => false, 'disliked' => false])
 
 <div class="mv-user-review-item">
     <div class="user-infor">
@@ -23,8 +23,13 @@
 
                 <input type="hidden" name="reviewId" value="{{ $review?->id }}">
 
-                <button class="icon-button" type="submit"><i class="fa-solid fa-trash" style="color: deeppink;" title="Delete Review"></i></button>
+                <button class="icon-button" type="submit"><i class="fa-solid fa-trash" style="color: deeppink;"
+                                                             title="Delete Review"></i></button>
             </form>
+        @else
+            <div id="like-dislike{{ $review?->id }}">
+                @include('partials.like_dislike', ['review' => $review, 'liked' => $liked, 'disliked' => $disliked])
+            </div>
         @endif
     </div>
 </div>

@@ -1,7 +1,7 @@
 @props(['medias'])
 
 <div class="topbar-filter user">
-    <p>Found <span>1,608 movies</span> in total</p>
+    <p>Found <span>{{ $medias->count() }} medias</span> in total</p>
     <label>Sort by:</label>
     <select>
         <option value="range">-- Choose option --</option>

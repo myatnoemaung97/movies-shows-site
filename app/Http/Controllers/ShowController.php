@@ -30,7 +30,8 @@ class ShowController extends Controller
             'period' => $start . ' - ' . $end,
             'show' => $show,
             'currentSeason' => $currentSeason,
-            'isInWatchlist' => (bool) auth()->user()?->watchlists()->firstWhere(['media_id' => $show->id, 'media_type' => "App\Models\Show"])
+            'isInWatchlist' => (bool) auth()->user()?->watchlists()->firstWhere(['media_id' => $show->id, 'media_type' => "App\Models\Show"]),
+            'review' => auth()->user()?->reviews()->firstWhere(['media_id' => $show->id, 'media_type' => "App\Models\Show"]),
         ]);
     }
 

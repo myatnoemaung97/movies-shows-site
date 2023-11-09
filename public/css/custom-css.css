@@ -1,9 +1,9 @@
-.logoutBtn {
+.logoutBtn, .saveBtn {
     background-color: rgb(221, 0, 63);
     color: white;
     border: none;
-    padding: 10px;
-    border-radius: 20px;
+    padding: 8px;
+    border-radius: 18px;
 }
 
 .episodeCard {

@@ -280,10 +280,10 @@ $(document).ready(function () {
 
     // delete review
     $(document).on('submit', '#delete-review', function (event) {
-        console.log('ajax');
         event.preventDefault();
 
         const formData = $(this).serialize();
+
         const reviewId = $(this).find('input[name="reviewId"]').val();
 
         $.ajax({
@@ -295,6 +295,58 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 // Handle errors if needed
+            }
+        });
+    });
+
+    // like
+    $(document).on('submit', '#like', function (event) {
+        event.preventDefault();
+
+        const formData = $(this).serialize();
+
+        const reviewId = $(this).find('input[name="reviewId"]').val();
+        const isAuthenticated = $(this).find('input[name="isAuthenticated"]').val();
+
+        if (!isAuthenticated) {
+            showLoginModal();
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: `/like`,
+            data: formData,
+            success: function (response) {
+                $(`#like-dislike${reviewId}`).html(response['updatedLikeDislike']);
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    });
+
+    // dislike
+    $(document).on('submit', '#dislike', function (event) {
+        event.preventDefault();
+
+        const formData = $(this).serialize();
+
+        const reviewId = $(this).find('input[name="reviewId"]').val();
+        const isAuthenticated = $(this).find('input[name="isAuthenticated"]').val();
+
+        if (!isAuthenticated) {
+            showLoginModal();
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: `/dislike`,
+            data: formData,
+            success: function (response) {
+                $(`#like-dislike${reviewId}`).html(response['updatedLikeDislike']);
+            },
+            error: function (xhr, status, error) {
             }
         });
     });
@@ -338,6 +390,32 @@ $(document).ready(function () {
         });
     });
 });
+
+function handleSortChange(sort, mediaId, type) {
+    const formData = new FormData();
+    formData.append('sort', sort);
+    formData.append('mediaType', type);
+    formData.append('mediaId', mediaId);
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    fetch("/sort", {
+        method: "POST",
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': csrfToken
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                $(`#review-section`).html(response['updatedReviewSection']);
+            }
+        })
+        .catch(error => {
+            console.error('Error occurred:', error);
+        });
+}
+
 
 function testPost() {
     const formData = new FormData();

@@ -4230,11 +4230,12 @@ ul {
 .cate .orange {
   background-color: #ec5a1a;
 }
-.movie_list .movie-item-style-2 img,
-.movie_single .movie-item-style-2 img,
-.userfav_list .movie-item-style-2 img {
-  width: 30%;
-}
+/* deleted css */
+/*.movie_list .movie-item-style-2 img,*/
+/*.movie_single .movie-item-style-2 img,*/
+/*.userfav_list .movie-item-style-2 img {*/
+/*  width: 30%;*/
+/*}*/
 @media (max-width: 767px) {
   .movie_list .movie-item-style-2 img,
   .movie_single .movie-item-style-2 img,
@@ -6538,6 +6539,7 @@ ul {
   border-bottom: 1px solid #405266;
   padding-bottom: 30px;
 }
+
 .userrate img {
   width: 100px;
 }

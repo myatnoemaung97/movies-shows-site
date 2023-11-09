@@ -40,7 +40,8 @@ User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'is_admin' => 'boolean',
-        'is_banned' => 'boolean'
+        'is_banned' => 'boolean',
+        'is_like' => 'boolean'
     ];
 
     public function reviews() {
@@ -61,5 +62,23 @@ User extends Authenticatable
 
     public function watchlistShows() {
         return $this->morphedByMany(Show::class, 'media', 'watchlists');
+    }
+
+    public function reviewMovies() {
+        return $this->morphedByMany(Movie::class, 'media', 'reviews');
+    }
+
+    public function likeDislikes() {
+        return $this->hasMany(LikeDislike::class);
+    }
+
+    public function likedReviews() {
+        return $this->belongsToMany(Review::class, 'like_dislikes')
+            ->where('is_like', true);
+    }
+
+    public function dislikedReviews() {
+        return $this->belongsToMany(Review::class, 'like_dislikes')
+            ->where('is_like', false);
     }
 }

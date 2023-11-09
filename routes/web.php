@@ -5,26 +5,27 @@ use App\Http\Controllers\AdminContentController;
 use App\Http\Controllers\AdminEpisodeController;
 use App\Http\Controllers\AdminMovieController;
 use App\Http\Controllers\AdminPersonController;
+use App\Http\Controllers\AdminSeasonController;
+use App\Http\Controllers\AdminShowController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CelebrityController;
-use App\Http\Controllers\EpisodeController;
+use App\Http\Controllers\DislikeController;
 use App\Http\Controllers\FavouriteController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\AdminSeasonController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\SessionsController;
-use App\Http\Controllers\AdminShowController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\SpotlightController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WatchListController;
 use App\Models\Article;
-use App\Models\Movie;
-use App\Models\Show;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,14 +40,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/test', function () {
-    return view('test');
+    $review = \App\Models\Review::find(3);
+    $user = auth()->user();
+
+    $likedReviews = $user->likedReviews;
+    $dislikedReviews = $user->dislikedReviews;
+
+    dd($dislikedReviews->contains($review));
 });
 
 Route::post('/testPost', [TestController::class, 'store']);
 Route::delete('/testDelete', [TestController::class, 'destroy']);
 Route::patch('/testPatch', [TestController::class, 'destroy']);
-
-
 
 Route::patch('/test', function (Request $request) {
     dd($request->all());
@@ -81,15 +86,29 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::delete('/logout', [SessionsController::class, 'destroy']);
 
-    Route::get('/profiles/{user}/watchlists', [WatchListController::class, 'index']);
+    Route::get('/profile', [ProfileController::class, 'edit']);
+    Route::patch('/profile', [ProfileController::class, 'update']);
+
+    Route::get('/profile/watchlists', [WatchListController::class, 'index']);
     Route::post('/watchlists', [WatchListController::class, 'store']);
     Route::delete('/watchlists', [WatchListController::class, 'destroy']);
 
     Route::post('/ratings', [RatingController::class, 'storeOrUpdate']);
     Route::delete('/ratings/{review}', [RatingController::class, 'destroyOrUpdate']);
 
+    Route::get('/profile/reviews', [ReviewController::class, 'index']);
     Route::post('/reviews', [ReviewController::class, 'storeOrUpdate']);
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroyOrUpdate']);
+    Route::post('/sort', [ReviewController::class, 'sort']);
+
+
+    Route::post('/like', [LikeController::class, 'store']);
+    Route::patch('/like', [LikeController::class, 'update']);
+    Route::delete('/like', [LikeController::class, 'destroy']);
+
+    Route::post('/dislike', [DislikeController::class, 'store']);
+    Route::patch('/dislike', [DislikeController::class, 'update']);
+    Route::delete('/dislike', [DislikeController::class, 'destroy']);
 });
 
 Route::middleware('can:admin')->group(function () {

@@ -5,7 +5,7 @@
     </div>
     <hr>
     <div>
-        <div class="d-flex flex-column float-right">
+        <div class="d-flex flex-column float-right" style="padding-right: 30px;">
             <p>Created: {{ $show->created_at }}</p>
             <p>Updated: {{ $show->updated_at }}</p>
             <div class="d-flex justify-content-end">

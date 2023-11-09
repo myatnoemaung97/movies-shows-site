@@ -1,4 +1,4 @@
-@props(['media', 'type', 'period', 'currentSeason', 'isInWatchlist' => false, 'review' => null])
+@props(['media', 'type', 'period', 'currentSeason', 'isInWatchlist' => false, 'review' => null, 'likedReviews', 'dislikedReviews'])
 
 <div class="hero sr-single-hero sr-single">
     <div class="container">
@@ -262,8 +262,8 @@
                                                 @include('partials.review_form', ['mediaId' => $media->id, 'type' => $type, 'review' => $review])
                                             </div>
 
-                                            <div id="review-section">
-                                                @include('partials.review_section', ['ownReview' => $review, 'reviews' => $media->reviews()->whereNot('user_id', auth()->user()?->id)->get()])
+                                            <div>
+                                                @include('partials.review_section', ['ownReview' => $review, 'mediaId' => $media->id, 'type' => $type, 'likedReviews' => $likedReviews, 'dislikedReviews' => $dislikedReviews, 'reviews' => $media->reviews()->whereNot('user_id', auth()->user()?->id)->get()])
                                             </div>
                                         </div>
                                     </div>

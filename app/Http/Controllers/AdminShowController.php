@@ -68,7 +68,6 @@ class AdminShowController extends Controller
             $attributes['thumbnail'] = ImageService::makeThumbnail($image, [185, 300]);
 
             $attributes['slug'] = Str::slug($attributes['title']) . '-' . date('Y', strtotime($attributes['release_date']));
-
             $show = Show::create($attributes);
 
             MediaGenreController::store($show, $attributes['genres']);

@@ -183,7 +183,7 @@
                             pages <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </a>
                         <ul class="dropdown-menu level1">
-                            <li><a href="/profiles/{{ auth()->user()?->id }}/watchlists">Watchlist</a></li>
+                            <li><a href="/profile/watchlists">Watchlist</a></li>
                             <li><a href="404.html">404 Page</a></li>
                             <li class="it-last"><a href="comingsoon.html">Coming soon</a></li>
                         </ul>

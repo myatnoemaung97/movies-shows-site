@@ -17,10 +17,14 @@ class MovieController extends Controller
     }
 
     public function show(Movie $movie) {
+        $user = auth()->user();
+
         return view('movies.show', [
             'movie' => $movie,
-            'isInWatchlist' => (bool) auth()->user()?->watchlists()->firstWhere(['media_id' => $movie->id, 'media_type' => "App\Models\Movie"]),
-            'review' => auth()->user()?->reviews()->firstWhere(['media_id' => $movie->id, 'media_type' => "App\Models\Movie"]),
+            'isInWatchlist' => (bool) $user?->watchlists()->firstWhere(['media_id' => $movie->id, 'media_type' => "App\Models\Movie"]),
+            'review' => $user?->reviews()->firstWhere(['media_id' => $movie->id, 'media_type' => "App\Models\Movie"]),
+            'likedReviews' => $user?->likedReviews,
+            'dislikedReviews' => $user?->dislikedReviews,
         ]);
     }
 }

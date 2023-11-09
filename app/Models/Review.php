@@ -11,6 +11,8 @@ class Review extends Model
 
     protected $guarded = [];
 
+    protected $with = ['media'];
+
     public function media() {
         return $this->morphTo();
     }
@@ -18,5 +20,6 @@ class Review extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
 
 }

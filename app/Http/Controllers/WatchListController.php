@@ -11,12 +11,13 @@ use Illuminate\Support\Collection;
 
 class WatchListController extends Controller
 {
-    public function index(User $user) {
+    public function index() {
+        $user = auth()->user();
         $movies = $user->watchlistMovies;
         $shows = $user->watchlistShows;
         $medias = $movies->mergeRecursive($shows);
 
-        $path = "/" . auth()->user()->id . '/watchlists/';
+        $path = '/profile/watchlists';
 
         return view('watchlists.index', [
             'medias' => $this->paginate($medias, 5, null, ['path' => $path])
