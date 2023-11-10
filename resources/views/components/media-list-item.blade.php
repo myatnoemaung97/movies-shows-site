@@ -7,7 +7,7 @@
     <div class="mv-item-infor">
         <h6><a href="/{{ $type === 'Movie' ? 'movies' : 'shows' }}/{{ $media->slug }}">{{ $media->title }} <span>({{ date('Y', strtotime($media->release_date)) }})</span></a></h6>
         @if($type === 'Show') <p>TV Series</p> @endif
-        <p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>
+        <p class="rate"><i class="ion-android-star"></i><span>{{ $media->rating }}</span> /10</p>
         <p class="describe">{{ substr($media->description, 0, 200) . '...' }}</p>
         <p class="run-time"> Run Time: {{ $media->run_time }} . <span>MMPA: {{ $media->age_rating }} </span> . <span>Release: {{ $media->release_date }}</span>
         </p>

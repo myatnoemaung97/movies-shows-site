@@ -25,7 +25,8 @@ class MovieFactory extends Factory
             'run_time' => fake()->numberBetween(60, 240),
             'poster' => '/storage/image-placeholder.jpg',
             'thumbnail' => '/storage/media-thumbnail.jpg',
-            'trailer' => 'youtube.com'
+            'trailer' => 'youtube.com',
+            'rating' => fake()->numberBetween(1.0, 10.0),
         ];
     }
 }

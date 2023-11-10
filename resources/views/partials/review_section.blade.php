@@ -1,8 +1,7 @@
-<div id="review-section" class="topbar-filter">
+<div class="topbar-filter">
     <label>Sort by:</label>
-    <select onchange="handleSortChange(this.value, {{ $mediaId }}, '{{ $type }}')">
+    <select onchange="sortReviews(this.value, {{ $mediaId }}, '{{ $type }}')">
         <option selected disabled>-</option>
-        <option value="best">Best</option>
         <option value="top">Top</option>
         <option value="new">New</option>
         <option value="controversial">Controversial</option>

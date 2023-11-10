@@ -25,7 +25,6 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WatchListController;
 use App\Models\Article;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,13 +39,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/test', function () {
-    $review = \App\Models\Review::find(3);
-    $user = auth()->user();
-
-    $likedReviews = $user->likedReviews;
-    $dislikedReviews = $user->dislikedReviews;
-
-    dd($dislikedReviews->contains($review));
+    dd(date('Y', strtotime(now())));
 });
 
 Route::post('/testPost', [TestController::class, 'store']);
@@ -75,6 +68,8 @@ Route::get('/shows/{show}/seasons/{season}', [SeasonController::class, 'show']);
 
 Route::get('/celebrities/{person}', [CelebrityController::class, 'show']);
 
+Route::get('/reviews/sort', [ReviewController::class, 'sort']);
+
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'create']);
     Route::post('/register', [RegisterController::class, 'store']);
@@ -99,8 +94,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/reviews', [ReviewController::class, 'index']);
     Route::post('/reviews', [ReviewController::class, 'storeOrUpdate']);
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroyOrUpdate']);
-    Route::post('/sort', [ReviewController::class, 'sort']);
-
 
     Route::post('/like', [LikeController::class, 'store']);
     Route::patch('/like', [LikeController::class, 'update']);

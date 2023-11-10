@@ -26,6 +26,7 @@ class ShowFactory extends Factory
             'trailer' => 'youtube.com',
             'status' => 'on going',
             'description' => fake()->paragraph(),
+            'rating' => fake()->numberBetween(1.0, 10.0),
         ];
     }
 }

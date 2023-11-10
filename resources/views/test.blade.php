@@ -19,6 +19,13 @@
 <button onclick="testDelete()"> delete </button>
 <button onclick="testPatch()"> patch </button>
 
+<select>
+    <option >1</option>
+    <option>2</option>
+    <option selected>3</option>
+
+</select>
+
 
 
 <!-- jquery -->

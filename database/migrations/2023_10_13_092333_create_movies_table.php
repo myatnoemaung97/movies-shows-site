@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('poster');
             $table->string('thumbnail')->default('/storage/media-thumbnail.jpg');
             $table->string('trailer');
+            $table->double('rating')->nullable();
             $table->timestamps();
         });
     }

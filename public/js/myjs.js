@@ -391,25 +391,40 @@ $(document).ready(function () {
     });
 });
 
-function handleSortChange(sort, mediaId, type) {
-    const formData = new FormData();
-    formData.append('sort', sort);
-    formData.append('mediaType', type);
-    formData.append('mediaId', mediaId);
-
+function sortReviews(sort, mediaId, type) {
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    fetch("/sort", {
-        method: "POST",
-        body: formData,
+    const query = `?sort=${sort}&mediaId=${mediaId}&mediaType=${type}`;
+
+    fetch(`/reviews/sort${query}`, {
+        method: "GET",
         headers: {
             'X-CSRF-TOKEN': csrfToken
         }
     })
-        .then(response => {
-            if (response.ok) {
-                $(`#review-section`).html(response['updatedReviewSection']);
-            }
+        .then(response => response.json())
+        .then(data => {
+            $(`#review-section`).html(data.updatedReviewSection);
+        })
+        .catch(error => {
+            console.error('Error occurred:', error);
+        });
+}
+
+function sortMedias(sort, type) {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    const url = `/${type}s?sort=${sort}`;
+
+    fetch(`${url}`, {
+        method: "GET",
+        headers: {
+            'X-CSRF-TOKEN': csrfToken
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            $(`#media-grid`).html(data.updatedMediaGrid);
         })
         .catch(error => {
             console.error('Error occurred:', error);

@@ -2,8 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Article;
-use App\Models\Content;
+use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Show;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -45,6 +44,10 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::bind('movie', function ($value) {
             return Movie::where('slug', $value)->firstOrFail();
+        });
+
+        Route::bind('genre', function ($value) {
+            return Genre::where('name', $value)->firstOrFail();
         });
 
         Route::bind('show', function ($value) {

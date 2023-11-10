@@ -9,7 +9,7 @@ class Movie extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'slug', 'age_rating', 'release_date', 'description', 'run_time', 'poster', 'thumbnail', 'trailer'];
+    protected $fillable = ['title', 'slug', 'age_rating', 'release_date', 'description', 'run_time', 'poster', 'thumbnail', 'trailer', 'rating'];
 
     public function reviews()
     {
@@ -44,5 +44,7 @@ class Movie extends Model
         return $this->morphToMany(Genre::class, 'media', 'media_genres');
     }
 
-
+    public function rating() {
+        return Review::where(['media_id' => $this->id, 'media_type' => 'App\Models\Movie'])->avg('rating');
+    }
 }

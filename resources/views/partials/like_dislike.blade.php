@@ -7,7 +7,7 @@
         <input type="hidden" name="_method" value="{{ $liked ? 'DELETE' : ($disliked ? 'PATCH' : 'POST') }}">
 
         <button class="icon-button" type="submit"><i id="like-btn" class="{{ $liked ? 'fa-solid' : 'fa-regular' }} fa-thumbs-up fa-lg"
-                                                     style="color: deeppink;"></i> {{ $review?->likes }}
+                                                     style="color: deeppink;"></i> <span style="color: white;">{{ $review?->likes }}</span>
         </button>
     </form>
 
@@ -20,7 +20,7 @@
 
         <button class="icon-button" type="submit"><i id="dislike-btn"
                                                      class="{{ $disliked ? 'fa-solid' : 'fa-regular' }} fa-thumbs-down fa-lg"
-                                                     style="color: deeppink"></i> {{ $review?->dislikes }}
+                                                     style="color: deeppink"></i> <span style="color: white;">{{ $review?->dislikes }}</span>
         </button>
     </form>
 </div>

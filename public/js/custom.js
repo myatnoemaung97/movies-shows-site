@@ -48,7 +48,7 @@ $(function(){
 		$(this).toggleClass('open');
 	});
 	//js for tabs
-	var tabsClick = $('.tabs .tab-links a, .tab-links-2 a, .tab-links-3 a');
+	var tabsClick = $('.tabs .tab-links a, .tab-links-2 a, .tab-links-3 a, ._my-tab-link');
 	var multiItem = $('.slick-multiItem');
 	var multiItem2 = $('.slick-multiItem2');
 	tabsClick.on('click', function(e)  {

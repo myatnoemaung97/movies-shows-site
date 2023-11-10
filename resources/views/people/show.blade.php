@@ -44,16 +44,15 @@
                                         <div class="row">
                                             <div class="col-md-8 col-sm-12 col-xs-12">
                                                 <p>{!! nl2br($person->bio) !!}</p>
-                                                <p class="time"><a href="#biography">See full bio <i
+                                                <p class="time"><a class="_my-tab-link" href="#biography">See full bio <i
                                                             class="ion-ios-arrow-right"></i></a></p>
                                                 <div class="title-hd-sm">
                                                     <h4>filmography</h4>
-                                                    <a href="#filmography" class="time">Full Filmography<i
+                                                    <a href="#filmography" class="time _my-tab-link">Full Filmography<i
                                                             class="ion-ios-arrow-right"></i></a>
                                                 </div>
                                                 <!-- movie cast -->
                                                 <x-filmography :medias="$medias->take(5)"/>
-
                                             </div>
                                             <div class="col-md-4 col-xs-12 col-sm-12">
                                                 <div class="sb-it">

@@ -76,28 +76,37 @@ class ReviewController extends Controller
         $mediaId = $request['mediaId'];
         $mediaType = $request['mediaType'];
 
+        $user = auth()->user();
+
         if ($mediaType === 'movie') {
             $media = Movie::find($mediaId);
         } else {
             $media = Show::find($mediaId);
         }
 
-        if ($sort === 'top') {
-            $reviews = $media->reviews()->orderBy('likes', 'desc')->get();
+        switch ($sort) {
+            case 'top':
+                $reviews = $media->reviews()->whereNot('user_id', $user?->id)->orderBy('likes', 'desc')->get();
+                break;
+            case 'controversial':
+                $reviews = $media->reviews()->whereNot('user_id', $user?->id)->orderBy('dislikes', 'desc')->get();
+                break;
+            case 'new':
+                $reviews = $media->reviews()->whereNot('user_id', $user?->id)->orderBy('created_at', 'desc')->get();
+                break;
         }
 
-        $user = auth()->user();
-
-        $ownReview = $user->reviews()->firstWhere(['media_id' => $mediaId, 'media_type' => "App\Models\\" . ucwords($mediaType)]);
-        $likedReviews = $user->likedReviews;
-        $dislikedReviews = $user->dislikedReviews;
+        $ownReview = $user?->reviews()->firstWhere(['media_id' => $mediaId, 'media_type' => "App\Models\\" . ucwords($mediaType)]);
+        $likedReviews = $user?->likedReviews;
+        $dislikedReviews = $user?->dislikedReviews;
 
         $updatedReviewSection = view('partials.review_section',
             ['mediaId' => $mediaId, 'type' => $mediaType, 'ownReview' => $ownReview, 'reviews' => $reviews, 'likedReviews' => $likedReviews, 'dislikedReviews' => $dislikedReviews])->render();
 
-
         return response()->json([
             'updatedReviewSection' => $updatedReviewSection
         ]);
+
+
     }
 }
