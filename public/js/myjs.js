@@ -412,15 +412,10 @@ function sortReviews(sort, mediaId, type) {
 }
 
 function sortMedias(sort, type) {
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
     const url = `/${type}s?sort=${sort}`;
 
     fetch(`${url}`, {
         method: "GET",
-        headers: {
-            'X-CSRF-TOKEN': csrfToken
-        }
     })
         .then(response => response.json())
         .then(data => {

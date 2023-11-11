@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/test', function () {
-    dd(date('Y', strtotime(now())));
+    dd(\App\Models\Movie::latest());
 });
 
 Route::post('/testPost', [TestController::class, 'store']);

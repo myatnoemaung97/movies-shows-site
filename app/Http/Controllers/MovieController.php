@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 class MovieController extends Controller
 {
     public function index(Request $request) {
+
+        $query = Movie::latest();
+
         if (empty($request->all())) {
-            $movies = Movie::latest();
 
             return view('movies.index', [
-                'count' => $movies->count(),
-                'movies' => $movies->paginate(12)
+                'count' => $query->count(),
+                'movies' => $query->paginate(12)
             ]);
         }
 
@@ -24,16 +26,28 @@ class MovieController extends Controller
         $yearFrom = $request['year_from'];
         $yearTo = $request['year_to'];
 
-        if ($sort) {
-            $movies = Movie::orderByRaw($sort);
-        }
-
         if ($title) {
-
+            $query = $query->where('title', 'like', '%' . $title . '%');
         }
 
+        if ($minRating) {
+            $query = $query->where('rating', '>', $minRating);
+        }
+
+        if ($yearFrom) {
+            $query = $query->whereYear('release_date', '>', $yearFrom);
+        }
+
+        if ($yearTo) {
+            $query = $query->whereYear('release_date', '<', $yearTo);
+        }
+
+        if ($sort) {
+            $query = $query->orderByRaw($sort);
+        }
+        
         $updatedMediaGrid = view('partials.media_grid',
-            ['count' => $movies->get()->count(), 'type' => 'movie', 'sort' => $sort, 'medias' => $movies->paginate(12)])->render();
+            ['count' => $query->get()->count(), 'type' => 'movie', 'sort' => $sort, 'medias' => $query->paginate(12)])->render();
 
         return response()->json([
             'updatedMediaGrid' => $updatedMediaGrid
