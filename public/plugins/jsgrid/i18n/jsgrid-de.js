@@ -24,7 +24,7 @@
                 editButtonTooltip: "Bearbeiten",
                 deleteButtonTooltip: "Löschen",
                 searchButtonTooltip: "Eintrag finden",
-                clearFilterButtonTooltip: "Filter zurücksetzen",
+                clearFilterButtonTooltip: "MediaFilter zurücksetzen",
                 insertButtonTooltip: "Hinzufügen",
                 updateButtonTooltip: "Speichern",
                 cancelEditButtonTooltip: "Abbrechen"

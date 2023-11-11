@@ -1,6 +1,6 @@
 <?php namespace Clockwork\Request;
 
-// Filter requests before recording
+// MediaFilter requests before recording
 class ShouldRecord
 {
 	// Enable collecting of errors only (requests with 4xx or 5xx responses)

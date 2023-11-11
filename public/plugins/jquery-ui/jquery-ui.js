@@ -5,7 +5,7 @@
 
 ( function( factory ) {
 	"use strict";
-	
+
 	if ( typeof define === "function" && define.amd ) {
 
 		// AMD. Register as an anonymous module.
@@ -8008,7 +8008,7 @@ $.extend( Datepicker.prototype, {
 		}
 	},
 
-	/* Filter entered characters - based on date format. */
+	/* MediaFilter entered characters - based on date format. */
 	_doKeyPress: function( event ) {
 		var chars, chr,
 			inst = $.datepicker._getInst( event.target );
@@ -13442,7 +13442,7 @@ $.ui.ddmanager = {
 				continue;
 			}
 
-			// Filter out elements in the current dragged item
+			// MediaFilter out elements in the current dragged item
 			for ( j = 0; j < list.length; j++ ) {
 				if ( list[ j ] === m[ i ].element[ 0 ] ) {
 					m[ i ].proportions().height = 0;

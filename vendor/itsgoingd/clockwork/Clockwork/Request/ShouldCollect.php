@@ -1,6 +1,6 @@
 <?php namespace Clockwork\Request;
 
-// Filter incoming requests before collecting data
+// MediaFilter incoming requests before collecting data
 class ShouldCollect
 {
 	// Enable on-demand mode, boolean or the secret value

@@ -1,4 +1,4 @@
-@props(['medias', 'count', 'type'])
+@props(['medias', 'count', 'type', 'filters' => null])
 
 <div class="hero common-hero">
     <div class="container">
@@ -29,7 +29,7 @@
                             <div class="row">
                                 <div class="col-md-12 form-it">
                                     <label>Movie name</label>
-                                    <input type="text" placeholder="Enter keywords" name="title" value="{{ old('title') }}">
+                                    <input type="text" placeholder="Enter keywords" name="title" value="{{ $filters['title'] ?? '' }}">
                                 </div>
                                 <div class="col-md-12 form-it">
                                     <label>Genres & Subgenres</label>
@@ -39,7 +39,7 @@
                                             <option value="">Enter to filter genres</option>
                                             <?php use App\Models\Genre ?>
                                             @foreach(Genre::all() as $genre)
-                                                <option value="{{ $genre->name }}">{{ ucwords($genre->name) }}</option>
+                                                <option value="{{ $genre->name }}" {{ $filters['genres'] && in_array( $genre->name, $filters['genres']) ? 'selected' : '' }}>{{ ucwords($genre->name) }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -48,7 +48,7 @@
                                     <label for="min_rating">Minimum Rating</label>
                                     <select name="min_rating" id="min_rating">
                                         @for($i = 1; $i <= 10; $i++)
-                                            <option value="{{ $i }}">{{ $i }}</option>
+                                            <option value="{{ $i }}" {{ $filters['minRating'] && $filters['minRating'] == $i ? 'selected' : '' }}>{{ $i }}</option>
                                         @endfor
                                     </select>
                                 </div>
@@ -59,7 +59,7 @@
                                             <select name="year_from">
                                                 <option disabled>From</option>
                                                 @for($i = date('Y', strtotime(now())); $i >= 1940 ; $i--)
-                                                    <option value="{{ $i }}">{{ $i }}</option>
+                                                    <option value="{{ $i }}" {{ $filters['yearFrom'] && $filters['yearFrom'] == $i ? 'selected' : '' }}>{{ $i }}</option>
                                                 @endfor
                                             </select>
                                         </div>
@@ -67,7 +67,7 @@
                                             <select name="year_to">
                                                 <option value="range" disabled>To</option>
                                                 @for($i = date('Y', strtotime(now())); $i >= 1940 ; $i--)
-                                                    <option value="{{ $i }}">{{ $i }}</option>
+                                                    <option value="{{ $i }}" {{ $filters['yearTo'] && $filters['yearTo'] == $i ? 'selected' : '' }}>{{ $i }}</option>
                                                 @endfor
                                             </select>
                                         </div>

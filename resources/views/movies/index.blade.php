@@ -1,3 +1,3 @@
 <x-layout>
-    <x-media-index :medias="$movies" :count="$count" :type="'movie'"/>
+    <x-media-index :medias="$movies" :count="$count" :type="'movie'" :filters="$filters"/>
 </x-layout>

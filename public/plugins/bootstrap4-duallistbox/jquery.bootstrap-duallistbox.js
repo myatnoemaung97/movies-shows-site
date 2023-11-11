@@ -30,7 +30,7 @@
   var pluginName = 'bootstrapDualListbox',
     defaults = {
       filterTextClear: 'show all',
-      filterPlaceHolder: 'Filter',
+      filterPlaceHolder: 'MediaFilter',
       moveSelectedLabel: 'Move selected',
       moveAllLabel: 'Move all',
       removeSelectedLabel: 'Remove selected',

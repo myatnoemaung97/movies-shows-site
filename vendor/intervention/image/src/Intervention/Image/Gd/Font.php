@@ -18,7 +18,7 @@ class Font extends \Intervention\Image\AbstractFont
     }
 
     /**
-     * Filter function to access internal integer font values
+     * MediaFilter function to access internal integer font values
      *
      * @return int
      */

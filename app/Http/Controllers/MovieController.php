@@ -11,14 +11,6 @@ class MovieController extends Controller
 
         $query = Movie::latest();
 
-        if (empty($request->all())) {
-
-            return view('movies.index', [
-                'count' => $query->count(),
-                'movies' => $query->paginate(12)
-            ]);
-        }
-
         $sort = $request['sort'];
         $title = $request['title'];
         $genres = $request['genres'];
@@ -44,14 +36,27 @@ class MovieController extends Controller
 
         if ($sort) {
             $query = $query->orderByRaw($sort);
-        }
-        
-        $updatedMediaGrid = view('partials.media_grid',
-            ['count' => $query->get()->count(), 'type' => 'movie', 'sort' => $sort, 'medias' => $query->paginate(12)])->render();
 
-        return response()->json([
-            'updatedMediaGrid' => $updatedMediaGrid
+            $updatedMediaGrid = view('partials.media_grid',
+                ['count' => $query->get()->count(), 'type' => 'movie', 'sort' => $sort, 'medias' => $query->paginate(12)])->render();
+
+            return response()->json([
+                'updatedMediaGrid' => $updatedMediaGrid
+            ]);
+        }
+
+        return view('movies.index', [
+            'count' => $query->count(),
+            'movies' => $query->paginate(12),
+            'filters' => [
+                'title' => $title,
+                'genres' => $genres,
+                'minRating' => $minRating,
+                'yearFrom' => $yearFrom,
+                'yearTo' => $yearTo
+            ],
         ]);
+
     }
 
     public function show(Movie $movie) {

@@ -1,6 +1,6 @@
 <?php namespace Clockwork\Helpers;
 
-// Filter stack traces
+// MediaFilter stack traces
 class StackFilter
 {
 	protected $classes = [];

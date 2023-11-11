@@ -2524,7 +2524,7 @@
             // Check element
             if (!element) return;
             if (duration > 0) {
-                // Filter out non-animated attributes
+                // MediaFilter out non-animated attributes
                 // Note: we don't need to delete from original attribute (they won't be set anyway)
                 var attrsNonAnimated = {};
                 for (var i=0 ; i < self._nonAnimatedAttrs.length ; i++) {
