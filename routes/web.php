@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/test', function () {
-    dd(\App\Models\Movie::latest());
+    dd(\request()->fullUrl());
 });
 
 Route::post('/testPost', [TestController::class, 'store']);

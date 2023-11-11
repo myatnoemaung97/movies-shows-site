@@ -4,7 +4,7 @@
     <div class="topbar-filter">
         <p>Found <span>{{ $count }} movies</span> in total</p>
         <label>Sort by:</label>
-        <select onchange="sortMedias(this.value, '{{ $type }}')">
+        <select onchange="sortMedias(this.value, '{{ $type }}', '{{ request()->fullUrl() }}')">
             <option value="rating desc" {{ $sort === 'rating desc' ? 'selected' : '' }}>Rating Descending</option>
             <option value="rating asc" {{ $sort === 'rating asc' ? 'selected' : '' }}>Rating Ascending</option>
             <option value="release_date desc" {{ $sort === 'release_date desc' ? 'selected' : '' }}>Release date Descending</option>

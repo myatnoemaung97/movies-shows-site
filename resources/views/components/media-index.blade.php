@@ -35,7 +35,7 @@
                                     <label>Genres & Subgenres</label>
                                     <div class="group-ip">
                                         <select
-                                            name="genres" multiple="" class="ui fluid dropdown">
+                                            name="genres[]" multiple class="ui fluid dropdown">
                                             <option value="">Enter to filter genres</option>
                                             <?php use App\Models\Genre ?>
                                             @foreach(Genre::all() as $genre)

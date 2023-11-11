@@ -411,8 +411,8 @@ function sortReviews(sort, mediaId, type) {
         });
 }
 
-function sortMedias(sort, type) {
-    const url = `/${type}s?sort=${sort}`;
+function sortMedias(sort, type, url) {
+    url = url + `&sort=${sort}`;
 
     fetch(`${url}`, {
         method: "GET",

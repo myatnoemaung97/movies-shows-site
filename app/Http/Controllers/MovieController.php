@@ -17,9 +17,14 @@ class MovieController extends Controller
         $minRating = $request['min_rating'];
         $yearFrom = $request['year_from'];
         $yearTo = $request['year_to'];
+        $page = $request['page'];
 
         if ($title) {
             $query = $query->where('title', 'like', '%' . $title . '%');
+        }
+
+        if ($genres) {
+            
         }
 
         if ($minRating) {
@@ -34,11 +39,11 @@ class MovieController extends Controller
             $query = $query->whereYear('release_date', '<', $yearTo);
         }
 
-        if ($sort) {
+        if ($sort && !$page) {
             $query = $query->orderByRaw($sort);
 
             $updatedMediaGrid = view('partials.media_grid',
-                ['count' => $query->get()->count(), 'type' => 'movie', 'sort' => $sort, 'medias' => $query->paginate(12)])->render();
+                ['count' => $query->get()->count(), 'type' => 'movie', 'sort' => $sort, 'medias' => $query->paginate(12)->withQueryString()])->render();
 
             return response()->json([
                 'updatedMediaGrid' => $updatedMediaGrid
@@ -47,10 +52,10 @@ class MovieController extends Controller
 
         return view('movies.index', [
             'count' => $query->count(),
-            'movies' => $query->paginate(12),
+            'movies' => $query->paginate(12)->withQueryString(),
             'filters' => [
                 'title' => $title,
-                'genres' => $genres,
+                'genres' => array($genres)[0],
                 'minRating' => $minRating,
                 'yearFrom' => $yearFrom,
                 'yearTo' => $yearTo
