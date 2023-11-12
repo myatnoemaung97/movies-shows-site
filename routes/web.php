@@ -3,8 +3,10 @@
 use App\Http\Controllers\AdminArticleController;
 use App\Http\Controllers\AdminContentController;
 use App\Http\Controllers\AdminEpisodeController;
+use App\Http\Controllers\AdminListController;
 use App\Http\Controllers\AdminMovieController;
 use App\Http\Controllers\AdminPersonController;
+use App\Http\Controllers\AdminPlaylistController;
 use App\Http\Controllers\AdminSeasonController;
 use App\Http\Controllers\AdminShowController;
 use App\Http\Controllers\ArticleController;
@@ -39,7 +41,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/test', function () {
-    dd(\request()->fullUrl());
+    dd(\App\Models\Movie::whereHas('genres', function ($query) {
+        $query->where('media_type', 'App\Models\Movie')->whereIn('genre_id', [1,2,3]);
+    })->get());
 });
 
 Route::post('/testPost', [TestController::class, 'store']);
@@ -117,6 +121,8 @@ Route::middleware('can:admin')->group(function () {
     Route::resource('/admin/shows/{show}/seasons', AdminSeasonController::class);
     Route::resource('/admin/shows/{show}/seasons/{season}/episodes', AdminEpisodeController::class);
     Route::resource('/admin/people', AdminPersonController::class);
+    Route::resource('/admin/lists', AdminPlaylistController::class);
 });
+
 
 

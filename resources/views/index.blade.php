@@ -23,7 +23,7 @@
     <div class="article-items">
         <div class="container">
             <div class="row ipad-width">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <!-- Movies -->
                     <div class="title-hd">
                         <h2>Movies</h2>
@@ -953,6 +953,36 @@
                         </div>
                     </div>
                     <!-- Shows/ -->
+                </div>
+                <div class="col-md-4">
+                    <div class="sidebar">
+                        <div class="celebrities">
+                            <h4 class="sb-title">Editor's Lists</h4>
+                            <div class="celeb-item">
+                                <a style="color: white;">Movies to binge through this holloween</a>
+                            </div>
+                            <div class="celeb-item">
+                                <a>Movies to binge through this holloween</a>
+                            </div>
+                            <div class="celeb-item">
+                                <a>Movies to binge through this holloween</a>
+                            </div>
+                            <div class="celeb-item">
+                                <a>Movies to binge through this holloween</a>
+                            </div>
+                            <div class="celeb-item">
+                                <a>Movies to binge through this holloween</a>
+                            </div>
+{{--                            <div class="celeb-item">--}}
+{{--                                <a href="#"><img src="images/uploads/ava2.jpg" alt="" width="70" height="70"></a>--}}
+{{--                                <div class="celeb-author">--}}
+{{--                                    <h6><a href="#">Benjamin Carroll</a></h6>--}}
+{{--                                    <span>Actor</span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+                            <a href="#" class="btn">See all lists<i class="ion-ios-arrow-right"></i></a>
+                        </div>
+                    </div>
                 </div>
 
             </div>

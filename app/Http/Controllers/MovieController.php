@@ -24,7 +24,9 @@ class MovieController extends Controller
         }
 
         if ($genres) {
-            
+            $query = $query->whereHas('genres', function ($query) use ($genres) {
+                $query->where('media_type', 'App\Models\Movie')->whereIn('genre_id', $genres);
+            });
         }
 
         if ($minRating) {

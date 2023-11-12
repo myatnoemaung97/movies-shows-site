@@ -39,7 +39,7 @@
                                             <option value="">Enter to filter genres</option>
                                             <?php use App\Models\Genre ?>
                                             @foreach(Genre::all() as $genre)
-                                                <option value="{{ $genre->name }}" {{ $filters['genres'] && in_array( $genre->name, $filters['genres']) ? 'selected' : '' }}>{{ ucwords($genre->name) }}</option>
+                                                <option value="{{ $genre->id }}" {{ $filters['genres'] && in_array( $genre->id, $filters['genres']) ? 'selected' : '' }}>{{ ucwords($genre->name) }}</option>
                                             @endforeach
                                         </select>
                                     </div>

@@ -412,9 +412,7 @@ function sortReviews(sort, mediaId, type) {
 }
 
 function sortMedias(sort, type, url) {
-    url = url + `&sort=${sort}`;
-
-    fetch(`${url}`, {
+    fetch(`/${type}s?sort=${sort}`, {
         method: "GET",
     })
         .then(response => response.json())
