@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use App\Services\FilterService;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -11,41 +12,11 @@ class MovieController extends Controller
 
         $query = Movie::latest();
 
-        $sort = $request['sort'];
-        $title = $request['title'];
-        $genres = $request['genres'];
-        $minRating = $request['min_rating'];
-        $yearFrom = $request['year_from'];
-        $yearTo = $request['year_to'];
-        $page = $request['page'];
+        $query = FilterService::filter($query, $request);
 
-        if ($title) {
-            $query = $query->where('title', 'like', '%' . $title . '%');
-        }
-
-        if ($genres) {
-            $query = $query->whereHas('genres', function ($query) use ($genres) {
-                $query->where('media_type', 'App\Models\Movie')->whereIn('genre_id', $genres);
-            });
-        }
-
-        if ($minRating) {
-            $query = $query->where('rating', '>', $minRating);
-        }
-
-        if ($yearFrom) {
-            $query = $query->whereYear('release_date', '>', $yearFrom);
-        }
-
-        if ($yearTo) {
-            $query = $query->whereYear('release_date', '<', $yearTo);
-        }
-
-        if ($sort && !$page) {
-            $query = $query->orderByRaw($sort);
-
+        if ($request['sort'] && !$request['page']) {
             $updatedMediaGrid = view('partials.media_grid',
-                ['count' => $query->get()->count(), 'type' => 'movie', 'sort' => $sort, 'medias' => $query->paginate(12)->withQueryString()])->render();
+                ['count' => $query->get()->count(), 'type' => 'movie', 'sort' => $request['sort'], 'medias' => $query->paginate(12)->withQueryString()])->render();
 
             return response()->json([
                 'updatedMediaGrid' => $updatedMediaGrid
@@ -56,14 +27,13 @@ class MovieController extends Controller
             'count' => $query->count(),
             'movies' => $query->paginate(12)->withQueryString(),
             'filters' => [
-                'title' => $title,
-                'genres' => array($genres)[0],
-                'minRating' => $minRating,
-                'yearFrom' => $yearFrom,
-                'yearTo' => $yearTo
+                'title' => $request['title'],
+                'genres' => array($request['genres'])[0],
+                'minRating' => $request['min_rating'],
+                'yearFrom' => $request['year_from'],
+                'yearTo' => $request['year_to']
             ],
         ]);
-
     }
 
     public function show(Movie $movie) {

@@ -24,11 +24,11 @@
             <div class="col-md-4 col-sm-12 col-xs-12">
                 <div class="sidebar">
                     <div class="searh-form">
-                        <h4 class="sb-title">Search for movie</h4>
-                        <form class="form-style-1" action="/movies" method="GET">
+                        <h4 class="sb-title">Search for {{ $type }}s</h4>
+                        <form class="form-style-1" action="/{{ $type }}s" method="GET">
                             <div class="row">
                                 <div class="col-md-12 form-it">
-                                    <label>Movie name</label>
+                                    <label>{{ ucwords($type) }} name</label>
                                     <input type="text" placeholder="Enter keywords" name="title" value="{{ $filters['title'] ?? '' }}">
                                 </div>
                                 <div class="col-md-12 form-it">

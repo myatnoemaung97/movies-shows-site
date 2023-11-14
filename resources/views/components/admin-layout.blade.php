@@ -90,7 +90,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/admin/lists" class="nav-link {{ Str::startsWith(request()->path(), 'admin/lists') ? 'active' : '' }}">
+                        <a href="/admin/playlists" class="nav-link {{ Str::startsWith(request()->path(), 'admin/lists') ? 'active' : '' }}">
                             <i class="fa-solid fa-list nav-icon"></i>
                             <p>Lists</p>
                         </a>

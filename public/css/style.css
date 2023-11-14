@@ -3723,11 +3723,11 @@ a {
   -moz-transition: all 0.3s ease-out;
   -o-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
-  color: #666;
+  color: white;
   border-bottom: 1px solid dotted;
 }
 a:hover {
-  color: #020d18;
+  color: deeppink;
 }
 p {
   margin-bottom: 10px;

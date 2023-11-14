@@ -1,4 +1,4 @@
-@props(['name', 'label', 'options', 'values'])
+@props(['name', 'label', 'options', 'values' => null])
 
 <x-form.label :name="$name" :label="$label"/>
 <select class="js-example-basic-multiple form-control text-black" id="{{ $name }}" name="{{$name}}[]"

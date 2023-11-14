@@ -15,6 +15,7 @@ use App\Http\Controllers\DislikeController;
 use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\RegisterController;
@@ -27,6 +28,9 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WatchListController;
 use App\Models\Article;
+use App\Models\Movie;
+use App\Models\Playlist;
+use App\Models\Show;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,9 +45,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/test', function () {
-    dd(\App\Models\Movie::whereHas('genres', function ($query) {
-        $query->where('media_type', 'App\Models\Movie')->whereIn('genre_id', [1,2,3]);
-    })->get());
+    dd(\request()->except('age'));
 });
 
 Route::post('/testPost', [TestController::class, 'store']);
@@ -56,7 +58,10 @@ Route::patch('/test', function (Request $request) {
 
 Route::get('/', function () {
     return view('index', [
-        'articles' => Article::latest()->where('status', 'published')->take(4)->get()
+        'articles' => Article::latest()->where('status', 'published')->take(4)->get(),
+        'playlists' => Playlist::latest()->take(5)->get(),
+        'movies' => Movie::latest()->take(4)->get(),
+        'shows' => Show::latest()->take(4)->get(),
     ]);
 });
 
@@ -73,6 +78,9 @@ Route::get('/shows/{show}/seasons/{season}', [SeasonController::class, 'show']);
 Route::get('/celebrities/{person}', [CelebrityController::class, 'show']);
 
 Route::get('/reviews/sort', [ReviewController::class, 'sort']);
+
+Route::get('/playlists', [PlaylistController::class, 'index']);
+Route::get('/playlists/{playlist}', [PlaylistController::class, 'show']);
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'create']);
@@ -121,7 +129,7 @@ Route::middleware('can:admin')->group(function () {
     Route::resource('/admin/shows/{show}/seasons', AdminSeasonController::class);
     Route::resource('/admin/shows/{show}/seasons/{season}/episodes', AdminEpisodeController::class);
     Route::resource('/admin/people', AdminPersonController::class);
-    Route::resource('/admin/lists', AdminPlaylistController::class);
+    Route::resource('/admin/playlists', AdminPlaylistController::class);
 });
 
 

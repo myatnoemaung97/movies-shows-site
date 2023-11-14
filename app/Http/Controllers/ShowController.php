@@ -2,17 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Movie;
 use App\Models\Show;
+use App\Services\FilterService;
 use Illuminate\Http\Request;
 
 class ShowController extends Controller
 {
-    public function index() {
-        $shows = Show::latest();
+    public function index(Request $request) {
+        $query = Show::latest();
+
+        $query = FilterService::filter($query, $request);
+
+        if ($request['sort'] && !$request['page']) {
+            $updatedMediaGrid = view('partials.media_grid',
+                ['count' => $query->get()->count(), 'type' => 'show', 'sort' => $request['sort'], 'medias' => $query->paginate(12)->withQueryString()])->render();
+
+            return response()->json([
+                'updatedMediaGrid' => $updatedMediaGrid
+            ]);
+        }
 
         return view('shows.index', [
-            'count' => $shows->count(),
-            'shows' => $shows->paginate(12)
+            'count' => $query->count(),
+            'shows' => $query->paginate(12)->withQueryString(),
+            'filters' => [
+                'title' => $request['title'],
+                'genres' => array($request['genres'])[0],
+                'minRating' => $request['min_rating'],
+                'yearFrom' => $request['year_from'],
+                'yearTo' => $request['year_to']
+            ],
         ]);
     }
 

@@ -38,5 +38,4 @@ class Show extends Model
         return $this->morphToMany(Genre::class, 'media', 'media_genres');
     }
 
-
 }
