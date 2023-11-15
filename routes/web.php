@@ -45,7 +45,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/test', function () {
-    dd(\request()->except('age'));
+    $str = 'Actor, Director';
+
+    dd(explode(', ', $str));
 });
 
 Route::post('/testPost', [TestController::class, 'store']);
@@ -59,7 +61,7 @@ Route::patch('/test', function (Request $request) {
 Route::get('/', function () {
     return view('index', [
         'articles' => Article::latest()->where('status', 'published')->take(4)->get(),
-        'playlists' => Playlist::latest()->take(5)->get(),
+        'playlists' => Playlist::latest()->where('pinned', true)->get(),
         'movies' => Movie::latest()->take(4)->get(),
         'shows' => Show::latest()->take(4)->get(),
     ]);
@@ -88,6 +90,9 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/login', [SessionsController::class, 'create']);
     Route::post('/login', [SessionsController::class, 'store']);
+
+    Route::get('/login/github', [SessionsController::class, 'github']);
+    Route::get('/login/github/redirect', [SessionsController::class, 'githubRedirect']);
 });
 
 Route::middleware('auth')->group(function () {
@@ -117,9 +122,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('can:admin')->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.index');
-    });
 
     Route::resource('/admin/users', UserController::class);
     Route::resource('/admin/articles', AdminArticleController::class);

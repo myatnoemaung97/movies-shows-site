@@ -14,10 +14,11 @@
                 multiple="multiple">
             <option value="">-select</option>
             @foreach($medias as $media)
+                <?php $class = class_basename($media) ?>
                 <option
-                    value="{{ $media->id }},{{ class_basename($media) }}">{{ $media->title }}
+                    value="{{ $media->id }},{{ $class }}" {{ ($class === 'Movie' ? $playlist->movies()->contains($media) : $playlist->shows()->contains($media)) ? 'selected' : '' }}>{{ $media->title }}
                     ({{ date('Y', strtotime($media->release_date)) }}
-                    ) {{ class_basename($media) === 'Show' ? 'TV-Series' : '' }}</option>
+                    ) {{ $class === 'Show' ? 'TV-Series' : '' }}</option>
             @endforeach
         </select>
         <x-form.error :name="'medias'"/>

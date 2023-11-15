@@ -58,19 +58,9 @@ class AdminPlaylistController extends Controller
             $playlist = Playlist::create([
                 'name' => $request['name'],
                 'user_id' => auth()->user()->id,
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
             ]);
 
-            $playlistMedias = array_map(function ($media) use ($playlist) {
-                $media = explode(',', $media);
-                return new PlaylistMedia([
-                    'playlist_id' => $playlist->id,
-                    'media_id' => $media[0],
-                    'media_type' => "App\Models\\" . $media[1]
-                ]);
-            }, $request['medias']);
-
-            $playlist->medias()->saveMany($playlistMedias);
+            AdminPlaylistMediaController::store($playlist, $request['medias']);
         });
 
         return redirect(route('playlists.index'))->with('create', 'Playlist');
@@ -90,6 +80,16 @@ class AdminPlaylistController extends Controller
     }
 
     public function update(Playlist $playlist, Request $request) {
+        if ($request->has('pinned')) {
+            $playlist->update(['pinned' => $request['pinned']]);
+
+            if ($request['pinned'] == 1) {
+                return redirect(route('playlists.show', $playlist->id))->with('pin', 'Playlist');
+            } else {
+                return redirect(route('playlists.show', $playlist->id))->with('unpin', 'Playlist');
+            }
+        }
+
         $request->validate([
             'name' => 'required',
             'medias' => 'required'
@@ -100,16 +100,7 @@ class AdminPlaylistController extends Controller
 
             PlaylistMedia::where('playlist_id', $playlist->id)->delete();
 
-            $playlistMedias = array_map(function ($media) use ($playlist) {
-                $media = explode(',', $media);
-                return new PlaylistMedia([
-                    'playlist_id' => $playlist->id,
-                    'media_id' => $media[0],
-                    'media_type' => "App\Models\\" . $media[1]
-                ]);
-            }, $request['medias']);
-
-            $playlist->medias()->saveMany($playlistMedias);
+            AdminPlaylistMediaController::store($playlist, $request['medias']);
         });
 
         return redirect(route('playlists.show', $playlist->id))->with('update', 'Playlist');
@@ -120,5 +111,4 @@ class AdminPlaylistController extends Controller
 
         return 'scccess';
     }
-
 }

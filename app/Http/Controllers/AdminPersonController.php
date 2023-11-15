@@ -59,9 +59,9 @@ class AdminPersonController extends Controller
         return redirect(route('people.index'))->with('create', 'Person');
     }
 
-    public function edit($id) {
+    public function edit(Person $person) {
         return view('admin.people.edit', [
-           'person' => Person::findOrFail($id)
+           'person' => $person
         ]);
     }
 

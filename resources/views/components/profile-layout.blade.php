@@ -29,7 +29,7 @@
                     <div class="user-fav">
                         <p>Others</p>
                         <ul>
-                            <li><a href="#">Change password</a></li>
+                            <li><a href="/profile">Change password</a></li>
                             <li><a href="/logout">Log out</a></li>
                         </ul>
                     </div>

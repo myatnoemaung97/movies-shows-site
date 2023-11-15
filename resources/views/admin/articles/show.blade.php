@@ -29,11 +29,9 @@
                                             @csrf
                                             @method('PATCH')
 
-                                            <input type="hidden" name="status" value="published">
-                                            <input type="hidden" name="title" value="{{ $article->title }}">
-                                            <input type="hidden" name="body" value="{{ $article->body }}">
+                                            <input type="hidden" name="status" value="{{ $article->status === 'published' ? 'draft' : 'published'}}">
 
-                                            <button class="btn btn-primary" type="submit">Publish</button>
+                                            <button class="btn btn-primary" type="submit">{{ $article->status === 'published' ? 'Un' : '' }}Publish</button>
                                         </form>
                                         <a class="btn btn-success" href="{{ route('articles.edit', $article->id) }}">Edit</a>
                                     </div>

@@ -20,4 +20,8 @@
     <div class="row">
         <button type="submit">Login</button>
     </div>
+
+    <div style="margin-right: 5px;">
+        <a href="/login/github" class="login-social"><i class="fa-brands fa-github"></i></a>
+    </div>
 </form>

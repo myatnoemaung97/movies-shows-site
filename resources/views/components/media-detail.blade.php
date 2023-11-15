@@ -25,8 +25,11 @@
                                     Watch
                                     Trailer</a>
                             </div>
-                            <div><a href="{{ $media->trialer }}"
-                                    class="item item-2 redbtn fancybox-media hvr-grow"><i class="ion-play"></i></a>
+                            <div>
+                                <a href="{{ $media->trailer }}" data-fancybox="video-gallery"><i
+                                        class="item item-2 redbtn hvr-grow ion-play"></i></a>
+                                {{--                                <a href="{{ $media->trialer }}"--}}
+                                {{--                                   class="item item-2 redbtn hvr-grow"><i class="ion-play"></i></a>--}}
                             </div>
                         </div>
                     </div>

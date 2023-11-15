@@ -26,9 +26,8 @@ class UserController extends Controller
                 ->addColumn('action', function ($u) {
 
                     $delete = '<a href="" class="deleteUserButton btn btn-sm btn-danger" data-id="' . $u->id . '">Delete</a>';
-                    $ban = "<a class='btn btn-sm btn-warning' style='margin-left: 10px;'>Ban</a>";
 
-                    return '<div class="action">' . $delete . $ban . '</div>';
+                    return '<div class="action">' . $delete . '</div>';
 
                 })->rawColumns(['action'])->make(true);
         }

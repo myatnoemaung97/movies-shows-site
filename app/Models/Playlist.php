@@ -11,6 +11,10 @@ class Playlist extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'pinned' => 'boolean'
+    ];
+
     public function author() {
         return $this->belongsTo(User::class, 'user_id');
     }

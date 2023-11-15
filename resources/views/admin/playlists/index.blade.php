@@ -16,6 +16,7 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>No. of Medias</th>
+                                    <th>Pinned</th>
                                     <th>Created</th>
                                     <th>Updated</th>
                                     <th>Action</th>
@@ -55,6 +56,9 @@
                 },
                 {
                     'data': 'no_of_medias'
+                },
+                {
+                    'data': 'pinned'
                 },
                 {
                     "data": "created_at"

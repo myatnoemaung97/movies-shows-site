@@ -4,9 +4,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="hero-ct">
-                        <h1> Article</h1>
+                        <h1> Lists</h1>
                         <ul class="breadcumb">
-                            <li class="active"><a href="#">Home</a></li>
+                            <li class="active"><a href="/">Home</a></li>
                             <li> <span class="fa-solid fa-arrow-right"></span> lists</li>
                         </ul>
                     </div>

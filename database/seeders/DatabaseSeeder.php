@@ -123,7 +123,6 @@ class DatabaseSeeder extends Seeder
         $playlist = Playlist::create([
             'user_id' => $user->id,
             'name' => 'My Fav Movies',
-            'description' => 'A list of my fav movies'
         ]);
 
         // user adds a movie to the playlist

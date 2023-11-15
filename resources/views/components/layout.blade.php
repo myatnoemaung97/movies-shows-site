@@ -8,7 +8,6 @@
 <!--[if !(IE 7) | !(IE 8)  ]><!-->
 <html lang="en" class="no-js">
 
-
 <head>
     <!-- Basic need -->
     <title>Kino Wave</title>
@@ -36,6 +35,11 @@
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/807f2d6ec6.js" crossorigin="anonymous"></script>
 
+    <!-- fancybox -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
+    />
 </head>
 <body>
 <!--preloading-->
@@ -89,6 +93,10 @@
             <div class="row">
                 <button type="submit">sign up</button>
             </div>
+
+            <div style="margin-right: 5px;">
+                <a href="/login/github" class="login-social"><i class="fa-brands fa-github"></i></a>
+            </div>
         </form>
     </div>
 </div>
@@ -116,80 +124,26 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li class="dropdown first">
-                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown">
-                            Home <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </a>
-                        <ul class="dropdown-menu level1">
-                            <li><a href="index-2.html">Home 01</a></li>
-                            <li><a href="homev2.html">Home 02</a></li>
-                            <li><a href="homev3.html">Home 03</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown first">
-                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-                            movies<i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </a>
-                        <ul class="dropdown-menu level1">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Movie grid<i
-                                        class="ion-ios-arrow-forward"></i></a>
-                                <ul class="dropdown-menu level2">
-                                    <li><a href="moviegrid.html">Movie grid</a></li>
-                                    <li><a href="moviegridfw.html">movie grid full width</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="movielist.html">Movie list</a></li>
-                            <li><a href="moviesingle.html">Movie single</a></li>
-                            <li class="it-last"><a href="seriessingle.html">Series single</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown first">
-                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-                            celebrities <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </a>
-                        <ul class="dropdown-menu level1">
-                            <li><a href="celebritygrid01.html">celebrity grid 01</a></li>
-                            <li><a href="celebritygrid02.html">celebrity grid 02 </a></li>
-                            <li><a href="celebritylist.html">celebrity list</a></li>
-                            <li class="it-last"><a href="celebritysingle.html">celebrity single</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown first">
-                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-                            news <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </a>
-                        <ul class="dropdown-menu level1">
-                            <li><a href="bloglist.html">blog List</a></li>
-                            <li><a href="bloggrid.html">blog Grid</a></li>
-                            <li class="it-last"><a href="blogdetail.html">blog Detail</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown first">
-                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-                            community <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </a>
-                        <ul class="dropdown-menu level1">
-                            <li><a href="userfavoritegrid.html">user favorite grid</a></li>
-                            <li><a href="userfavoritelist.html">user favorite list</a></li>
-                            <li><a href="userprofile.html">user profile</a></li>
-                            <li class="it-last"><a href="userrate.html">user rate</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/movies">Movies</a></li>
+                    <li><a href="/shows">Shows</a></li>
+                    <li><a href="/playlists">Lists</a></li>
                 </ul>
                 <ul class="nav navbar-nav flex-child-menu menu-right">
-                    <li class="dropdown first">
-                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-                            pages <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </a>
-                        <ul class="dropdown-menu level1">
-                            <li><a href="/profile/watchlists">Watchlist</a></li>
-                            <li><a href="404.html">404 Page</a></li>
-                            <li class="it-last"><a href="comingsoon.html">Coming soon</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Help</a></li>
                     @auth
+                        <li class="dropdown first">
+                            <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
+                                profile <i class="fa fa-angle-down" aria-hidden="true"></i>
+                            </a>
+                            <ul class="dropdown-menu level1">
+                                <li><a href="/profile">Profile</a></li>
+                                <li><a href="/profile/watchlists">Watchlist</a></li>
+                                <li><a href="/profile/reviews">Reviews</a></li>
+                                @can('admin')
+                                    <li><a href="/admin/users">Admin Dashboard</a></li>
+                                @endcan
+                            </ul>
+                        </li>
                         <li>
                             <form action="/logout" method="POST">
                                 @csrf
@@ -206,15 +160,6 @@
             </div>
             <!-- /.navbar-collapse -->
         </nav>
-
-        <!-- top search form -->
-        <div class="top-search">
-            <select>
-                <option value="united">TV show</option>
-                <option value="saab">Others</option>
-            </select>
-            <input type="text" placeholder="Search for a movie, TV Show or celebrity that you are looking for">
-        </div>
     </div>
 </header>
 <!-- END | Header -->
@@ -231,42 +176,42 @@
                     New York, NY 10001</p>
                 <p>Call us: <a href="#">(+01) 202 342 6789</a></p>
             </div>
-            <div class="flex-child-ft item2">
-                <h4>Resources</h4>
-                <ul>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Blockbuster</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Forums</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Help Center</a></li>
-                </ul>
-            </div>
-            <div class="flex-child-ft item3">
-                <h4>Legal</h4>
-                <ul>
-                    <li><a href="#">Terms of Use</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Security</a></li>
-                </ul>
-            </div>
-            <div class="flex-child-ft item4">
-                <h4>Account</h4>
-                <ul>
-                    <li><a href="#">My Account</a></li>
-                    <li><a href="#">Watchlist</a></li>
-                    <li><a href="#">Collections</a></li>
-                    <li><a href="#">User Guide</a></li>
-                </ul>
-            </div>
-            <div class="flex-child-ft item5">
-                <h4>Newsletter</h4>
-                <p>Subscribe to our newsletter system now <br> to get latest news from us.</p>
-                <form action="#">
-                    <input type="text" placeholder="Enter your email...">
-                </form>
-                <a href="#" class="btn">Subscribe now <i class="fa-solid fa-arrow-right"></i></a>
-            </div>
+{{--            <div class="flex-child-ft item2">--}}
+{{--                <h4>Resources</h4>--}}
+{{--                <ul>--}}
+{{--                    <li><a href="#">About</a></li>--}}
+{{--                    <li><a href="#">Blockbuster</a></li>--}}
+{{--                    <li><a href="#">Contact Us</a></li>--}}
+{{--                    <li><a href="#">Forums</a></li>--}}
+{{--                    <li><a href="#">Blog</a></li>--}}
+{{--                    <li><a href="#">Help Center</a></li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+{{--            <div class="flex-child-ft item3">--}}
+{{--                <h4>Legal</h4>--}}
+{{--                <ul>--}}
+{{--                    <li><a href="#">Terms of Use</a></li>--}}
+{{--                    <li><a href="#">Privacy Policy</a></li>--}}
+{{--                    <li><a href="#">Security</a></li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+{{--            <div class="flex-child-ft item4">--}}
+{{--                <h4>Account</h4>--}}
+{{--                <ul>--}}
+{{--                    <li><a href="#">My Account</a></li>--}}
+{{--                    <li><a href="#">Watchlist</a></li>--}}
+{{--                    <li><a href="#">Collections</a></li>--}}
+{{--                    <li><a href="#">User Guide</a></li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+{{--            <div class="flex-child-ft item5">--}}
+{{--                <h4>Newsletter</h4>--}}
+{{--                <p>Subscribe to our newsletter system now <br> to get latest news from us.</p>--}}
+{{--                <form action="#">--}}
+{{--                    <input type="text" placeholder="Enter your email...">--}}
+{{--                </form>--}}
+{{--                <a href="#" class="btn">Subscribe now <i class="fa-solid fa-arrow-right"></i></a>--}}
+{{--            </div>--}}
         </div>
     </div>
     <div class="ft-copyright">
@@ -287,7 +232,13 @@
 
 <!-- custom js -->
 <script src="/js/myjs.js"></script>
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+<script>
+    Fancybox.bind('[data-fancybox]', {
+        // Custom options
+    });
+</script>
 </body>
-
-
 </html>

@@ -99,6 +99,16 @@ class AdminArticleController extends Controller
     }
 
     public function update(Request $request, Article $article) {
+        if ($request->has('status')) {
+            $article->update(['status' => $request['status']]);
+
+            if ($request['status'] === 'published') {
+                return redirect(route('articles.index'))->with('publish', 'Article');
+            } else {
+                return redirect(route('articles.index'))->with('unpublish', 'Article');
+            }
+        }
+
         $attributes = $this->validateArticle($request);
 
         $image = $request->file('image');
@@ -112,10 +122,6 @@ class AdminArticleController extends Controller
         }
 
         $article->update($attributes);
-
-        if ($attributes['status'] === 'published') {
-            return redirect(route('articles.index'))->with('publish', 'Article');
-        }
 
         return redirect(route('articles.show', $article->id))->with('update', 'Article');
     }
@@ -134,7 +140,6 @@ class AdminArticleController extends Controller
             'title' => 'required',
             'body' => 'required',
             'image.*' => 'mimes:jpg,jpeg,png,bmp,svg',
-            'status' => 'required'
         ];
 
         if ($request->isMethod('patch')) {

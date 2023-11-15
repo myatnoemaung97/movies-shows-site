@@ -5,8 +5,6 @@
         @csrf
         @method($method)
 
-        <input type="hidden" name="status" value="{{ $article?->status ?? 'draft' }}">
-
         <h3 class="text-center">{{ $header }}</h3>
 
         <x-form.input :name="'title'" :label="'Title'" :value="$article?->title"/>
