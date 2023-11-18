@@ -77,7 +77,7 @@ class AdminEpisodeController extends Controller
 
         $rules = [
             'release_date' => 'required|date',
-            'title' => 'required',
+            'title' => 'required|max:255',
             'run_time' => 'required|numeric|min:0',
             'description' => 'required|max:250'
         ];

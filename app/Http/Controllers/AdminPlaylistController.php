@@ -50,7 +50,7 @@ class AdminPlaylistController extends Controller
 
     public function store(Request $request) {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:255',
             'medias' => 'required'
         ]);
 
@@ -91,7 +91,7 @@ class AdminPlaylistController extends Controller
         }
 
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:255',
             'medias' => 'required'
         ]);
 

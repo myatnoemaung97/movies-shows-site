@@ -3,7 +3,6 @@
 use App\Http\Controllers\AdminArticleController;
 use App\Http\Controllers\AdminContentController;
 use App\Http\Controllers\AdminEpisodeController;
-use App\Http\Controllers\AdminListController;
 use App\Http\Controllers\AdminMovieController;
 use App\Http\Controllers\AdminPersonController;
 use App\Http\Controllers\AdminPlaylistController;
@@ -12,7 +11,6 @@ use App\Http\Controllers\AdminShowController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CelebrityController;
 use App\Http\Controllers\DislikeController;
-use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PlaylistController;
@@ -23,7 +21,6 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\ShowController;
-use App\Http\Controllers\SpotlightController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WatchListController;
@@ -45,9 +42,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/test', function () {
-    $str = 'Actor, Director';
-
-    dd(explode(', ', $str));
+    dd(uuid_create());
 });
 
 Route::post('/testPost', [TestController::class, 'store']);

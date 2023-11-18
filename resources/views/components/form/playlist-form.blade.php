@@ -16,7 +16,7 @@
             @foreach($medias as $media)
                 <?php $class = class_basename($media) ?>
                 <option
-                    value="{{ $media->id }},{{ $class }}" {{ ($class === 'Movie' ? $playlist->movies()->contains($media) : $playlist->shows()->contains($media)) ? 'selected' : '' }}>{{ $media->title }}
+                    value="{{ $media->id }},{{ $class }}" {{ ($class === 'Movie' ? $playlist?->movies()->contains($media) : $playlist?->shows()->contains($media)) ? 'selected' : '' }}>{{ $media->title }}
                     ({{ date('Y', strtotime($media->release_date)) }}
                     ) {{ $class === 'Show' ? 'TV-Series' : '' }}</option>
             @endforeach

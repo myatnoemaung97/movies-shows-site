@@ -100,9 +100,9 @@ class AdminPersonController extends Controller
 
     private function validatePerson(Request $request) {
         $rules = [
-            'name' => 'required',
+            'name' => 'required|max:255',
             'birthday' => 'required',
-            'country' => 'required',
+            'country' => 'required|max:255',
             'height' => 'required',
             'roles' => 'required',
             'bio' => 'required',

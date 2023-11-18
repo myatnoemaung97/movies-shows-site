@@ -6,7 +6,6 @@ use App\Models\Article;
 use App\Services\ImageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
 
 class AdminArticleController extends Controller
@@ -17,14 +16,12 @@ class AdminArticleController extends Controller
             $articles = Article::query();
 
             return DataTables::of($articles)
-                ->editColumn('created_at', function($a) {
+                ->editColumn('created_at', function ($a) {
                     return Carbon::parse($a->created_at)->format("Y-m-d H:i:s");
                 })
-
-                ->editColumn('updated_at', function($a) {
+                ->editColumn('updated_at', function ($a) {
                     return Carbon::parse($a->updated_at)->format("Y-m-d H:i:s");
                 })
-
                 ->addColumn('action', function ($a) {
 
                     $details = "<a href='/admin/articles/$a->id' class='btn btn-sm btn-primary' style='margin-right: 10px'>Details</a>";
@@ -44,23 +41,19 @@ class AdminArticleController extends Controller
             $contents = $article->contents;
 
             return DataTables::of($contents)
-                ->editColumn('body', function($c) {
+                ->editColumn('body', function ($c) {
                     return substr($c->body, 0, 25) . '...';
                 })
-
                 ->editColumn('image', function ($value) {
                     $image = '<img src="' . $value->image . '" alt="image" style="max-width: 100px; max-height: 300px;"';
                     return '<div class="image">' . $image . '</div>';
                 })
-
-                ->editColumn('created_at', function($c) {
+                ->editColumn('created_at', function ($c) {
                     return Carbon::parse($c->created_at)->format("Y-m-d H:i:s");
                 })
-
-                ->editColumn('updated_at', function($c) {
+                ->editColumn('updated_at', function ($c) {
                     return Carbon::parse($c->updated_at)->format("Y-m-d H:i:s");
                 })
-
                 ->addColumn('action', function ($c) use ($article) {
 
                     $details = "<a href='/admin/articles/$article->id/contents/$c->id' class='btn btn-sm btn-primary' style='margin-right: 10px'>Details</a>";
@@ -137,7 +130,7 @@ class AdminArticleController extends Controller
 
     private function validateArticle(Request $request) {
         $rules = [
-            'title' => 'required',
+            'title' => 'required|max:255',
             'body' => 'required',
             'image.*' => 'mimes:jpg,jpeg,png,bmp,svg',
         ];

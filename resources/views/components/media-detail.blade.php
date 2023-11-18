@@ -68,8 +68,8 @@
                         <div class="movie-rate" style="{{ $type === 'season' ? 'margin-bottom: 100px;' : '' }}">
                             <div class="rate">
                                 <i class="ion-android-star"></i>
-                                <p><span>8.1</span> /10<br>
-                                    <span class="rv">56 Reviews</span>
+                                <p><span>{{ $media->rating }}</span> /10<br>
+                                    <span class="rv">{{ $media->reviews->count() }} Reviews</span>
                                 </p>
                             </div>
                             <div class="rate-star">

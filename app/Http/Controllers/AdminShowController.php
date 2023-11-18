@@ -155,7 +155,7 @@ class AdminShowController extends Controller
 
     private function validateShow(Request $request) {
         $rules = [
-            'title' => 'required',
+            'title' => 'required|max:255',
             'age_rating' => 'required',
             'release_date' => 'required|date',
             'status' => 'required',
@@ -163,7 +163,7 @@ class AdminShowController extends Controller
             'genres' => 'required',
             'creators' => 'required',
             'cast' => 'required',
-            'trailer' => 'required',
+            'trailer' => 'required|max:255',
             'poster.*' => 'mimes:jpg,jpeg,png,bmp,svg',
         ];
 

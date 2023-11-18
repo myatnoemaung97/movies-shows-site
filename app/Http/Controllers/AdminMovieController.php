@@ -137,7 +137,7 @@ class AdminMovieController extends Controller
 
     private function validateMovie(Request $request) {
         $rules = [
-            'title' => 'required',
+            'title' => 'required|max:255',
             'age_rating' => 'required',
             'release_date' => 'required',
             'description' => 'required',
@@ -145,7 +145,7 @@ class AdminMovieController extends Controller
             'directors' => 'required',
             'genres' => 'required',
             'cast' => 'required',
-            'trailer' => 'required',
+            'trailer' => 'required|max:255',
             'poster.*' => 'mimes:jpg,jpeg,png,bmp,svg',
         ];
 
