@@ -10,7 +10,7 @@
                                 <a href="#"><img src="{{ $article->thumbnail }}" alt="" width="285" height="437"></a>
                             </div>
                             <div class="title-in">
-                                <h6><a href="/articles/{{$article->id}}">{{$article->title}}</a></h6>
+                                <h6><a href="/articles/{{$article->id}}"><span class="aritcle-title">{{$article->title}}</span></a></h6>
                             </div>
                         </div>
                     @endforeach

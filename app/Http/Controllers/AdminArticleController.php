@@ -130,7 +130,7 @@ class AdminArticleController extends Controller
 
     private function validateArticle(Request $request) {
         $rules = [
-            'title' => 'required|max:255',
+            'title' => 'required|max:80',
             'body' => 'required',
             'image.*' => 'mimes:jpg,jpeg,png,bmp,svg',
         ];

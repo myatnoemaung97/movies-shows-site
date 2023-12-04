@@ -20,11 +20,11 @@
                 multiple="multiple">
             <option value="" disabled>-select</option>
             <option
-                value="Actor" {{ in_array('Actor', explode(', ', $person->roles)) ? 'selected' : '' }}>
+                value="Actor" {{ in_array('Actor', explode(', ', $person?->roles)) ? 'selected' : '' }}>
                 Actor
             </option>
             <option
-                value="Director" {{ in_array('Actor', explode(', ', $person->roles)) ? 'selected' : '' }}>
+                value="Director" {{ in_array('Actor', explode(', ', $person?->roles)) ? 'selected' : '' }}>
                 Director
             </option>
         </select>

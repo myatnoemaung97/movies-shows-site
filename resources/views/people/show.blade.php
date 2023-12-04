@@ -75,7 +75,7 @@
                                             <div class="rv-hd">
                                                 <div>
                                                     <h3>Biography of</h3>
-                                                    <h2>Hugh Jackman</h2>
+                                                    <h2>{{ $person->name }}</h2>
                                                 </div>
                                             </div>
                                             <p>{!! nl2br($person->biography) !!}</p>
